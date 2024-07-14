@@ -13,7 +13,7 @@ namespace API.Services
             _cloudinaryService = cloudinaryService;
             _uow = unitOfWork;
         }
-        public Task<AppUser> GetUserById(int id)
+        public Task<AppUser> GetUserById(string id)
         {
             return _uow.Users.GetById(id);
         }
@@ -23,16 +23,14 @@ namespace API.Services
             await _uow.Users.Update(user);
             await _uow.CompleteAsync();
         }
-
-        public Task<IEnumerable<AppUserImages>> GetUserImages(int userId)
+        public Task<IEnumerable<AppUserImages>> GetUserProfileImages(string userId)
         {
-            return _uow.Users.GetImages(userId);
+            return _uow.Users.GetProfileImages(userId);
         }
 
-        public async Task AddUserImage(AppUserImages image)
+        public Task<IEnumerable<AppUserImages>> GetUserBackgroundImages(string userId)
         {
-            await _uow.Users.AddImage(image);
-            await _uow.CompleteAsync();
+            return _uow.Users.GetBackgroundImages(userId);
         }
 
         public async Task AddUserImage(int userId, AppUserImages image, Stream fileStream, string fileName, string fileType)
@@ -57,6 +55,11 @@ namespace API.Services
         public Task<AppUserImages> GetUserImageById(int id)
         {
             return _uow.Users.GetImageById(id);
+        }
+        public async Task SetMainProfileImage(int imageId)
+        {
+            await _uow.Users.SetMainProfileImage(imageId);
+            await _uow.CompleteAsync();
         }
     }
 }

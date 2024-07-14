@@ -1,6 +1,6 @@
 namespace API.DTOs
 {
-    public class ResetPasswordDto
+    public class ResetPasswordConfirmDto
     {
         public string Email { get; set; }
         public string Code { get; set; }

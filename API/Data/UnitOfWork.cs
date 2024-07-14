@@ -14,9 +14,9 @@ namespace API.Data
         public IArticleRepository Articles => new ArticleRepository(_context);
         public IUserRepository Users => new UserRepository(_context);
 
-        public Task CompleteAsync()
+        public async Task CompleteAsync()
         {
-            throw new NotImplementedException();
+            await _context.SaveChangesAsync();
         }
     }
 }

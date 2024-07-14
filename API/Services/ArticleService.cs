@@ -43,13 +43,6 @@ namespace API.Services
             await _uow.CompleteAsync();
         }
 
-        // public async Task AddImage(Image image, Stream fileStream, string fileName, string fileType)
-        // {
-        //     image.Url = await _cloudinaryService.UploadFileAsync(fileStream, fileName, fileType);
-        //     await _uow.Articles.AddImage(image);
-        //     await _uow.CompleteAsync();
-        // }
-
         public async Task AddImage(int articleId, Image image, Stream fileStream, string fileName, string fileType)
         {
             image.ArticleId = articleId;
@@ -72,18 +65,6 @@ namespace API.Services
         {
             return _uow.Articles.GetImageById(id);
         }
-
-
-        // public async Task AddVideo(Video video, Stream fileStream, string fileName, string fileType)
-        // {
-        //     if (!video.IsExternal)
-        //     {
-        //         video.Url = await _cloudinaryService.UploadFileAsync(fileStream, fileName, fileType);
-        //     }
-        //     await _uow.Articles.AddVideo(video);
-        //     await _uow.CompleteAsync();
-        // }
-
 
         public async Task AddVideo(int articleId, Video video, Stream fileStream, string fileName, string fileType)
         {

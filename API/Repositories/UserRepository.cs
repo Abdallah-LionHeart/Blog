@@ -15,7 +15,7 @@ namespace API.Repositories
         }
 
 
-        public async Task<AppUser> GetById(int id)
+        public async Task<AppUser> GetById(string id)
         {
             return await _context.Users.Include(u => u.ProfileImages).Include(u => u.BackgroundImages).FirstOrDefaultAsync(u => u.Id == id);
         }
@@ -47,6 +47,39 @@ namespace API.Repositories
             return await _context.UsersImages.Where(i => i.AppUserId == userId).ToListAsync();
         }
 
+        public async Task<IEnumerable<AppUserImages>> GetProfileImages(string userId)
+        {
+            if (int.TryParse(userId, out int userIdInt))
+            {
+                return await _context.UsersImages.Where(i => i.AppUserId == userIdInt && i.IsMain).ToListAsync();
+            }
+            return new List<AppUserImages>();
+        }
+
+        public async Task<IEnumerable<AppUserImages>> GetBackgroundImages(string userId)
+        {
+            if (int.TryParse(userId, out int userIdInt))
+            {
+                return await _context.UsersImages.Where(i => i.AppUserId == userIdInt && !i.IsMain).ToListAsync();
+            }
+            return new List<AppUserImages>();
+        }
+        public async Task SetMainProfileImage(int imageId)
+        {
+            var currentMain = await _context.UsersImages.FirstOrDefaultAsync(i => i.IsMain);
+            if (currentMain != null)
+            {
+                currentMain.IsMain = false;
+            }
+
+            var newMain = await _context.UsersImages.FindAsync(imageId);
+            if (newMain != null)
+            {
+                newMain.IsMain = true;
+            }
+
+            await _context.SaveChangesAsync();
+        }
         public async Task<AppUserImages> GetImageById(int id)
         {
             return await _context.UsersImages.FindAsync(id);
