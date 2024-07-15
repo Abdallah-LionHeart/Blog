@@ -1,1 +1,19 @@
-<p>home works!</p>
+<div class="home-container">
+ <h2>Home</h2>
+ <div *ngFor="let article of articles" class="article">
+  <h3>{{ article.title }}</h3>
+  <p>{{ article.content }}</p>
+  <div *ngIf="article.images.length">
+   <h4>Images</h4>
+   <div *ngFor="let image of article.images">
+    <img [src]="image" [alt]="image" />
+   </div>
+  </div>
+  <div *ngIf="article.videos.length">
+   <h4>Videos</h4>
+   <div *ngFor="let video of article.videos">
+    <video controls [src]="video"></video>
+   </div>
+  </div>
+ </div>
+</div>

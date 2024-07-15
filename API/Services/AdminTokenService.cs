@@ -8,20 +8,20 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace API.Services
 {
-    public class TokenService : ITokenService
+    public class AdminTokenService : IAdminTokenService
     {
         private readonly SymmetricSecurityKey _key;
         private readonly IConfiguration _config;
-        private readonly UserManager<AppUser> _userManage;
+        private readonly UserManager<Admin> _userManager;
 
-        public TokenService(IConfiguration config, UserManager<AppUser> userManage)
+        public AdminTokenService(IConfiguration config, UserManager<Admin> userManager)
         {
-            _userManage = userManage;
+            _userManager = userManager;
             _config = config;
             _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["TokenKey"]));
         }
 
-        public async Task<string> CreateToken(AppUser user)
+        public async Task<string> CreateToken(Admin user)
         {
             var claims = new List<Claim>
             {
@@ -29,7 +29,7 @@ namespace API.Services
                 new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName)
             };
 
-            var roles = await _userManage.GetRolesAsync(user);
+            var roles = await _userManager.GetRolesAsync(user);
             claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
 
             var cred = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);

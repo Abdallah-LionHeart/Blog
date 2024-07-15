@@ -1,0 +1,21 @@
+<div class="photo-editor-container">
+ <h3>Profile Images</h3>
+ <input type="file" (change)="onProfileImageChange($event)" multiple />
+ <div class="images-container">
+  <div *ngFor="let image of profileImages" class="image-item">
+   <img [src]="image.url" [alt]="image.url" />
+   <button (click)="setMainProfileImage(image.id)" [disabled]="image.isMain">Set as Main</button>
+   <button (click)="deleteProfileImage(image.id)">Delete</button>
+  </div>
+ </div>
+
+ <h3>Background Images</h3>
+ <input type="file" (change)="onBackgroundImageChange($event)" multiple />
+ <div class="images-container">
+  <div *ngFor="let image of backgroundImages" class="image-item">
+   <img [src]="image.url" [alt]="image.url" />
+   <button (click)="setMainBackgroundImage(image.id)" [disabled]="image.isMain">Set as Main</button>
+   <button (click)="deleteBackgroundImage(image.id)">Delete</button>
+  </div>
+ </div>
+</div>

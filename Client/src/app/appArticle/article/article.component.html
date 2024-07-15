@@ -1,0 +1,12 @@
+<div class="articles-container">
+ <h2>Articles</h2>
+ <button routerLink="/articles/new">New Article</button>
+ <ul>
+  <li *ngFor="let article of articles">
+   <h3>{{ article.title }}</h3>
+   <p>{{ article.content }}</p>
+   <button [routerLink]="['/articles/edit', article.id]">Edit</button>
+   <button (click)="deleteArticle(article.id)">Delete</button>
+  </li>
+ </ul>
+</div>

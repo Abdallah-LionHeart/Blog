@@ -3,21 +3,21 @@ using API.Entities;
 using API.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Threading.Tasks;
 
 namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthController : ControllerBase
+    public class AccountController : ControllerBase
     {
-        private readonly UserManager<AppUser> _userManager;
-        private readonly SignInManager<AppUser> _signInManager;
+        private readonly UserManager<Admin> _userManager;
+        private readonly SignInManager<Admin> _signInManager;
         private readonly IEmailService _emailService;
+        private readonly IAdminTokenService _tokenService;
 
-        public AuthController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IEmailService emailService)
+        public AccountController(UserManager<Admin> userManager, SignInManager<Admin> signInManager, IEmailService emailService, IAdminTokenService tokenService)
         {
+            _tokenService = tokenService;
             _userManager = userManager;
             _signInManager = signInManager;
             _emailService = emailService;
@@ -27,7 +27,7 @@ namespace API.Controllers
         public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
         {
             var user = await _userManager.FindByEmailAsync(loginDto.Email);
-            if (user == null) return Unauthorized("Email does not exsist.");
+            if (user == null) return Unauthorized("Email does not exists.");
 
             var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
             if (!result.Succeeded) return Unauthorized("Wrong Password");
@@ -61,7 +61,8 @@ namespace API.Controllers
             var result = await _signInManager.PasswordSignInAsync(user.UserName, confirmDto.Password, false, false);
             if (result.Succeeded)
             {
-                return Ok("Login successful");
+                var token = await _tokenService.CreateToken(user);
+                return Ok(new { token });
             }
 
             return Unauthorized("Invalid login attempt.");

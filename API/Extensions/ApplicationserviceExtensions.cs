@@ -12,6 +12,7 @@ namespace API.Extensions
         {
             services.AddScoped<IArticleRepository, ArticleRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IAdminTokenService, AdminTokenService>();
             services.AddScoped<ICloudinaryService, CloudinaryService>();
             services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));
             services.AddScoped<ArticleService>();

@@ -13,9 +13,9 @@ namespace API.Controllers
     {
         private readonly UserService _userService;
         private readonly ArticleService _articleService;
-        private readonly UserManager<AppUser> _userManager;
+        private readonly UserManager<Admin> _userManager;
 
-        public AdminController(UserService userService, ArticleService articleService, UserManager<AppUser> userManager)
+        public AdminController(UserService userService, ArticleService articleService, UserManager<Admin> userManager)
         {
             _userService = userService;
             _articleService = articleService;
@@ -24,7 +24,7 @@ namespace API.Controllers
 
         // User Management
         [HttpGet("users/{id}")]
-        public async Task<ActionResult<AppUser>> GetUser(string id)
+        public async Task<ActionResult<AppUser>> GetUser(int id)
         {
             var user = await _userService.GetUserById(id);
             if (user == null)
@@ -35,7 +35,7 @@ namespace API.Controllers
         }
 
         [HttpPut("users/{id}")]
-        public async Task<IActionResult> UpdateUser(string id, AppUser user)
+        public async Task<IActionResult> UpdateUser(int id, AppUser user)
         {
             if (id != user.Id)
             {
@@ -46,32 +46,32 @@ namespace API.Controllers
         }
 
         [HttpPost("users/profile-images")]
-        public async Task<ActionResult<AppUserImages>> AddProfileImage([FromForm] AppUserImages image, [FromForm] IFormFile file)
+        public async Task<ActionResult<ProfileImage>> AddProfileImage([FromForm] ProfileImage profileImage, [FromForm] IFormFile file)
         {
             using var stream = file.OpenReadStream();
-            await _userService.AddUserImage(image.AppUserId, image, stream, file.FileName, file.ContentType);
-            return CreatedAtAction(nameof(GetUser), new { id = image.AppUserId }, image);
+            await _userService.AddUserProfileImage(profileImage.AppUserId, profileImage, stream, file.FileName, file.ContentType);
+            return CreatedAtAction(nameof(GetUser), new { id = profileImage.AppUserId }, profileImage);
         }
 
         [HttpDelete("users/profile-images/{id}")]
         public async Task<IActionResult> DeleteProfileImage(int id)
         {
-            await _userService.RemoveUserImage(id);
+            await _userService.RemoveUserProfileImage(id);
             return NoContent();
         }
 
         [HttpPost("users/background-images")]
-        public async Task<ActionResult<AppUserImages>> AddBackgroundImage([FromForm] AppUserImages image, [FromForm] IFormFile file)
+        public async Task<ActionResult<BackgroundImage>> AddBackgroundImage([FromForm] BackgroundImage backgroundImage, [FromForm] IFormFile file)
         {
             using var stream = file.OpenReadStream();
-            await _userService.AddUserImage(image.AppUserId, image, stream, file.FileName, file.ContentType);
-            return CreatedAtAction(nameof(GetUser), new { id = image.AppUserId }, image);
+            await _userService.AddUserBackgroundImage(backgroundImage.AppUserId, backgroundImage, stream, file.FileName, file.ContentType);
+            return CreatedAtAction(nameof(GetUser), new { id = backgroundImage.AppUserId }, backgroundImage);
         }
 
         [HttpDelete("users/background-images/{id}")]
         public async Task<IActionResult> DeleteBackgroundImage(int id)
         {
-            await _userService.RemoveUserImage(id);
+            await _userService.RemoveUserBackgroundImage(id);
             return NoContent();
         }
 

@@ -1,0 +1,22 @@
+.article-form-container {
+ max-width: 600px;
+ margin: 0 auto;
+}
+
+.article-form-container form {
+ display: flex;
+ flex-direction: column;
+}
+
+.article-form-container label {
+ margin-top: 10px;
+}
+
+.article-form-container input,
+.article-form-container textarea {
+ margin-bottom: 10px;
+}
+
+.article-form-container button {
+ margin-top: 20px;
+}

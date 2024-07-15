@@ -29,12 +29,30 @@ builder.Services.AddEndpointsApiExplorer();
 var app = builder.Build();
 
 
+// using (var scope = app.Services.CreateScope())
+// {
+//     var services = scope.ServiceProvider;
+//     var userManager = services.GetRequiredService<UserManager<Admin>>();
+//     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+//     await DbInitializer.SeedAdminUser(userManager, roleManager);
+// }
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
-    var userManager = services.GetRequiredService<UserManager<AppUser>>();
+    var context = services.GetRequiredService<BlogContext>();
+    var userManager = services.GetRequiredService<UserManager<Admin>>();
     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-    await DbInitializer.SeedAdminUser(userManager, roleManager);
+
+    try
+    {
+        context.Database.Migrate();
+        await DbInitializer.SeedData(context, userManager, roleManager);
+    }
+    catch (Exception ex)
+    {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "An error occurred during migration");
+    }
 }
 
 // Configure the HTTP request pipeline.

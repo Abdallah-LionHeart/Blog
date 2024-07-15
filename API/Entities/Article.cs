@@ -10,8 +10,7 @@ namespace API.Entities
         public bool IsEvent { get; set; }
         public string YouTubeLink { get; set; }
         public string FacebookLink { get; set; }
-        public List<Image> Images { get; set; }
-        public List<Video> Videos { get; set; }
-
+        public List<Image> Images { get; set; } = new List<Image>();
+        public List<Video> Videos { get; set; } = new List<Video>();
     }
 }

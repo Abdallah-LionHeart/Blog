@@ -1,36 +1,31 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { catchError, of, tap } from 'rxjs';
-import { environment } from '../../environments/environment';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService {
 
+
   baseUrl = environment.apiUrl;
-  private tokenKey = 'token';
 
-  constructor(private http: HttpClient, private router: Router, public jwtHelper: JwtHelperService) { }
+  constructor(private http: HttpClient) { }
 
-  login(username: string, password: string) {
-    return this.http.post<{ token: string }>(this.baseUrl, { username, password })
-      .pipe(
-        tap(response => {
-          localStorage.setItem(this.tokenKey, response.token);
-        }),
-        catchError(() => of(false))
-      );
+  login(email: string, password: string) {
+    return this.http.post(this.baseUrl + 'acount/login', { email, password });
   }
 
-  isLoggedIn(): boolean {
-    const token = localStorage.getItem(this.tokenKey);
-    return !this.jwtHelper.isTokenExpired(token);
+  confirmLogin(email: string, password: string, code: string) {
+    return this.http.post(this.baseUrl + 'account/confirm-login', { email, password, code });
   }
 
-  logout() {
-    localStorage.removeItem(this.tokenKey);
-    this.router.navigate(['/admin-portal-xyz']);
+  resetPasswordRequest(email: string) {
+    return this.http.post(this.baseUrl + 'account/reset-password-request', { email });
   }
+
+  resetPasswordConfirm(email: string, code: string, newPassword: string) {
+    return this.http.post(this.baseUrl + 'account/reset-password-confirm', { email, code, newPassword });
+  }
+
 }

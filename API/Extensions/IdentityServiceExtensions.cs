@@ -12,7 +12,7 @@ namespace API.Extensions
     {
         public static IServiceCollection AddIdentityServices(this IServiceCollection services, IConfiguration config)
         {
-            services.AddIdentity<AppUser, IdentityRole>()
+            services.AddIdentity<Admin, IdentityRole>()
                         .AddEntityFrameworkStores<BlogContext>()
                         .AddDefaultTokenProviders();
 
