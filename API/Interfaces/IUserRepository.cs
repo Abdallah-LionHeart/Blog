@@ -4,7 +4,7 @@ namespace API.Interfaces
 {
     public interface IUserRepository
     {
-
+        Task<AppUser> GetUser();
         Task<AppUser> GetById(int id);
         Task Update(AppUser user);
         Task<IEnumerable<ProfileImage>> GetProfileImages(int userId);

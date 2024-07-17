@@ -80,35 +80,77 @@ public static class DbInitializer
         // Seed Articles
         if (!await context.Articles.AnyAsync())
         {
-            var article = new Article
+            var articles = new List<Article>
             {
-                Title = "Sample Article",
-                Content = "This is a sample article.",
-                Headline = "Sample Headline",
-                IsEvent = false,
-                FacebookLink = "http://facebook.com/samplearticle",
-                YouTubeLink = "http://youtube.com/samplearticle"
+                new Article
+                {
+                    Title = "Sample Article 1",
+                    Content = "This is the first sample article.",
+                    Headline = "Sample Headline 1",
+                    IsEvent = false,
+                    FacebookLink = "http://facebook.com/samplearticle1",
+                    YouTubeLink = "http://youtube.com/samplearticle1"
+                },
+                new Article
+                {
+                    Title = "Sample Article 2",
+                    Content = "This is the second sample article.",
+                    Headline = "Sample Headline 2",
+                    IsEvent = false,
+                    FacebookLink = "http://facebook.com/samplearticle2",
+                    YouTubeLink = "http://youtube.com/samplearticle2"
+                },
+                new Article
+                {
+                    Title = "Sample Article 3",
+                    Content = "This is the third sample article.",
+                    Headline = "Sample Headline 3",
+                    IsEvent = false,
+                    FacebookLink = "http://facebook.com/samplearticle3",
+                    YouTubeLink = "http://youtube.com/samplearticle3"
+                },
+                new Article
+                {
+                    Title = "Sample Article 4",
+                    Content = "This is the fourth sample article.",
+                    Headline = "Sample Headline 4",
+                    IsEvent = false,
+                    FacebookLink = "http://facebook.com/samplearticle4",
+                    YouTubeLink = "http://youtube.com/samplearticle4"
+                },
+                new Article
+                {
+                    Title = "Sample Article 5",
+                    Content = "This is the fifth sample article.",
+                    Headline = "Sample Headline 5",
+                    IsEvent = false,
+                    FacebookLink = "http://facebook.com/samplearticle5",
+                    YouTubeLink = "http://youtube.com/samplearticle5"
+                }
             };
 
-            context.Articles.Add(article);
+            context.Articles.AddRange(articles);
             await context.SaveChangesAsync();
 
             // Seed Images and Videos for Article
-            var image = new Image
+            foreach (var article in articles)
             {
-                Url = "https://plus.unsplash.com/premium_photo-1688561384438-bfa9273e2c00?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                ArticleId = article.Id
-            };
+                var image = new Image
+                {
+                    Url = "https://plus.unsplash.com/premium_photo-1688561384438-bfa9273e2c00?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    ArticleId = article.Id
+                };
 
-            var video = new Video
-            {
-                Url = "https://videocdn.cdnpk.net/videos/052a09da-c166-402b-b10d-cffd8756e747/horizontal/previews/videvo_watermarked/large.mp4",
-                IsExternal = true,
-                ArticleId = article.Id
-            };
+                var video = new Video
+                {
+                    Url = "https://videocdn.cdnpk.net/videos/052a09da-c166-402b-b10d-cffd8756e747/horizontal/previews/videvo_watermarked/large.mp4",
+                    IsExternal = true,
+                    ArticleId = article.Id
+                };
 
-            context.Images.Add(image);
-            context.Videos.Add(video);
+                context.Images.Add(image);
+                context.Videos.Add(video);
+            }
             await context.SaveChangesAsync();
         }
     }

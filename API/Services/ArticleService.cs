@@ -43,10 +43,17 @@ namespace API.Services
             await _uow.CompleteAsync();
         }
 
-        public async Task AddImage(int articleId, Image image, Stream fileStream, string fileName, string fileType)
+
+        public async Task AddImage(IFormFile file, int articleId)
         {
-            image.ArticleId = articleId;
-            image.Url = await _cloudinaryService.UploadFileAsync(fileStream, fileName, fileType);
+            var uploadResult = await _cloudinaryService.UploadImageAsync(file);
+            var image = new Image
+            {
+                Url = uploadResult.SecureUrl.AbsoluteUri,
+                PublicId = uploadResult.PublicId,
+                ArticleId = articleId
+            };
+
             await _uow.Articles.AddImage(image);
             await _uow.CompleteAsync();
         }
@@ -66,13 +73,16 @@ namespace API.Services
             return _uow.Articles.GetImageById(id);
         }
 
-        public async Task AddVideo(int articleId, Video video, Stream fileStream, string fileName, string fileType)
+        public async Task AddVideo(IFormFile file, int articleId)
         {
-            video.ArticleId = articleId;
-            if (!video.IsExternal)
+            var uploadResult = await _cloudinaryService.UploadVideoAsync(file);
+            var video = new Video
             {
-                video.Url = await _cloudinaryService.UploadFileAsync(fileStream, fileName, fileType);
-            }
+                Url = uploadResult.SecureUrl.AbsoluteUri,
+                PublicId = uploadResult.PublicId,
+                ArticleId = articleId
+            };
+
             await _uow.Articles.AddVideo(video);
             await _uow.CompleteAsync();
         }

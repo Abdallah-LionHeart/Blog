@@ -1,19 +1,20 @@
-import { AppUserImage } from "./app-user-image";
+import { BackgroundImage } from "./BackgroundImage";
+import { ProfileImage } from "./ProfileImage";
 
-export class User {
- id!: string;
- firstName!: string;
- lastName!: string;
- businessEmail!: string;
- education!: string;
- experience!: string;
- position!: string;
- overview!: string;
- publicPhoneNumber!: string;
- age!: number;
- facebookLink!: string;
- twitterLink!: string;
- youTubeLink!: string;
- profileImages!: AppUserImage[];
- backgroundImages!: AppUserImage[];
+export interface User {
+ id: number;
+ firstName: string;
+ lastName: string;
+ email: string;
+ education: string;
+ experience: string;
+ position: string;
+ overview: string;
+ phoneNumber: string;
+ age: number;
+ facebookLink: string;
+ twitterLink: string;
+ youTubeLink: string;
+ profileImages: ProfileImage[];
+ backgroundImages: BackgroundImage[];
 }

@@ -58,11 +58,10 @@ namespace API.Controllers
         }
 
         [HttpPost("{id}/images")]
-        public async Task<ActionResult> AddImage(int id, [FromForm] Image image, [FromForm] IFormFile file)
+        public async Task<ActionResult> AddImage(int id, [FromForm] IFormFile file)
         {
-            using var stream = file.OpenReadStream();
-            await _service.AddImage(id, image, stream, file.FileName, file.ContentType);
-            return Ok(image);
+            await _service.AddImage(file, id);
+            return Ok();
         }
 
         [HttpDelete("images/{id}")]
@@ -71,20 +70,11 @@ namespace API.Controllers
             await _service.RemoveImage(id);
             return NoContent();
         }
-
         [HttpPost("{id}/videos")]
-        public async Task<ActionResult> AddVideo(int id, [FromForm] Video video, [FromForm] IFormFile file)
+        public async Task<ActionResult> AddVideo(int id, [FromForm] IFormFile file)
         {
-            if (file != null)
-            {
-                using var stream = file.OpenReadStream();
-                await _service.AddVideo(id, video, stream, file.FileName, file.ContentType);
-            }
-            else
-            {
-                await _service.AddVideo(id, video, null, null, null);
-            }
-            return Ok(video);
+            await _service.AddVideo(file, id);
+            return Ok();
         }
 
 
@@ -116,5 +106,6 @@ namespace API.Controllers
             }
             return Ok(image);
         }
+
     }
 }

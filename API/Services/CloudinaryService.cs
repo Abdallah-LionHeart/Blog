@@ -3,6 +3,8 @@ using API.Interfaces;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using Microsoft.Extensions.Options;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace API.Services
 {
@@ -21,17 +23,38 @@ namespace API.Services
             _cloudinary = new Cloudinary(account);
         }
 
-        public async Task<string> UploadFileAsync(Stream fileStream, string fileName, string fileType)
-        {
-            var uploadParams = new RawUploadParams()
-            {
-                File = new FileDescription(fileName, fileStream),
-                PublicId = fileName,
-                Folder = "blog1"
-            };
 
+        public async Task<ImageUploadResult> UploadImageAsync(IFormFile file)
+        {
+            var uploadResult = new ImageUploadResult();
+            if (file.Length > 0)
+            {
+                using var stream = file.OpenReadStream();
+                var uploadParams = new ImageUploadParams
+                {
+                    File = new FileDescription(file.FileName, stream),
+                    Transformation = new Transformation()
+                        .Height(500)
+                        .Width(500)
+                        .Crop("fill")
+                        .Gravity("face"),
+                    Folder = "blog"
+
+                };
+                uploadResult = await _cloudinary.UploadAsync(uploadParams);
+            };
+            return uploadResult;
+        }
+
+        public async Task<VideoUploadResult> UploadVideoAsync(IFormFile file)
+        {
+            var uploadParams = new VideoUploadParams
+            {
+                File = new FileDescription(file.FileName, file.OpenReadStream()),
+                Folder = "blog"
+            };
             var uploadResult = await _cloudinary.UploadAsync(uploadParams);
-            return uploadResult.SecureUrl.AbsoluteUri;
+            return uploadResult;
         }
 
         public async Task DeleteFileAsync(string publicId)

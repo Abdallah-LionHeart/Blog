@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace API.Entities
 {
     public class AppUser
@@ -15,7 +17,9 @@ namespace API.Entities
         public string FacebookLink { get; set; }
         public string TwitterLink { get; set; }
         public string YouTubeLink { get; set; }
-        public List<ProfileImage> ProfileImages { get; set; } = new List<ProfileImage>();
-        public List<BackgroundImage> BackgroundImages { get; set; } = new List<BackgroundImage>();
+        [JsonIgnore]
+        public ICollection<ProfileImage> ProfileImages { get; set; }
+        [JsonIgnore]
+        public ICollection<BackgroundImage> BackgroundImages { get; set; }
     }
 }

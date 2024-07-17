@@ -1,0 +1,28 @@
+<div class="container mt-5">
+ <div class="card">
+  <div class="card-header">
+   <h4>Edit your Profile</h4>
+  </div>
+  <div class="card-body">
+   <div class="row">
+    <div class="col-md-4 text-center">
+     <img [src]="profileImageUrl" class="img-fluid profile-image" alt="Profile Picture">
+     <input type="file" (change)="onProfileImageChange($event)" class="form-control-file mt-2">
+    </div>
+    <div class="col-md-8">
+     <tabset>
+      <tab heading="Personal">
+       <app-user-management></app-user-management>
+      </tab>
+      <tab heading="Background Images">
+       <app-background-images></app-background-images>
+      </tab>
+      <tab heading="Profile Images">
+       <app-profile-images></app-profile-images>
+      </tab>
+     </tabset>
+    </div>
+   </div>
+  </div>
+ </div>
+</div>

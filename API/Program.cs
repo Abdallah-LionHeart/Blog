@@ -1,6 +1,7 @@
 using API.Data;
 using API.Entities;
 using API.Extensions;
+using API.Middleware;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,7 +9,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddNewtonsoftJson(options =>
+    {
+        options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+    });
+
 
 builder.Services.AddDbContext<BlogContext>(opt =>
 {
@@ -28,6 +33,8 @@ builder.Services.AddEndpointsApiExplorer();
 
 var app = builder.Build();
 
+app.UseMiddleware<ExceptionMiddleware>();
+
 
 // using (var scope = app.Services.CreateScope())
 // {
@@ -36,6 +43,28 @@ var app = builder.Build();
 //     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 //     await DbInitializer.SeedAdminUser(userManager, roleManager);
 // }
+
+
+// Configure the HTTP request pipeline.
+// if (app.Environment.IsDevelopment())
+// {
+//     app.UseDeveloperExceptionPage();
+// }
+app.UseRouting();
+app.UseCors(builder =>
+    builder
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        .AllowCredentials()
+        .WithOrigins("https://localhost:4200")
+);
+
+app.UseHttpsRedirection();
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.MapControllers();
+
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
@@ -54,25 +83,5 @@ using (var scope = app.Services.CreateScope())
         logger.LogError(ex, "An error occurred during migration");
     }
 }
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseDeveloperExceptionPage();
-}
-
-app.UseCors(builder =>
-    builder
-        .AllowAnyHeader()
-        .AllowAnyMethod()
-        .AllowCredentials()
-        .WithOrigins("https://localhost:4200")
-);
-
-app.UseHttpsRedirection();
-app.UseAuthentication();
-app.UseAuthorization();
-
-app.MapControllers();
 
 app.Run();

@@ -13,6 +13,10 @@ namespace API.Services
             _cloudinaryService = cloudinaryService;
             _uow = unitOfWork;
         }
+        public Task<AppUser> GetUser()
+        {
+            return _uow.Users.GetUser();
+        }
         public Task<AppUser> GetUserById(int id)
         {
             return _uow.Users.GetById(id);
@@ -33,19 +37,31 @@ namespace API.Services
             return _uow.Users.GetBackgroundImages(userId);
         }
 
-        public async Task AddUserProfileImage(int userId, ProfileImage image, Stream fileStream, string fileName, string fileType)
+        public async Task AddProfileImage(IFormFile file, int userId)
         {
-            image.AppUserId = userId;
-            image.Url = await _cloudinaryService.UploadFileAsync(fileStream, fileName, fileType);
-            await _uow.Users.AddProfileImage(image);
+            var uploadResult = await _cloudinaryService.UploadImageAsync(file);
+            var profileImage = new ProfileImage
+            {
+                Url = uploadResult.SecureUrl.AbsoluteUri,
+                PublicId = uploadResult.PublicId,
+                AppUserId = userId
+            };
+
+            await _uow.Users.AddProfileImage(profileImage);
             await _uow.CompleteAsync();
         }
 
-        public async Task AddUserBackgroundImage(int userId, BackgroundImage image, Stream fileStream, string fileName, string fileType)
+        public async Task AddBackgroundImage(IFormFile file, int userId)
         {
-            image.AppUserId = userId;
-            image.Url = await _cloudinaryService.UploadFileAsync(fileStream, fileName, fileType);
-            await _uow.Users.AddBackgroundImage(image);
+            var uploadResult = await _cloudinaryService.UploadImageAsync(file);
+            var backgroundImage = new BackgroundImage
+            {
+                Url = uploadResult.SecureUrl.AbsoluteUri,
+                PublicId = uploadResult.PublicId,
+                AppUserId = userId
+            };
+
+            await _uow.Users.AddBackgroundImage(backgroundImage);
             await _uow.CompleteAsync();
         }
 

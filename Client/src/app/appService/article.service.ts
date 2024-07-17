@@ -8,40 +8,40 @@ import { Article } from '../appModels/article';
 })
 export class ArticleService {
 
-  baseUrl = environment.apiUrl;
+  baseUrl = environment.apiUrl + 'articles';
 
   constructor(private http: HttpClient) { }
 
   getAllArticles() {
-    return this.http.get<Article[]>(`${this.baseUrl}/articles`);
+    return this.http.get<Article[]>(this.baseUrl);
   }
 
   getArticleById(id: number) {
-    return this.http.get<Article>(`${this.baseUrl}/articles/${id}`);
+    return this.http.get<Article>(this.baseUrl + id);
   }
 
   addArticle(article: Article) {
-    return this.http.post<Article>(`${this.baseUrl}/articles`, article);
+    return this.http.post<Article>(this.baseUrl, article);
   }
 
   updateArticle(id: number, article: Article) {
-    return this.http.put<Article>(`${this.baseUrl}/articles/${id}`, article);
+    return this.http.put<Article>(this.baseUrl + id, article);
   }
 
   deleteArticle(id: number) {
-    return this.http.delete(`${this.baseUrl}/articles/${id}`);
+    return this.http.delete(this.baseUrl + id);
   }
 
   addImage(articleId: number, image: File) {
     const formData = new FormData();
     formData.append('file', image);
-    return this.http.post(`${this.baseUrl}/articles/${articleId}/images`, formData);
+    return this.http.post(this.baseUrl + articleId + '/images', formData);
   }
 
   addVideo(articleId: number, video: File) {
     const formData = new FormData();
     formData.append('file', video);
-    return this.http.post(`${this.baseUrl}/articles/${articleId}/videos`, formData);
+    return this.http.post(this.baseUrl + articleId + '/videos', formData);
   }
 
   addYoutubeVideo(articleId: number, videoUrl: string) {

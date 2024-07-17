@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AccountService } from '../../appService/account.service';
 
 @Component({
@@ -8,34 +9,73 @@ import { AccountService } from '../../appService/account.service';
   styleUrls: ['./reset-password.component.scss']
 })
 export class ResetPasswordComponent {
-  resetRequestForm: FormGroup;
-  resetConfirmForm: FormGroup;
-  isCodeSent = false;
+  forgotPasswordForm: FormGroup;
+  emailExists: boolean | null = null;
+  emailSent: boolean = false;
 
-  constructor(private fb: FormBuilder, private accountService: AccountService) {
-    this.resetRequestForm = this.fb.group({
+
+  constructor(private fb: FormBuilder, private accountService: AccountService, private router: Router) {
+    this.forgotPasswordForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]]
     });
+  }
 
-    this.resetConfirmForm = this.fb.group({
+  // resetPasswordRequest() {
+  //   this.accountService.resetPasswordRequest(this.forgotPasswordForm.value).subscribe({
+  //     next: () => {
+  //       setTimeout(() => {
+  //         this.router.navigate(['/login']);
+  //       }, 3000);
+  //     },
+  //     error: error => {
+  //       console.log(error);
+  //     }
+  //   });
+  // }
+
+  forgotPassword() {
+    if (this.forgotPasswordForm.invalid) {
+      return;
+    }
+
+    this.accountService.resetPasswordRequest(this.forgotPasswordForm.controls['email'].value).subscribe({
+      next: () => {
+        this.emailSent = true;
+        setTimeout(() => {
+          this.router.navigate(['/login'], { queryParams: { email: this.forgotPasswordForm.controls['email'].value } });
+        }, 3000);
+      },
+      error: error => {
+        console.log(error);
+      }
+
+    });
+  }
+
+  initializeForm() {
+    this.forgotPasswordForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      code: ['', Validators.required],
-      newPassword: ['', Validators.required]
+    });
+
+    this.forgotPasswordForm.controls['email'].valueChanges.subscribe(value => {
+      this.checkEmailExists(value);
     });
   }
 
-  sendResetCode() {
-    const { email } = this.resetRequestForm.value;
-    this.accountService.resetPasswordRequest(email).subscribe(() => {
-      this.isCodeSent = true;
-    });
-  }
 
-  resetPassword() {
-    const { email, code, newPassword } = this.resetConfirmForm.value;
-    this.accountService.resetPasswordConfirm(email, code, newPassword).subscribe(() => {
-      // Handle success
-    });
+  checkEmailExists(email: string) {
+    if (email && this.forgotPasswordForm.controls['email'].valid) {
+      this.accountService.checkEmailExists(email).subscribe({
+        next: (exists: boolean) => {
+          this.emailExists = exists;
+        },
+        error: () => {
+          this.emailExists = false;
+        }
+      });
+    } else {
+      this.emailExists = null;
+    }
   }
 
 }

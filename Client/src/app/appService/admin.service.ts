@@ -2,53 +2,84 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { environment } from 'src/environments/environment';
-import { AppUserImage } from '../appModels/app-user-image';
+import { BackgroundImage } from '../appModels/BackgroundImage';
+import { ProfileImage } from '../appModels/ProfileImage';
 import { User } from '../appModels/user';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminService {
-  baseUrl = environment.apiUrl;
+  baseUrl = environment.apiUrl + 'admin/';
+  users: User[] = [];
 
   constructor(private http: HttpClient) { }
 
 
-  getUserById(id: string) {
-    return this.http.get<User>(this.baseUrl + 'admin/users' + id);
+  getUsers() {
+    return this.http.get<User>(this.baseUrl);
   }
 
-  updateUser(id: string, user: User) {
-    return this.http.put<User>(this.baseUrl + 'admin/users' + id, user);
+  getUser(id: number) {
+    return this.http.get<User>(this.baseUrl + id);
   }
 
-  addProfileImage(userId: string, image: File) {
+
+  updateUser(id: number, user: User) {
+    return this.http.put<User>(this.baseUrl + id, user);
+  }
+
+  // updateUser(id: number, user: User) {
+  //   return this.http.put(this.baseUrl + id, user).pipe(
+  //     map(() => {
+  //       const index = this.users.indexOf(user);
+  //       this.users[index] = { ...this.users[index], ...user }
+  //     })
+  //   )
+  // }
+
+  // updateUser(id: number, user: User) {
+  //   return this.http.put<User>(this.baseUrl + id, user);
+  // }
+
+  addProfileImage(userId: number, profileImage: ProfileImage, file: File) {
     const formData = new FormData();
-    formData.append('file', image);
-    formData.append('isMain', 'true');
-    return this.http.post<AppUserImage>(this.baseUrl + 'admin/users/profile-images', formData);
+    formData.append('file', file);
+    formData.append('appUserId', userId.toString());
+    formData.append('url', profileImage.url);
+    formData.append('isMain', profileImage.isMain.toString());
+    formData.append('publicId', profileImage.publicId);
+    return this.http.post<ProfileImage>(this.baseUrl + userId + '/profile-images', formData);
   }
 
-  addBackgroundImage(userId: string, image: File) {
+  addBackgroundImage(userId: number, backgroundImage: BackgroundImage, file: File) {
     const formData = new FormData();
-    formData.append('file', image);
-    formData.append('isMain', 'true');
-    return this.http.post<AppUserImage>(this.baseUrl + 'admin/users/background-images', formData);
+    formData.append('file', file);
+    formData.append('appUserId', userId.toString());
+    formData.append('url', backgroundImage.url);
+    formData.append('publicId', backgroundImage.publicId);
+    return this.http.post<BackgroundImage>(this.baseUrl + userId + '/background-images', formData);
   }
 
-  setMainProfileImage(imageId: number) {
-    return this.http.post(this.baseUrl + 'admin/users/profile-images/' + imageId + '/set-main', {});
+  deleteProfileImage(id: number) {
+    return this.http.delete(this.baseUrl + 'profile-images/' + id);
   }
 
-  setMainBackgroundImage(imageId: number) {
-    return this.http.post(this.baseUrl + 'admin/users/background-images/' + imageId + '/set-main', {});
+
+  deleteBackgroundImage(id: number) {
+    return this.http.delete(this.baseUrl + 'background-images/' + id);
   }
 
-  deleteProfileImage(imageId: number) {
-    return this.http.delete(this.baseUrl + 'admin/users/profile-images/' + imageId);
+  getProfileImages(userId: number) {
+    return this.http.get(this.baseUrl + userId + '/profile-images');
   }
 
-  deleteBackgroundImage(imageId: number) {
-    return this.http.delete(this.baseUrl + 'admin/users/background-images/' + imageId);
+  getBackgroundImages(userId: number) {
+    return this.http.get(this.baseUrl + userId + '/background-images');
   }
+
+  setMainProfileImage(id: number) {
+    return this.http.put(this.baseUrl + '/profile-images/' + id + '/set-main', {});
+  }
+
 }

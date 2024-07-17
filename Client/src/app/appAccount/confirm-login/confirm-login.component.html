@@ -1,0 +1,31 @@
+<div class="d-flex justify-content-center align-items-center min-vh-100">
+ <div class="col-12 col-md-6 col-lg-4">
+  <div *ngIf="confirmationSuccess" class="alert alert-info">
+   <p class="text">Email confirmed successfully. Redirecting to login...</p>
+  </div>
+  <h2 class="text-center">Verify Email</h2>
+  <div class="container">
+   <div class="justify-content-center">
+    <form [formGroup]="confirmCodeForm" (ngSubmit)="confirmEmail()">
+     <div class="row gy-3 justify-content-center">
+      <div class="col-12">
+       <label for="code">Confirmation Code</label>
+       <input type="text" id="code" formControlName="code" class="form-control" required />
+       <div *ngIf="confirmCodeForm.controls['code'].invalid && confirmCodeForm.controls['code'].touched" class="text-danger">
+        Confirmation code is required.
+       </div>
+      </div>
+     </div>
+     <div class="row justify-content-center">
+      <div class="col-12 text-center">
+       <div class="button-group">
+        <button class="btn btn-dark btn-md" type="button" (click)="resendCode()" [disabled]="countdown > 0">Resend Code <span *ngIf="countdown > 0">({{ countdown }})</span></button>
+        <button [disabled]="confirmCodeForm.invalid" class="btn btn-dark btn-md" type="submit">login</button>
+       </div>
+      </div>
+     </div>
+    </form>
+   </div>
+  </div>
+ </div>
+</div>

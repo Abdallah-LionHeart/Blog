@@ -1,0 +1,39 @@
+.user-management-container {
+ background-color: #f9f9f9;
+ border-radius: 8px;
+ box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+ padding: 20px;
+ margin-top: 20px;
+}
+
+.user-management-container h2 {
+ color: #333;
+}
+
+.user-management-container label {
+ font-size: 16px;
+ color: #555;
+}
+
+.user-management-container .form-control {
+ border-radius: 4px;
+ font-size: 16px;
+}
+
+.user-management-container textarea.form-control {
+ resize: vertical;
+}
+
+.user-management-container .btn-primary {
+ background-color: #007bff;
+ border: none;
+ font-size: 16px;
+}
+
+.user-management-container .btn-primary:disabled {
+ background-color: #cccccc;
+}
+
+.user-management-container .btn-primary:hover:not(:disabled) {
+ background-color: #0056b3;
+}

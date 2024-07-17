@@ -9,28 +9,36 @@ import { AccountService } from 'src/app/appService/account.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-  loginForm: FormGroup;
-  isCodeSent = false;
+  loginForm!: FormGroup;
+  changeType: boolean = true;
+  visible: boolean = true;
+  confirmationCodeSent = false;
 
   constructor(private fb: FormBuilder, private accountService: AccountService, private router: Router) {
+  }
+
+  ngOnInit(): void {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
-      code: ['']
+      password: ['', Validators.required]
     });
   }
 
-  login() {
-    const { email, password } = this.loginForm.value;
-    this.accountService.login(email, password).subscribe(() => {
-      this.isCodeSent = true;
-    });
+  logIn() {
+    this.accountService.login(this.loginForm.value).subscribe({
+      next: () => {
+        this.confirmationCodeSent = true;
+        setTimeout(() => {
+          this.router.navigate(['/confirm-login'], { queryParams: { email: this.loginForm.controls['email'].value } });
+        }, 3000);
+      }
+    })
+  }
+  viewPass() {
+    this.visible = !this.visible;
+    this.changeType = !this.changeType;
   }
 
-  confirmLogin() {
-    const { email, password, code } = this.loginForm.value;
-    this.accountService.confirmLogin(email, password, code).subscribe(() => {
-      this.router.navigate(['/home']);
-    });
-  }
+
+
 }

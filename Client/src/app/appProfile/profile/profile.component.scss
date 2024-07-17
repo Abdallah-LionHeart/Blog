@@ -1,0 +1,28 @@
+.container {
+ max-width: 900px;
+}
+
+.card {
+ margin-top: 20px;
+}
+
+.profile-image {
+ width: 100%;
+ height: auto;
+ object-fit: cover;
+ max-height: 300px;
+}
+
+.form-control-file {
+ margin-top: 10px;
+}
+
+.tab-content {
+ margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+ .profile-image {
+  max-height: 200px;
+ }
+}

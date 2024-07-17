@@ -14,7 +14,15 @@ namespace API.Repositories
             _context = context;
         }
 
+        public async Task<AppUser> GetUser()
+        {
+            return await _context.AppUsers.FirstOrDefaultAsync();
 
+            // return await _context.AppUsers.Include(u => u.ProfileImages)
+            //     .Include(u => u.BackgroundImages)
+            //     .FirstOrDefaultAsync();
+
+        }
         public async Task<AppUser> GetById(int id)
         {
             return await _context.AppUsers.Include(u => u.ProfileImages).Include(u => u.BackgroundImages).FirstOrDefaultAsync(u => u.Id == id);
@@ -85,19 +93,18 @@ namespace API.Repositories
 
         public async Task SetMainProfileImage(int imageId)
         {
-            var currentMain = await _context.ProfileImages.FirstOrDefaultAsync(i => i.IsMain);
-            if (currentMain != null)
+            var image = await GetProfileImageById(imageId);
+            if (image != null)
             {
-                currentMain.IsMain = false;
-            }
+                var currentMain = await _context.ProfileImages.FirstOrDefaultAsync(i => i.IsMain);
+                if (currentMain != null)
+                {
+                    currentMain.IsMain = false;
+                }
 
-            var newMain = await _context.ProfileImages.FindAsync(imageId);
-            if (newMain != null)
-            {
-                newMain.IsMain = true;
+                image.IsMain = true;
+                await _context.SaveChangesAsync();
             }
-
-            await _context.SaveChangesAsync();
         }
     }
 }

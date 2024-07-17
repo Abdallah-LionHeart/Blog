@@ -1,21 +1,38 @@
-<div class="photo-editor-container">
- <h3>Profile Images</h3>
- <input type="file" (change)="onProfileImageChange($event)" multiple />
- <div class="images-container">
-  <div *ngFor="let image of profileImages" class="image-item">
-   <img [src]="image.url" [alt]="image.url" />
-   <button (click)="setMainProfileImage(image.id)" [disabled]="image.isMain">Set as Main</button>
-   <button (click)="deleteProfileImage(image.id)">Delete</button>
+<div class="container mt-5">
+ <div class="row">
+  <div class="col-md-6">
+   <div class="photo-editor-section">
+    <h3 class="text-center">Profile Images</h3>
+    <div class="text-center mb-3">
+     <!-- <input type="file" class="form-control-file" (change)="onProfileImageChange($event)" multiple /> -->
+    </div>
+    <div class="images-container d-flex flex-wrap justify-content-center">
+     <div *ngFor="let image of profileImages" class="image-item m-2">
+      <img [src]="image.url" [alt]="image.url" class="img-thumbnail" />
+      <div class="text-center mt-2">
+       <button class="btn btn-primary btn-sm mr-1" (click)="setMainProfileImage(image.id)" [disabled]="image.isMain">Set as Main</button>
+       <button class="btn btn-danger btn-sm" (click)="deleteProfileImage(image.id)">Delete</button>
+      </div>
+     </div>
+    </div>
+   </div>
   </div>
- </div>
-
- <h3>Background Images</h3>
- <input type="file" (change)="onBackgroundImageChange($event)" multiple />
- <div class="images-container">
-  <div *ngFor="let image of backgroundImages" class="image-item">
-   <img [src]="image.url" [alt]="image.url" />
-   <button (click)="setMainBackgroundImage(image.id)" [disabled]="image.isMain">Set as Main</button>
-   <button (click)="deleteBackgroundImage(image.id)">Delete</button>
+  <div class="col-md-6">
+   <div class="photo-editor-section">
+    <h3 class="text-center">Background Images</h3>
+    <div class="text-center mb-3">
+     <!-- <input type="file" class="form-control-file" (change)="onBackgroundImageChange($event)" multiple /> -->
+    </div>
+    <div class="images-container d-flex flex-wrap justify-content-center">
+     <div *ngFor="let image of backgroundImages" class="image-item m-2">
+      <img [src]="image.url" [alt]="image.url" class="img-thumbnail" />
+      <div class="text-center mt-2">
+       <!-- <button class="btn btn-primary btn-sm mr-1" (click)="setMainBackgroundImage(image.id)" [disabled]="image.isMain">Set as Main</button> -->
+       <button class="btn btn-danger btn-sm" (click)="deleteBackgroundImage(image.id)">Delete</button>
+      </div>
+     </div>
+    </div>
+   </div>
   </div>
  </div>
 </div>
