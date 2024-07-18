@@ -8,7 +8,7 @@ import { Article } from '../appModels/article';
 })
 export class ArticleService {
 
-  baseUrl = environment.apiUrl + 'articles';
+  baseUrl = environment.apiUrl + 'articles/';
 
   constructor(private http: HttpClient) { }
 

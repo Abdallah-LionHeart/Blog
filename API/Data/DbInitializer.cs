@@ -61,14 +61,14 @@ public static class DbInitializer
             // Seed ProfileImages and BackgroundImages
             var profileImage = new ProfileImage
             {
-                Url = "https://images.unsplash.com/photo-1534308143481-c55f00be8bd7?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fHByb2ZpbGV8ZW58MHx8MHx8fDA%3D",
+                Url = "https://res.cloudinary.com/dlfn7tqlb/image/upload/v1721236911/blog/v81g2n1gd2vc3ssyaqve.avif",
                 IsMain = true,
                 AppUserId = appUser.Id
             };
 
             var backgroundImage = new BackgroundImage
             {
-                Url = "https://images.unsplash.com/photo-1587032286390-7edffb326523?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDR8Ym84alFLVGFFMFl8fGVufDB8fHx8fA%3D%3D",
+                Url = "https://res.cloudinary.com/dlfn7tqlb/image/upload/v1721257081/blog/w2m0jcvu7lqrow5rd2nk.avif",
                 AppUserId = appUser.Id
             };
 

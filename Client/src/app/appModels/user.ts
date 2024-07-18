@@ -15,6 +15,8 @@ export interface User {
  facebookLink: string;
  twitterLink: string;
  youTubeLink: string;
+ profileImageUrl: string;
+ backgroundImageUrl: string;
  profileImages: ProfileImage[];
  backgroundImages: BackgroundImage[];
 }

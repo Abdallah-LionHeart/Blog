@@ -23,7 +23,7 @@ export class PhotoEditorComponent {
     if (file) {
       this.adminService.addProfileImage(this.userId, image, file).subscribe({
         next: image => {
-          this.profileImages.push(image);
+          // this.profileImages.push(image);
 
         }
       })

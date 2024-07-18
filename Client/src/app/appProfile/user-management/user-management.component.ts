@@ -58,11 +58,11 @@ export class UserManagementComponent implements OnInit {
 
     this.adminService.updateUser(updatedUser.id, updatedUser).subscribe({
       next: () => {
-        this.alertMessage = 'User updated successfully'
+        this.alertMessage = 'Updated successfully'
         this.alertType = 'success'
       },
       error: () => {
-        this.alertMessage = 'Failed to update user'
+        this.alertMessage = 'Failed to update'
         this.alertType = 'danger'
       }
     })

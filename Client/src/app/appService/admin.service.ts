@@ -29,23 +29,9 @@ export class AdminService {
     return this.http.put<User>(this.baseUrl + id, user);
   }
 
-  // updateUser(id: number, user: User) {
-  //   return this.http.put(this.baseUrl + id, user).pipe(
-  //     map(() => {
-  //       const index = this.users.indexOf(user);
-  //       this.users[index] = { ...this.users[index], ...user }
-  //     })
-  //   )
-  // }
-
-  // updateUser(id: number, user: User) {
-  //   return this.http.put<User>(this.baseUrl + id, user);
-  // }
-
   addProfileImage(userId: number, profileImage: ProfileImage, file: File) {
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('appUserId', userId.toString());
     formData.append('url', profileImage.url);
     formData.append('isMain', profileImage.isMain.toString());
     formData.append('publicId', profileImage.publicId);
@@ -71,15 +57,23 @@ export class AdminService {
   }
 
   getProfileImages(userId: number) {
-    return this.http.get(this.baseUrl + userId + '/profile-images');
+    return this.http.get<ProfileImage>(this.baseUrl + userId + 'profile-images');
   }
 
   getBackgroundImages(userId: number) {
-    return this.http.get(this.baseUrl + userId + '/background-images');
+    return this.http.get<BackgroundImage>(this.baseUrl + userId + 'background-images');
+  }
+
+  getAllProfileImages() {
+    return this.http.get<ProfileImage[]>(this.baseUrl + 'profile-images');
+  }
+
+  getAllBackgroundImages() {
+    return this.http.get<BackgroundImage[]>(this.baseUrl + 'background-images');
   }
 
   setMainProfileImage(id: number) {
-    return this.http.put(this.baseUrl + '/profile-images/' + id + '/set-main', {});
+    return this.http.put(this.baseUrl + 'profile-images/' + id + '/set-main', {});
   }
 
 }

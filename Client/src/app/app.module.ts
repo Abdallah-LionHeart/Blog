@@ -7,7 +7,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ConfirmLoginComponent } from './appAccount/confirm-login/confirm-login.component';
 import { LoginComponent } from './appAccount/login/login.component';
-import { PhotoEditorComponent } from './appAccount/photo-editor/photo-editor.component';
 import { ResetPasswordConfirmComponent } from './appAccount/reset-password-confirm/reset-password-confirm.component';
 import { ResetPasswordComponent } from './appAccount/reset-password/reset-password.component';
 import { DashborardComponent } from './appAdmin/dashborard/dashborard.component';
@@ -20,12 +19,12 @@ import { BackgroundImagesComponent } from './appProfile/background-images/backgr
 import { ProfileImagesComponent } from './appProfile/profile-images/profile-images.component';
 import { ProfileComponent } from './appProfile/profile/profile.component';
 import { UserManagementComponent } from './appProfile/user-management/user-management.component';
+import { CreateArticleComponent } from './appArticle/create-article/create-article.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    PhotoEditorComponent,
     ProfileComponent,
     ResetPasswordComponent,
     DashborardComponent,
@@ -37,7 +36,8 @@ import { UserManagementComponent } from './appProfile/user-management/user-manag
     UserManagementComponent,
     ProfileImagesComponent,
     BackgroundImagesComponent,
-    ConfirmLoginComponent
+    ConfirmLoginComponent,
+    CreateArticleComponent
   ],
   imports: [
     BrowserModule,

@@ -1,10 +1,10 @@
 <div class="container mt-5">
  <div class="card">
-  <div class="card-header">
-   <h4>User Management</h4>
+  <div class="card-header text-center">
+   <h4>Your Public Data</h4>
   </div>
   <div class="card-body">
-   <div *ngIf="alertMessage" class="alert alert-{{ alertType }}" role="alert">
+   <div *ngIf="alertMessage" class="alert text-center alert-{{ alertType }}" role="alert">
     {{ alertMessage }}
    </div>
    <form [formGroup]="userForm" (ngSubmit)="updateUser()">
@@ -12,47 +12,47 @@
      <label for="firstName">First Name</label>
      <input type="text" id="firstName" class="form-control" formControlName="firstName">
     </div>
-    <div class="form-group">
+    <div class="form-group input-feild">
      <label for="lastName">Last Name</label>
      <input type="text" id="lastName" class="form-control" formControlName="lastName">
     </div>
-    <div class="form-group">
+    <div class="form-group input-feild">
      <label for="email">Business Email</label>
      <input type="email" id="email" class="form-control" formControlName="email">
     </div>
-    <div class="form-group">
+    <div class="form-group input-feild">
      <label for="phoneNumber">Public Phone Number</label>
      <input type="text" id="phoneNumber" class="form-control" formControlName="phoneNumber">
     </div>
-    <div class="form-group">
+    <div class="form-group input-feild">
      <label for="education">Education</label>
      <input type="text" id="education" class="form-control" formControlName="education">
     </div>
-    <div class="form-group">
+    <div class="form-group input-feild">
      <label for="experience">Experience</label>
      <textarea id="experience" class="form-control" formControlName="experience"></textarea>
     </div>
-    <div class="form-group">
+    <div class="form-group input-feild">
      <label for="position">Position</label>
      <input type="text" id="position" class="form-control" formControlName="position">
     </div>
-    <div class="form-group">
+    <div class="form-group input-feild">
      <label for="overview">Overview</label>
      <textarea id="overview" class="form-control" formControlName="overview"></textarea>
     </div>
-    <div class="form-group">
+    <div class="form-group input-feild">
      <label for="age">Age</label>
      <input type="number" id="age" class="form-control" formControlName="age">
     </div>
-    <div class="form-group">
+    <div class="form-group input-feild">
      <label for="facebookLink">Facebook Link</label>
      <input type="text" id="facebookLink" class="form-control" formControlName="facebookLink">
     </div>
-    <div class="form-group">
+    <div class="form-group input-feild">
      <label for="twitterLink">Twitter Link</label>
      <input type="text" id="twitterLink" class="form-control" formControlName="twitterLink">
     </div>
-    <div class="form-group">
+    <div class="form-group input-feild">
      <label for="youTubeLink">YouTube Link</label>
      <input type="text" id="youTubeLink" class="form-control" formControlName="youTubeLink">
     </div>

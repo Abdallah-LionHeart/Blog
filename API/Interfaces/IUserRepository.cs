@@ -17,5 +17,8 @@ namespace API.Interfaces
         Task<BackgroundImage> GetBackgroundImageById(int id);
         Task SetMainProfileImage(int imageId);
 
+        Task<IEnumerable<ProfileImage>> GetAllProfileImages();
+        Task<IEnumerable<BackgroundImage>> GetAllBackgroundImages();
+
     }
 }

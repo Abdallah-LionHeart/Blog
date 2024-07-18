@@ -58,6 +58,15 @@ namespace API.Repositories
         {
             return await _context.BackgroundImages.FindAsync(id);
         }
+        public async Task<IEnumerable<ProfileImage>> GetAllProfileImages()
+        {
+            return await _context.ProfileImages.ToListAsync();
+        }
+
+        public async Task<IEnumerable<BackgroundImage>> GetAllBackgroundImages()
+        {
+            return await _context.BackgroundImages.ToListAsync();
+        }
 
         public async Task AddBackgroundImage(BackgroundImage backgroundImage)
         {

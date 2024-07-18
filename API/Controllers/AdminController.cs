@@ -60,6 +60,20 @@ namespace API.Controllers
             return Ok(images);
         }
 
+        [HttpGet("profile-images")]
+        public async Task<ActionResult<IEnumerable<ProfileImage>>> GetAllProfileImages()
+        {
+            var images = await _userService.GetAllProfileImages();
+            return Ok(images);
+        }
+
+        [HttpGet("background-images")]
+        public async Task<ActionResult<IEnumerable<BackgroundImage>>> GetAllBackgroundImages()
+        {
+            var images = await _userService.GetAllBackgroundImages();
+            return Ok(images);
+        }
+
         [HttpPost("{userId}/profile-images")]
         public async Task<ActionResult<ProfileImage>> AddProfileImage(IFormFile file, int userId)
         {

@@ -1,24 +1,53 @@
-<div class="container mt-5">
+<!-- <div class="container mt-5">
  <div class="card">
   <div class="card-header">
    <h4>Edit your Profile</h4>
   </div>
   <div class="card-body">
    <div class="row">
-    <div class="col-md-4 text-center">
+    <div class="col-md-4 text-center blogimag">
      <img [src]="profileImageUrl" class="img-fluid profile-image" alt="Profile Picture">
-     <input type="file" (change)="onProfileImageChange($event)" class="form-control-file mt-2">
     </div>
     <div class="col-md-8">
      <tabset>
       <tab heading="Personal">
        <app-user-management></app-user-management>
       </tab>
-      <tab heading="Background Images">
+      <tab heading="Profile">
+       <app-profile-images></app-profile-images>
+      </tab>
+      <tab heading="Background">
        <app-background-images></app-background-images>
       </tab>
-      <tab heading="Profile Images">
+     </tabset>
+    </div>
+   </div>
+  </div>
+ </div>
+</div> -->
+
+
+<div class="container mt-5">
+ <div class="card">
+  <div class="card-header text-center">
+   <h4>Edit your Profile</h4>
+  </div>
+  <div class="card-body">
+   <div class="row">
+    <div class="col-lg-4 col-md-6 text-center mb-4">
+     <img [src]="profileImageUrl" class="img-fluid rounded-circle profile-image" alt="Profile Picture">
+     <!-- <input type="file" (change)="onProfileImageChange($event)" class="form-control-file mt-2"> -->
+    </div>
+    <div class="col-lg-8 col-md-6">
+     <tabset>
+      <tab heading="Personal">
+       <app-user-management></app-user-management>
+      </tab>
+      <tab heading="Profile">
        <app-profile-images></app-profile-images>
+      </tab>
+      <tab heading="Background">
+       <app-background-images></app-background-images>
       </tab>
      </tabset>
     </div>

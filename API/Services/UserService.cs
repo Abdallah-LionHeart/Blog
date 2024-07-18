@@ -102,5 +102,15 @@ namespace API.Services
             await _uow.Users.SetMainProfileImage(imageId);
             await _uow.CompleteAsync();
         }
+
+        public Task<IEnumerable<ProfileImage>> GetAllProfileImages()
+        {
+            return _uow.Users.GetAllProfileImages();
+        }
+
+        public Task<IEnumerable<BackgroundImage>> GetAllBackgroundImages()
+        {
+            return _uow.Users.GetAllBackgroundImages();
+        }
     }
 }

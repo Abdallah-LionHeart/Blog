@@ -1,15 +1,31 @@
 <div class="container mt-3">
  <div class="row">
-  <div class="col-md-12">
-   <h5>Background Images</h5>
-   <input type="file" (change)="onBackgroundImageChange($event)" class="form-control-file mt-2">
-   <div class="row mt-3">
-    <div class="col-md-3" *ngFor="let image of backgroundImages">
-     <div class="card">
-      <img [src]="image.url" class="card-img-top">
-      <div class="card-body text-center">
-       <button class="btn btn-danger btn-sm" (click)="deleteBackgroundImage(image.id)">Delete</button>
-      </div>
+  <div class="col-12">
+   <div *ngIf="alertMessage" class="alert alert-{{alertType}} alert-dismissible fade show" role="alert">
+    {{ alertMessage }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+   </div>
+   <h5 class="mb-3">Background Images</h5>
+   <ngx-dropzone (change)="onSelect($event)">
+    <ngx-dropzone-label>Drag and drop your image files here or click to upload</ngx-dropzone-label>
+   </ngx-dropzone>
+   <div class="d-flex justify-content-between mt-3">
+    <button class="btn btn-outline-primary" (click)="uploadFiles()">
+     <i class="fa fa-upload me-2"></i>Upload Selected Images
+    </button>
+   </div>
+   <div *ngIf="uploadProgress > 0" class="progress mt-3">
+    <div class="progress-bar" role="progressbar" [style.width.%]="uploadProgress" aria-valuenow="uploadProgress" aria-valuemin="0" aria-valuemax="100">
+     {{ uploadProgress }}%
+    </div>
+   </div>
+   <div class="row mt-3" *ngIf="backgroundImages && backgroundImages.length > 0">
+    <div class="col-sm-6 col-md-4 mb-3" *ngFor="let image of backgroundImages">
+     <div class="card position-relative background-image-card">
+      <img *ngIf="image && image.url" [src]="image.url" class="card-img-top">
+      <button class="btn btn-outline-danger btn-sm position-absolute delete-button" (click)="deleteBackgroundImage(image.id)">
+       <i class="fa fa-trash fa-2x"></i>
+      </button>
      </div>
     </div>
    </div>

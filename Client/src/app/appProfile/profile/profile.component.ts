@@ -9,7 +9,8 @@ import { AdminService } from 'src/app/appService/admin.service';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent {
-  profileImageUrl: string = 'https://via.placeholder.com/150'; // Default image
+  // profileImageUrl: string = 'https://via.placeholder.com/150'; 
+  profileImageUrl!: string; // Default image
   user!: User;
 
   constructor(private adminService: AdminService) { }

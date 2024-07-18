@@ -1,68 +1,105 @@
-.nv-file-over {
- border: dotted 3px red;
+// .container {
+//  max-width: 900px;
+// }
+
+// .card {
+//  margin-top: 20px;
+// }
+
+// .card-img-top {
+//  width: 100%;
+//  height: auto;
+// }
+
+// .ngx-dropzone {
+//  border: 2px dashed #007bff;
+//  border-radius: 5px;
+//  padding: 20px;
+//  text-align: center;
+//  color: #007bff;
+//  cursor: pointer;
+// }
+
+// .ngx-dropzone:hover {
+//  background-color: #f0f8ff;
+// }
+
+// .ngx-dropzone-label {
+//  font-size: 1.2em;
+// }
+
+// .progress {
+//  height: 20px;
+// }
+
+// .progress-bar {
+//  background-color: #007bff;
+// }
+
+
+
+
+.container {
+ max-width: 900px;
+ margin: 0 auto;
 }
 
-.position-relative {
- position: relative;
+.card {
+ margin-top: 20px;
+ box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+ border-radius: 10px;
 }
 
-.image {
- display: block;
+.card-img-top {
  width: 100%;
  height: auto;
+ border-top-left-radius: 10px;
+ border-top-right-radius: 10px;
 }
 
-.overlay {
- position: absolute;
- top: 50%;
- left: 50%;
- transform: translate(-50%, -50%);
- display: none;
+.ngx-dropzone {
+ border: 2px dashed #007bff;
+ border-radius: 5px;
+ padding: 20px;
+ text-align: center;
+ color: #007bff;
+ cursor: pointer;
 }
 
-.col-2:hover .overlay {
- display: block;
+.ngx-dropzone:hover {
+ background-color: #f0f8ff;
 }
 
-.profile-images-container {
+.ngx-dropzone-label {
+ font-size: 1.2em;
+}
+
+.progress {
+ height: 20px;
+}
+
+.progress-bar {
+ background-color: #007bff;
+}
+
+h5 {
+ margin-bottom: 1rem;
+}
+
+.btn-group {
  display: flex;
- flex-direction: column;
- align-items: center;
+ justify-content: center;
+ gap: 10px;
 }
 
-.image-previews {
- display: flex;
- flex-wrap: wrap;
- margin-bottom: 20px;
+@media (min-width: 576px) {
+ .card-img-top {
+  height: auto;
+ }
 }
 
-.image-preview {
- margin-right: 10px;
- margin-bottom: 10px;
-}
-
-.image-preview img {
- width: 100px;
- height: 100px;
- object-fit: cover;
- border-radius: 4px;
-}
-
-.uploaded-images {
- display: flex;
- flex-direction: column;
-}
-
-.image-item {
- display: flex;
- align-items: center;
- margin-top: 10px;
-}
-
-.image-thumbnail {
- width: 100px;
- height: 100px;
- object-fit: cover;
- margin-right: 10px;
- border-radius: 4px;
+@media (min-width: 768px) {
+ .btn-group {
+  justify-content: space-around;
+ }
 }
