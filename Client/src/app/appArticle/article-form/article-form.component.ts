@@ -29,18 +29,18 @@ export class ArticleFormComponent {
     }
   }
 
-  saveArticle() {
-    const article: Article = this.articleForm.value;
-    if (this.articleId) {
-      this.articleService.updateArticle(this.articleId, article).subscribe(() => {
-        this.router.navigate(['/articles']);
-      });
-    } else {
-      this.articleService.addArticle(article).subscribe(() => {
-        this.router.navigate(['/articles']);
-      });
-    }
-  }
+  // saveArticle() {
+  //   const article: Article = this.articleForm.value;
+  //   if (this.articleId) {
+  //     this.articleService.updateArticle(this.articleId, article).subscribe(() => {
+  //       this.router.navigate(['/articles']);
+  //     });
+  //   } else {
+  //     this.articleService.addArticle(article).subscribe(() => {
+  //       this.router.navigate(['/articles']);
+  //     });
+  //   }
+  // }
 
   onFileChange(event: any, type: 'image' | 'video') {
     const file = event.target.files[0];

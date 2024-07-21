@@ -18,17 +18,17 @@ export class PhotoEditorComponent {
 
   ngOnInit(): void { }
 
-  onProfileImageChange(event: any, image: ProfileImage) {
-    const file = event.target.files[0];
-    if (file) {
-      this.adminService.addProfileImage(this.userId, image, file).subscribe({
-        next: image => {
-          // this.profileImages.push(image);
+  // onProfileImageChange(event: any, image: ProfileImage) {
+  //   const file = event.target.files[0];
+  //   if (file) {
+  //     this.adminService.addProfileImage(this.userId, image, file).subscribe({
+  //       next: image => {
+  //         // this.profileImages.push(image);
 
-        }
-      })
-    }
-  }
+  //       }
+  //     })
+  //   }
+  // }
 
 
   // onBackgroundImageChange(event: any) {

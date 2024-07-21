@@ -1,0 +1,46 @@
+.container {
+ max-width: 800px;
+ margin: 0 auto;
+ padding: 20px;
+}
+
+.header {
+ display: flex;
+ flex-direction: column;
+ gap: 20px;
+ margin-bottom: 20px;
+}
+
+.search-bar {
+ display: flex;
+ gap: 10px;
+}
+
+.filter-bar {
+ display: flex;
+ gap: 10px;
+}
+
+.filter-bar .btn {
+ flex: 1;
+}
+
+.filter-bar .btn.active {
+ background-color: #007bff;
+ color: white;
+}
+
+.card {
+ margin-bottom: 20px;
+}
+
+.img-fluid {
+ max-width: 100%;
+ height: auto;
+}
+
+.pagination-controls {
+ display: flex;
+ justify-content: center;
+ margin-top: 20px;
+}

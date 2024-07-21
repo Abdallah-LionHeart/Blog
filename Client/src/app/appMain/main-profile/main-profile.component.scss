@@ -1,0 +1,102 @@
+.profile-container {
+ display: flex;
+ flex-wrap: wrap;
+ justify-content: space-between;
+ align-items: center;
+ max-width: 100%;
+ margin: 0 auto;
+ padding: 20px;
+
+ @media (max-width: 768px) {
+  flex-direction: column;
+ }
+}
+
+.profile-image-container {
+ flex: 1;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ padding: 10px;
+
+ @media (max-width: 768px) {
+  order: -1;
+  margin-bottom: 20px;
+ }
+}
+
+.profile-image {
+ width: 400px;
+ height: 400px;
+ border-radius: 50%;
+ object-fit: cover;
+
+ @media (max-width: 768px) {
+  width: 150px;
+  height: 150px;
+ }
+}
+
+.carousel-container {
+ flex: 1;
+ border: 2px solid #ccc;
+ border-radius: 15px;
+ padding: 0;
+ overflow: hidden;
+ max-width: 100%;
+ margin: 0 auto;
+
+ @media (max-width: 768px) {
+  order: 1;
+  width: 100%;
+ }
+}
+
+.background-carousel {
+ width: 100%;
+ max-width: 100%;
+ margin: 0 auto;
+ position: relative;
+
+ img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+
+  @media (min-width: 769px) and (max-width: 1199px) {
+   height: 400px;
+   /* Medium screens */
+  }
+
+  @media (min-width: 1200px) {
+   height: 400px;
+   /* Large screens */
+  }
+
+  @media (max-width: 768px) {
+   height: 250px;
+   /* Smaller height for small screens */
+  }
+ }
+}
+
+// .owl-carousel .owl-nav button.owl-prev,
+// .owl-carousel .owl-nav button.owl-next {
+//  position: absolute;
+//  top: 50%;
+//  transform: translateY(-50%);
+//  background: rgba(0, 0, 0, 0.5);
+//  border: none;
+//  color: white;
+//  font-size: 2rem;
+//  z-index: 1;
+// }
+
+// .owl-carousel .owl-nav button.owl-prev {
+//  left: 10px;
+// }
+
+// .owl-carousel .owl-nav button.owl-next {
+//  right: 10px;
+// }

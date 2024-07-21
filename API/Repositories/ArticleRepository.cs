@@ -1,5 +1,6 @@
 using API.Data;
 using API.Entities;
+using API.Helpers;
 using API.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -34,6 +35,11 @@ namespace API.Repositories
         public async Task<IEnumerable<Article>> GetAll()
         {
             return await _context.Articles.Include(a => a.Images).Include(a => a.Videos).ToListAsync();
+        }
+
+        public async Task<IEnumerable<Article>> GetAllEvents()
+        {
+            return await _context.Articles.Include(a => a.Images).Include(a => a.Videos).Where(a => a.IsEvent).ToListAsync();
         }
 
         public async Task<Article> GetById(int id)
@@ -88,6 +94,56 @@ namespace API.Repositories
         public async Task<Video> GetVideoById(int id)
         {
             return await _context.Videos.FindAsync(id);
+        }
+
+        public async Task<PaginatedResult<Article>> GetPaginated(ArticleParams articleParams)
+        {
+            var query = _context.Articles.Include(a => a.Images).Include(a => a.Videos).AsQueryable();
+
+            // Apply filtering
+            switch (articleParams.OrderBy.ToLower())
+            {
+                case "lastday":
+                    query = query.Where(a => a.PublishDate >= DateTime.UtcNow.AddDays(-1));
+                    break;
+                case "lastweek":
+                    query = query.Where(a => a.PublishDate >= DateTime.UtcNow.AddDays(-7));
+                    break;
+                case "lastmonth":
+                    query = query.Where(a => a.PublishDate >= DateTime.UtcNow.AddMonths(-1));
+                    break;
+                case "recent":
+                default:
+                    query = query.OrderByDescending(a => a.PublishDate).Where(a => a.PublishDate >= DateTime.UtcNow.AddDays(0));
+                    break;
+            }
+
+            var totalCount = await query.CountAsync();
+
+            var articles = await query
+                .Skip((articleParams.PageNumber - 1) * articleParams.PageSize)
+                .Take(articleParams.PageSize)
+                .ToListAsync();
+
+            return new PaginatedResult<Article>(articles, totalCount, articleParams.PageNumber, articleParams.PageSize);
+        }
+
+        public async Task<PaginatedResult<Article>> SearchArticles(ArticleParams articleParams, string searchTerm, string filter)
+        {
+            var query = _context.Articles.Include(a => a.Images).Include(a => a.Videos).AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                query = query.Where(a => a.Title.Contains(searchTerm) || a.Content.Contains(searchTerm) || a.Headline.Contains(searchTerm));
+            }
+
+            var totalCount = await query.CountAsync();
+            var articles = await query
+                .Skip((articleParams.PageNumber - 1) * articleParams.PageSize)
+                .Take(articleParams.PageSize)
+                .ToListAsync();
+
+            return new PaginatedResult<Article>(articles, totalCount, articleParams.PageNumber, articleParams.PageSize);
         }
     }
 }

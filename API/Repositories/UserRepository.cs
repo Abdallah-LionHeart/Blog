@@ -16,11 +16,9 @@ namespace API.Repositories
 
         public async Task<AppUser> GetUser()
         {
-            return await _context.AppUsers.FirstOrDefaultAsync();
-
-            // return await _context.AppUsers.Include(u => u.ProfileImages)
-            //     .Include(u => u.BackgroundImages)
-            //     .FirstOrDefaultAsync();
+            return await _context.AppUsers.Include(u => u.ProfileImages)
+                .Include(u => u.BackgroundImages)
+                .FirstOrDefaultAsync();
 
         }
         public async Task<AppUser> GetById(int id)
@@ -30,8 +28,9 @@ namespace API.Repositories
 
         public async Task Update(AppUser user)
         {
-            _context.AppUsers.Update(user);
+            _context.Entry(user).State = EntityState.Modified;
             await _context.SaveChangesAsync();
+
         }
 
         public async Task<IEnumerable<ProfileImage>> GetProfileImages(int userId)
@@ -71,13 +70,13 @@ namespace API.Repositories
         public async Task AddBackgroundImage(BackgroundImage backgroundImage)
         {
             await _context.BackgroundImages.AddAsync(backgroundImage);
-            await _context.SaveChangesAsync();
+
         }
 
         public async Task AddProfileImage(ProfileImage profileImage)
         {
             await _context.ProfileImages.AddAsync(profileImage);
-            await _context.SaveChangesAsync();
+
         }
 
         public async Task RemoveProfileImage(int id)
@@ -86,7 +85,7 @@ namespace API.Repositories
             if (profileImage != null)
             {
                 _context.ProfileImages.Remove(profileImage);
-                await _context.SaveChangesAsync();
+
             }
         }
 
@@ -96,24 +95,53 @@ namespace API.Repositories
             if (backgroundImage != null)
             {
                 _context.BackgroundImages.Remove(backgroundImage);
-                await _context.SaveChangesAsync();
+
             }
         }
+
+
+        public void UpdateProfileImage(ProfileImage profileImage)
+        {
+            _context.ProfileImages.Update(profileImage);
+        }
+
 
         public async Task SetMainProfileImage(int imageId)
         {
-            var image = await GetProfileImageById(imageId);
+            var image = await _context.ProfileImages.FindAsync(imageId);
             if (image != null)
             {
-                var currentMain = await _context.ProfileImages.FirstOrDefaultAsync(i => i.IsMain);
+                var currentMain = await _context.ProfileImages
+                    .Where(i => i.AppUserId == image.AppUserId && i.IsMain)
+                    .FirstOrDefaultAsync();
                 if (currentMain != null)
                 {
                     currentMain.IsMain = false;
+                    _context.ProfileImages.Update(currentMain);
                 }
 
                 image.IsMain = true;
+                _context.ProfileImages.Update(image);
                 await _context.SaveChangesAsync();
             }
         }
+
+        // public async Task SetMainProfileImage(int imageId)
+        // {
+        //     var image = await GetProfileImageById(imageId);
+        //     if (image != null)
+        //     {
+        //         var currentMain = await _context.ProfileImages.FirstOrDefaultAsync(i => i.IsMain);
+        //         if (currentMain != null)
+        //         {
+        //             currentMain.IsMain = false;
+        //         }
+
+        //         image.IsMain = true;
+        //         await _context.SaveChangesAsync();
+        //     }
+        // }
+
+
     }
 }

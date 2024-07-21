@@ -1,5 +1,8 @@
+using API.DTOs;
 using API.Entities;
+using API.Helpers;
 using API.Services;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -9,20 +12,28 @@ namespace API.Controllers
     public class ArticlesController : ControllerBase
     {
         private readonly ArticleService _service;
+        private readonly IMapper _mapper;
 
-        public ArticlesController(ArticleService service)
+        public ArticlesController(ArticleService service, IMapper mapper)
         {
+            _mapper = mapper;
             _service = service;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Article>>> GetArticles()
+        public async Task<ActionResult<IEnumerable<ArticleDto>>> GetArticles()
         {
             return Ok(await _service.GetAllArticles());
         }
 
+        [HttpGet("events")]
+        public async Task<ActionResult<IEnumerable<ArticleDto>>> GetEvents()
+        {
+            return Ok(await _service.GetAllEvents());
+        }
+
         [HttpGet("{id}")]
-        public async Task<ActionResult<Article>> GetArticle(int id)
+        public async Task<ActionResult<ArticleDto>> GetArticle(int id)
         {
             var article = await _service.GetArticleById(id);
             if (article == null)
@@ -32,23 +43,24 @@ namespace API.Controllers
             return Ok(article);
         }
 
-        [HttpPost]
-        public async Task<ActionResult<Article>> CreateArticle(Article article)
+        [HttpPost("add-article")]
+        public async Task<ActionResult<ArticleDto>> CreateArticle([FromForm] ArticleCreateDto articleDto, [FromForm] List<IFormFile> images, [FromForm] List<IFormFile> videos)
         {
-            await _service.AddArticle(article);
-            return CreatedAtAction(nameof(GetArticle), new { id = article.Id }, article);
+            var createdArticle = await _service.AddArticle(articleDto, images, videos);
+            return CreatedAtAction(nameof(GetArticle), new { id = createdArticle.Id }, createdArticle);
         }
-
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateArticle(int id, Article article)
+        public async Task<IActionResult> UpdateArticle(int id, [FromForm] ArticleUpdateDto articleDto, [FromForm] List<IFormFile> images, [FromForm] List<IFormFile> videos)
         {
-            if (id != article.Id)
+            if (id != articleDto.Id)
             {
                 return BadRequest();
             }
-            await _service.UpdateArticle(article);
+
+            await _service.UpdateArticle(articleDto, images, videos);
             return NoContent();
         }
+
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteArticle(int id)
@@ -105,6 +117,21 @@ namespace API.Controllers
                 return NotFound();
             }
             return Ok(image);
+        }
+
+        [HttpGet("paginated")]
+        public async Task<ActionResult<PaginatedResult<ArticleDto>>> GetPaginatedArticles([FromQuery] ArticleParams articleParams)
+        {
+            var result = await _service.GetPaginatedArticles(articleParams);
+            return Ok(result);
+        }
+
+
+        [HttpGet("search")]
+        public async Task<ActionResult<PaginatedResult<ArticleDto>>> SearchArticles([FromQuery] ArticleParams articleParams, [FromQuery] string searchTerm, [FromQuery] string filter)
+        {
+            var result = await _service.SearchArticles(articleParams, searchTerm, filter);
+            return Ok(result);
         }
 
     }

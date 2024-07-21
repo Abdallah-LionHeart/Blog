@@ -1,17 +1,18 @@
-import { Image } from "./image";
-import { Video } from "./video";
+import { ImageDto } from "./imageDto";
+import { VideoDto } from "./videoDto";
 
-export class Article {
- id!: number;
- title!: string;
- headline!: string;
- content!: string;
- isEvent!: Boolean;
- publishDate!: Date;
- images!: Image[];
- videos!: Video[];
- youTubeLink!: string;
- facebookLink!: string;
- createdAt!: Date;
- updatedAt!: Date;
+
+export interface Article {
+ id: number;
+ title: string;
+ headline: string;
+ content: string;
+ isEvent: Boolean;
+ publishDate: Date;
+ images: ImageDto[];
+ videos: VideoDto[];
+ youTubeLink: string;
+ facebookLink: string;
+ createdAt: Date;
+ updatedAt: Date;
 }

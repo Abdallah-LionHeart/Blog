@@ -1,0 +1,16 @@
+<ng-container>
+ <div class="profile-container">
+  <div class="profile-image-container" *ngIf="profileImage">
+   <img [src]="profileImage.url" alt="Profile Image" class="profile-image">
+  </div>
+  <div class="carousel-container">
+   <owl-carousel-o [options]="customOptions" class="background-carousel">
+    <ng-container *ngFor="let image of backgroundImages">
+     <ng-template carouselSlide [id]="image.id.toString()">
+      <img [src]="image.url" [alt]="'Background image ' + image.id" class="background-image">
+     </ng-template>
+    </ng-container>
+   </owl-carousel-o>
+  </div>
+ </div>
+</ng-container>

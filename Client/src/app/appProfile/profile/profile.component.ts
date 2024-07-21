@@ -20,12 +20,16 @@ export class ProfileComponent {
   }
 
   loadUser() {
-    this.adminService.getUser(1).subscribe(user => {
-      this.user = user;
-      this.loadProfileImage();
-    }, error => {
-    });
+    this.adminService.getUser(1).subscribe({
+      next: user => {
+        this.user = user;
+        this.loadProfileImage();
+      }, error: error => {
+        console.error('Error loading user', error);
+      }
+    })
   }
+
 
   loadProfileImage() {
     if (this.user && this.user.profileImages && this.user.profileImages.length > 0) {
@@ -33,13 +37,33 @@ export class ProfileComponent {
     }
   }
 
+  onProfileImagesUpdated() {
+    this.loadUser();
+  }
+
+
   onProfileImageChange(event: any) {
     const file = event.target.files[0];
     if (file) {
-      const profileImage: ProfileImage = { id: 0, url: '', isMain: false, publicId: '' };
-      this.adminService.addProfileImage(this.user.id, profileImage, file).subscribe(() => {
-        this.loadUser();
+      this.adminService.addProfileImage(this.user.id, file).subscribe({
+        next: (newImage: ProfileImage) => {
+          this.user.profileImages.push(newImage);
+          this.loadProfileImage();
+        }, error: error => {
+          console.error('Error adding profile image', error)
+        }
       });
     }
+  }
+
+  onSetMainProfileImage(id: number) {
+    this.adminService.setMainProfileImage(id).subscribe({
+      next: () => {
+        this.user.profileImages.forEach(img => img.isMain = img.id === id);
+        this.loadProfileImage();
+      }, error: error => {
+        console.error('Error setting main profile image', error)
+      }
+    })
   }
 }

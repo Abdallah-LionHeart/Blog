@@ -1,0 +1,37 @@
+<div class="container">
+ <div class="header">
+  <h2>Articles</h2>
+  <div class="search-bar">
+   <input type="text" class="form-control" [(ngModel)]="searchTerm" placeholder="Search articles...">
+   <button class="btn btn-primary" (click)="searchArticles()">Search</button>
+   <button class="btn btn-secondary" (click)="clearSearch()">Clear</button>
+  </div>
+  <div class="filter-bar">
+   <button class="btn btn-outline-primary" [class.active]="filter === 'recent'" (click)="onFilterChange('recent')">Recent</button>
+   <button class="btn btn-outline-primary" [class.active]="filter === 'lastday'" (click)="onFilterChange('lastday')">Last Day</button>
+   <button class="btn btn-outline-primary" [class.active]="filter === 'lastweek'" (click)="onFilterChange('lastweek')">Last Week</button>
+   <button class="btn btn-outline-primary" [class.active]="filter === 'lastmonth'" (click)="onFilterChange('lastmonth')">Last Month</button>
+  </div>
+ </div>
+
+ <div *ngIf="articles.length > 0">
+  <div *ngFor="let article of articles" class="card mb-3">
+   <div class="card-body">
+    <h5 class="card-title">{{ article.title }}</h5>
+    <p class="card-text">{{ article.content }}</p>
+    <p class="card-text"><small class="text-muted">Published on: {{ article.publishDate | date:'longDate' }}</small></p>
+    <div *ngFor="let image of article.images">
+     <img [src]="image.url" class="img-fluid" alt="Article Image">
+    </div>
+    <div *ngFor="let video of article.videos">
+     <video *ngIf="!video.isExternal" [src]="video.url" controls class="img-fluid"></video>
+     <div *ngIf="video.isExternal" [innerHTML]="getVideoEmbed(video.url)"></div>
+    </div>
+   </div>
+  </div>
+  <pagination-controls *ngIf="totalItems > pageSize" (pageChange)="onPageChange($event)"></pagination-controls>
+ </div>
+ <div *ngIf="articles.length === 0">
+  <p>No articles found.</p>
+ </div>
+</div>

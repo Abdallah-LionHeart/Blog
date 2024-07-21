@@ -18,8 +18,8 @@ namespace API.Entities
         public string TwitterLink { get; set; }
         public string YouTubeLink { get; set; }
         [JsonIgnore]
-        public ICollection<ProfileImage> ProfileImages { get; set; }
+        public List<ProfileImage> ProfileImages { get; set; }
         [JsonIgnore]
-        public ICollection<BackgroundImage> BackgroundImages { get; set; }
+        public List<BackgroundImage> BackgroundImages { get; set; }
     }
 }

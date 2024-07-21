@@ -1,0 +1,63 @@
+.w-100 {
+ width: 100% !important;
+}
+
+.container {
+ display: flex;
+ position: relative;
+ justify-content: center;
+ margin-top: 5rem;
+}
+
+.cards {
+ width: calc(100% - 80px);
+ overflow: hidden;
+}
+
+.overflow {
+ position: relative;
+ transition: left 0.5s ease-in-out;
+}
+
+.card {
+ height: auto;
+ background-color: #e0e1e2;
+ border-radius: 5px;
+ display: inline-block;
+ margin-right: 10px;
+ position: relative;
+ max-width: 900px;
+}
+
+.card .card-body {
+ padding: 1rem;
+}
+
+.card img,
+.card video {
+ margin-top: 0.5rem;
+}
+
+.left,
+.right {
+ height: 30px;
+ width: 30px;
+ background-color: #0072bc;
+ position: absolute;
+ top: 50%;
+ transform: translateY(-50%);
+ cursor: pointer;
+}
+
+.left.disabled,
+.right.disabled {
+ background-color: #ccc;
+}
+
+.left {
+ left: 0;
+}
+
+.right {
+ right: 0;
+}

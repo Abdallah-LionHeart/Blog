@@ -1,5 +1,7 @@
+using API.DTOs;
 using API.Entities;
 using API.Interfaces;
+using AutoMapper;
 
 namespace API.Services
 {
@@ -7,37 +9,44 @@ namespace API.Services
     {
         private readonly IUnitOfWork _uow;
         private readonly ICloudinaryService _cloudinaryService;
+        private readonly IMapper _mapper;
 
-        public UserService(IUnitOfWork unitOfWork, ICloudinaryService cloudinaryService)
+        public UserService(IUnitOfWork unitOfWork, ICloudinaryService cloudinaryService, IMapper mapper)
         {
+            _mapper = mapper;
             _cloudinaryService = cloudinaryService;
             _uow = unitOfWork;
         }
-        public Task<AppUser> GetUser()
+        public async Task<AppUserDto> GetUser()
         {
-            return _uow.Users.GetUser();
+            var user = await _uow.Users.GetUser();
+            return _mapper.Map<AppUserDto>(user);
         }
-        public Task<AppUser> GetUserById(int id)
+        public async Task<AppUserDto> GetUserById(int id)
         {
-            return _uow.Users.GetById(id);
+            var user = await _uow.Users.GetById(id);
+            return _mapper.Map<AppUserDto>(user);
         }
 
-        public async Task UpdateUser(AppUser user)
+        public async Task UpdateUser(AppUserDto userDto)
         {
+            var user = _mapper.Map<AppUser>(userDto);
             await _uow.Users.Update(user);
             await _uow.CompleteAsync();
         }
-        public Task<IEnumerable<ProfileImage>> GetUserProfileImages(int userId)
+        public async Task<IEnumerable<ProfileImageDto>> GetUserProfileImages(int userId)
         {
-            return _uow.Users.GetProfileImages(userId);
+            var images = await _uow.Users.GetProfileImages(userId);
+            return _mapper.Map<IEnumerable<ProfileImageDto>>(images);
         }
 
-        public Task<IEnumerable<BackgroundImage>> GetUserBackgroundImages(int userId)
+        public async Task<IEnumerable<BackgroundImageDto>> GetUserBackgroundImages(int userId)
         {
-            return _uow.Users.GetBackgroundImages(userId);
+            var images = await _uow.Users.GetProfileImages(userId);
+            return _mapper.Map<IEnumerable<BackgroundImageDto>>(images);
         }
 
-        public async Task AddProfileImage(IFormFile file, int userId)
+        public async Task<ProfileImageDto> AddProfileImage(IFormFile file, int userId)
         {
             var uploadResult = await _cloudinaryService.UploadImageAsync(file);
             var profileImage = new ProfileImage
@@ -49,9 +58,11 @@ namespace API.Services
 
             await _uow.Users.AddProfileImage(profileImage);
             await _uow.CompleteAsync();
+
+            return _mapper.Map<ProfileImageDto>(profileImage);
         }
 
-        public async Task AddBackgroundImage(IFormFile file, int userId)
+        public async Task<BackgroundImageDto> AddBackgroundImage(IFormFile file, int userId)
         {
             var uploadResult = await _cloudinaryService.UploadImageAsync(file);
             var backgroundImage = new BackgroundImage
@@ -63,9 +74,11 @@ namespace API.Services
 
             await _uow.Users.AddBackgroundImage(backgroundImage);
             await _uow.CompleteAsync();
+
+            return _mapper.Map<BackgroundImageDto>(backgroundImage);
         }
 
-        public async Task RemoveUserProfileImage(int id)
+        public async Task<ProfileImageDto> RemoveUserProfileImage(int id)
         {
             var image = await _uow.Users.GetProfileImageById(id);
             if (image != null)
@@ -74,9 +87,11 @@ namespace API.Services
                 await _uow.Users.RemoveProfileImage(id);
                 await _uow.CompleteAsync();
             }
+
+            return _mapper.Map<ProfileImageDto>(image);
         }
 
-        public async Task RemoveUserBackgroundImage(int id)
+        public async Task<BackgroundImageDto> RemoveUserBackgroundImage(int id)
         {
             var image = await _uow.Users.GetBackgroundImageById(id);
             if (image != null)
@@ -85,6 +100,8 @@ namespace API.Services
                 await _uow.Users.RemoveBackgroundImage(id);
                 await _uow.CompleteAsync();
             }
+
+            return _mapper.Map<BackgroundImageDto>(image);
         }
 
         public Task<ProfileImage> GetProfileImageById(int id)
@@ -97,20 +114,35 @@ namespace API.Services
             return _uow.Users.GetBackgroundImageById(id);
         }
 
-        public async Task SetMainProfileImage(int imageId)
+
+
+        public async Task<IEnumerable<ProfileImageDto>> GetAllProfileImages()
+        {
+            var images = await _uow.Users.GetAllProfileImages();
+            return _mapper.Map<IEnumerable<ProfileImageDto>>(images);
+        }
+
+        public async Task<IEnumerable<BackgroundImageDto>> GetAllBackgroundImages()
+        {
+            var images = await _uow.Users.GetAllBackgroundImages();
+            return _mapper.Map<IEnumerable<BackgroundImageDto>>(images);
+        }
+
+
+        public async Task<ProfileImageDto> SetMainProfileImage(int imageId)
         {
             await _uow.Users.SetMainProfileImage(imageId);
             await _uow.CompleteAsync();
+
+            var image = await _uow.Users.GetProfileImageById(imageId);
+            return _mapper.Map<ProfileImageDto>(image);
         }
 
-        public Task<IEnumerable<ProfileImage>> GetAllProfileImages()
-        {
-            return _uow.Users.GetAllProfileImages();
-        }
 
-        public Task<IEnumerable<BackgroundImage>> GetAllBackgroundImages()
-        {
-            return _uow.Users.GetAllBackgroundImages();
-        }
+        // public async Task SetMainProfileImage(int imageId)
+        // {
+        //     await _uow.Users.SetMainProfileImage(imageId);
+        //     await _uow.CompleteAsync();
+        // }
     }
 }

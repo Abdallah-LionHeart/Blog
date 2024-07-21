@@ -1,32 +1,3 @@
-<!-- <div class="container mt-3">
- <div class="row">
-  <div class="col-md-12">
-   <h5>Profile Images</h5>
-   <ngx-dropzone (change)="onSelect($event)">
-    <ngx-dropzone-label>Drag and drop your image files here or click to upload</ngx-dropzone-label>
-   </ngx-dropzone>
-   <button class="btn btn-outline mt-3" (click)="uploadFiles()"><i class="fa fa-upload me-2"></i>Upload Selected Images</button>
-   <div *ngIf="uploadProgress > 0" class="progress mt-3">
-    <div class="progress-bar" role="progressbar" [style.width.%]="uploadProgress" aria-valuenow="uploadProgress" aria-valuemin="0" aria-valuemax="100">{{ uploadProgress }}%</div>
-   </div>
-   <div class="row mt-3" *ngIf="profileImages && profileImages.length > 0">
-    <div class="col-md-3" *ngFor="let image of profileImages">
-     <div class="card">
-      <img *ngIf="image && image.url" [src]="image.url" class="card-img-top">
-      <div class="card-body text-center">
-       <button class="btn btn-outline-danger btn-sm" (click)="deleteProfileImage(image.id)"><i class="fa fa-trash"></i></button>
-       <button class="btn btn-outline-dark btn-sm" (click)="setMainProfileImage(image.id)"><i class="fa fa-check"></i></button>
-      </div>
-     </div>
-    </div>
-   </div>
-  </div>
- </div>
-</div> -->
-
-
-
-
 <div class="container mt-3">
  <div class="row">
   <div class="col-12">

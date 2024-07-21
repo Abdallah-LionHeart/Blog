@@ -1,3 +1,4 @@
+using API.DTOs;
 using API.Entities;
 using API.Services;
 using Microsoft.AspNetCore.Identity;
@@ -21,7 +22,7 @@ namespace API.Controllers
 
         // User Management
         [HttpGet]
-        public async Task<ActionResult<AppUser>> GetUser()
+        public async Task<ActionResult<AppUserDto>> GetUser()
         {
             var user = await _userService.GetUser();
             if (user == null)
@@ -32,7 +33,7 @@ namespace API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<AppUser>> GetUser(int id)
+        public async Task<ActionResult<AppUserDto>> GetUser(int id)
         {
             var user = await _userService.GetUserById(id);
             if (user == null)
@@ -43,39 +44,39 @@ namespace API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateUser(int id, AppUser user)
+        public async Task<IActionResult> UpdateUser(int id, AppUserDto userDto)
         {
-            if (id != user.Id)
+            if (id != userDto.Id)
             {
                 return BadRequest();
             }
-            await _userService.UpdateUser(user);
+            await _userService.UpdateUser(userDto);
             return NoContent();
         }
 
         [HttpGet("{userId}/profile-images")]
-        public async Task<ActionResult<IEnumerable<ProfileImage>>> GetUserProfileImages(int userId)
+        public async Task<ActionResult<IEnumerable<ProfileImageDto>>> GetUserProfileImages(int userId)
         {
             var images = await _userService.GetUserProfileImages(userId);
             return Ok(images);
         }
 
         [HttpGet("profile-images")]
-        public async Task<ActionResult<IEnumerable<ProfileImage>>> GetAllProfileImages()
+        public async Task<ActionResult<IEnumerable<ProfileImageDto>>> GetAllProfileImages()
         {
             var images = await _userService.GetAllProfileImages();
             return Ok(images);
         }
 
         [HttpGet("background-images")]
-        public async Task<ActionResult<IEnumerable<BackgroundImage>>> GetAllBackgroundImages()
+        public async Task<ActionResult<IEnumerable<BackgroundImageDto>>> GetAllBackgroundImages()
         {
             var images = await _userService.GetAllBackgroundImages();
             return Ok(images);
         }
 
         [HttpPost("{userId}/profile-images")]
-        public async Task<ActionResult<ProfileImage>> AddProfileImage(IFormFile file, int userId)
+        public async Task<ActionResult<ProfileImageDto>> AddProfileImage(IFormFile file, int userId)
         {
             await _userService.AddProfileImage(file, userId);
             return CreatedAtAction(nameof(GetUser), new { id = userId }, null);

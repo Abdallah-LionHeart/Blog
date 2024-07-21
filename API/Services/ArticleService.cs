@@ -1,5 +1,8 @@
+using API.DTOs;
 using API.Entities;
+using API.Helpers;
 using API.Interfaces;
+using AutoMapper;
 
 namespace API.Services
 {
@@ -7,35 +10,249 @@ namespace API.Services
     {
         private readonly IUnitOfWork _uow;
         private readonly ICloudinaryService _cloudinaryService;
+        private readonly IMapper _mapper;
 
-        public ArticleService(IUnitOfWork unitOfWork, ICloudinaryService cloudinaryService)
+        public ArticleService(IUnitOfWork unitOfWork, ICloudinaryService cloudinaryService, IMapper mapper)
         {
+            _mapper = mapper;
             _cloudinaryService = cloudinaryService;
             _uow = unitOfWork;
 
         }
 
-        public Task<IEnumerable<Article>> GetAllArticles()
+        public async Task<IEnumerable<ArticleDto>> GetAllArticles()
         {
-            return _uow.Articles.GetAll();
+            var articles = await _uow.Articles.GetAll();
+            return _mapper.Map<IEnumerable<ArticleDto>>(articles);
         }
 
-        public Task<Article> GetArticleById(int id)
+        public async Task<IEnumerable<ArticleDto>> GetAllEvents()
         {
-            return _uow.Articles.GetById(id);
+            var events = await _uow.Articles.GetAllEvents();
+            return _mapper.Map<IEnumerable<ArticleDto>>(events);
         }
 
-        public async Task AddArticle(Article article)
+        public async Task<ArticleDto> GetArticleById(int id)
         {
+            var article = await _uow.Articles.GetById(id);
+            return _mapper.Map<ArticleDto>(article);
+        }
+        public async Task<ArticleDto> AddArticle(ArticleCreateDto articleDto, List<IFormFile> imageFiles, List<IFormFile> videoFiles)
+        {
+            var article = new Article
+            {
+                Title = articleDto.Title,
+                Content = articleDto.Content,
+                Headline = articleDto.Headline,
+                IsEvent = articleDto.IsEvent,
+                YouTubeLink = articleDto.YouTubeLink,
+                FacebookLink = articleDto.FacebookLink
+            };
+
+            if (imageFiles != null && imageFiles.Any())
+            {
+                article.Images = new List<Image>();
+                foreach (var imageFile in imageFiles)
+                {
+                    var uploadResult = await _cloudinaryService.UploadImageAsync(imageFile);
+                    var image = new Image
+                    {
+                        Url = uploadResult.SecureUrl.AbsoluteUri,
+                        PublicId = uploadResult.PublicId
+                    };
+                    article.Images.Add(image);
+                }
+            }
+
+            if (videoFiles != null && videoFiles.Any())
+            {
+                article.Videos = new List<Video>();
+                foreach (var videoFile in videoFiles)
+                {
+                    var uploadResult = await _cloudinaryService.UploadVideoAsync(videoFile);
+                    var video = new Video
+                    {
+                        Url = uploadResult.SecureUrl.AbsoluteUri,
+                        PublicId = uploadResult.PublicId,
+                        IsExternal = false
+                    };
+                    article.Videos.Add(video);
+                }
+            }
+
+            if (!string.IsNullOrEmpty(articleDto.YouTubeLink))
+            {
+                var video = new Video
+                {
+                    Url = articleDto.YouTubeLink,
+                    IsExternal = true
+                };
+                article.Videos.Add(video);
+            }
+
             await _uow.Articles.Add(article);
             await _uow.CompleteAsync();
+
+            return _mapper.Map<ArticleDto>(article);
         }
 
-        public async Task UpdateArticle(Article article)
+        public async Task UpdateArticle(ArticleUpdateDto articleDto, List<IFormFile> imageFiles, List<IFormFile> videoFiles)
         {
+            var article = await _uow.Articles.GetById(articleDto.Id);
+            if (article == null)
+            {
+                throw new Exception("Article not found");
+            }
+
+            article.Title = articleDto.Title;
+            article.Content = articleDto.Content;
+            article.Headline = articleDto.Headline;
+            article.IsEvent = articleDto.IsEvent;
+            article.YouTubeLink = articleDto.YouTubeLink;
+            article.FacebookLink = articleDto.FacebookLink;
+
+            if (imageFiles != null && imageFiles.Any())
+            {
+                foreach (var imageFile in imageFiles)
+                {
+                    var uploadResult = await _cloudinaryService.UploadImageAsync(imageFile);
+                    var image = new Image
+                    {
+                        Url = uploadResult.SecureUrl.AbsoluteUri,
+                        PublicId = uploadResult.PublicId
+                    };
+                    article.Images.Add(image);
+                }
+            }
+
+            if (videoFiles != null && videoFiles.Any())
+            {
+                foreach (var videoFile in videoFiles)
+                {
+                    var uploadResult = await _cloudinaryService.UploadVideoAsync(videoFile);
+                    var video = new Video
+                    {
+                        Url = uploadResult.SecureUrl.AbsoluteUri,
+                        PublicId = uploadResult.PublicId,
+                        IsExternal = false
+                    };
+                    article.Videos.Add(video);
+                }
+            }
+
+            if (!string.IsNullOrEmpty(articleDto.YouTubeLink))
+            {
+                var video = new Video
+                {
+                    Url = articleDto.YouTubeLink,
+                    IsExternal = true
+                };
+                article.Videos.Add(video);
+            }
+
             await _uow.Articles.Update(article);
             await _uow.CompleteAsync();
         }
+
+
+        // public async Task AddAedrticle(ArticleCreateDto articleDto)
+        // {
+        //     var article = _mapper.Map<Article>(articleDto);
+        //     if (articleDto.Images != null)
+        //     {
+        //         foreach (var imageFile in articleDto.Images)
+        //         {
+        //             var uploadResult = await _cloudinaryService.UploadImageAsync(imageFile);
+        //             var image = new Image
+        //             {
+        //                 Url = uploadResult.SecureUrl.AbsoluteUri,
+        //                 PublicId = uploadResult.PublicId
+        //             };
+        //             article.Images.Add(image);
+        //         }
+        //     }
+
+        //     if (articleDto.Videos != null)
+        //     {
+        //         foreach (var videoFile in articleDto.Videos)
+        //         {
+        //             var uploadResult = await _cloudinaryService.UploadVideoAsync(videoFile);
+        //             var video = new Video
+        //             {
+        //                 Url = uploadResult.SecureUrl.AbsoluteUri,
+        //                 PublicId = uploadResult.PublicId,
+        //                 IsExternal = false
+        //             };
+        //             article.Videos.Add(video);
+        //         }
+        //     }
+
+        //     if (!string.IsNullOrEmpty(articleDto.YouTubeLink))
+        //     {
+        //         var video = new Video
+        //         {
+        //             Url = articleDto.YouTubeLink,
+        //             IsExternal = true
+        //         };
+        //         article.Videos.Add(video);
+        //     }
+
+        //     await _uow.Articles.Add(article);
+        //     await _uow.CompleteAsync();
+        // }
+
+        // public async Task UpdateArticle(ArticleUpdateDto articleDto)
+        // {
+        //     var article = await _uow.Articles.GetById(articleDto.Id);
+        //     if (article == null)
+        //     {
+        //         throw new Exception("Article not found");
+        //     }
+
+        //     _mapper.Map(articleDto, article);
+
+        //     if (articleDto.Images != null)
+        //     {
+        //         foreach (var imageFile in articleDto.Images)
+        //         {
+        //             var uploadResult = await _cloudinaryService.UploadImageAsync(imageFile);
+        //             var image = new Image
+        //             {
+        //                 Url = uploadResult.SecureUrl.AbsoluteUri,
+        //                 PublicId = uploadResult.PublicId
+        //             };
+        //             article.Images.Add(image);
+        //         }
+        //     }
+
+        //     if (articleDto.Videos != null)
+        //     {
+        //         foreach (var videoFile in articleDto.Videos)
+        //         {
+        //             var uploadResult = await _cloudinaryService.UploadVideoAsync(videoFile);
+        //             var video = new Video
+        //             {
+        //                 Url = uploadResult.SecureUrl.AbsoluteUri,
+        //                 PublicId = uploadResult.PublicId,
+        //                 IsExternal = false
+        //             };
+        //             article.Videos.Add(video);
+        //         }
+        //     }
+
+        //     if (!string.IsNullOrEmpty(articleDto.YouTubeLink))
+        //     {
+        //         var video = new Video
+        //         {
+        //             Url = articleDto.YouTubeLink,
+        //             IsExternal = true
+        //         };
+        //         article.Videos.Add(video);
+        //     }
+
+        //     await _uow.Articles.Update(article);
+        //     await _uow.CompleteAsync();
+        // }
 
         public async Task DeleteArticle(int id)
         {
@@ -80,7 +297,8 @@ namespace API.Services
             {
                 Url = uploadResult.SecureUrl.AbsoluteUri,
                 PublicId = uploadResult.PublicId,
-                ArticleId = articleId
+                ArticleId = articleId,
+                IsExternal = false
             };
 
             await _uow.Articles.AddVideo(video);
@@ -102,5 +320,20 @@ namespace API.Services
         {
             return _uow.Articles.GetVideoById(id);
         }
+
+        public async Task<PaginatedResult<ArticleDto>> GetPaginatedArticles(ArticleParams articleParams)
+        {
+            var result = await _uow.Articles.GetPaginated(articleParams);
+            var articlesDto = _mapper.Map<IEnumerable<ArticleDto>>(result.Items);
+            return new PaginatedResult<ArticleDto>(articlesDto, result.TotalCount, result.PageNumber, result.PageSize);
+        }
+
+        public async Task<PaginatedResult<ArticleDto>> SearchArticles(ArticleParams articleParams, string searchTerm, string filter)
+        {
+            var result = await _uow.Articles.SearchArticles(articleParams, searchTerm, filter);
+            var articlesDto = _mapper.Map<IEnumerable<ArticleDto>>(result.Items);
+            return new PaginatedResult<ArticleDto>(articlesDto, result.TotalCount, result.PageNumber, result.PageSize);
+        }
+
     }
 }

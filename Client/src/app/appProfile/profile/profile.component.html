@@ -36,7 +36,6 @@
    <div class="row">
     <div class="col-lg-4 col-md-6 text-center mb-4">
      <img [src]="profileImageUrl" class="img-fluid rounded-circle profile-image" alt="Profile Picture">
-     <!-- <input type="file" (change)="onProfileImageChange($event)" class="form-control-file mt-2"> -->
     </div>
     <div class="col-lg-8 col-md-6">
      <tabset>
@@ -44,7 +43,7 @@
        <app-user-management></app-user-management>
       </tab>
       <tab heading="Profile">
-       <app-profile-images></app-profile-images>
+       <app-profile-images (profileImagesUpdated)="onProfileImagesUpdated()"></app-profile-images>
       </tab>
       <tab heading="Background">
        <app-background-images></app-background-images>

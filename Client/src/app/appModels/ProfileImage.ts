@@ -3,5 +3,4 @@ export interface ProfileImage {
  url: string;
  isMain: boolean;
  publicId: string;
- // appUserId: number;
 }

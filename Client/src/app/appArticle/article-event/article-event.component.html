@@ -1,0 +1,22 @@
+<div class="container" #container>
+ <div class="left" *ngIf="totalPages > 1" (click)="currentPage != 1 && changePage(-1)" [ngClass]="{'disabled': currentPage === 1}"></div>
+ <div class="cards" [ngClass]="{'w-100': totalPages === 1}">
+  <div class="overflow" [ngStyle]="{'width': overflowWidth, 'left': pagePosition}">
+   <div class="card" *ngFor="let event of events" [ngStyle]="{'width': cardWidth || 100}">
+    <div class="card-body">
+     <h5 class="card-title">{{ event.title }}</h5>
+     <p class="card-text">{{ event.content }}</p>
+     <p class="card-text"><small class="text-muted">Published on: {{ event.publishDate | date:'longDate' }}</small></p>
+     <div *ngFor="let image of event.images">
+      <img [src]="image.url" class="img-fluid" alt="Event Image">
+     </div>
+     <div *ngFor="let video of event.videos">
+      <video *ngIf="!video.isExternal" [src]="video.url" controls class="img-fluid"></video>
+      <div *ngIf="video.isExternal" [innerHTML]="getVideoEmbed(video.url)"></div>
+     </div>
+    </div>
+   </div>
+  </div>
+ </div>
+ <div class="right" *ngIf="totalPages > 1" (click)="currentPage != totalPages && changePage(+1)" [ngClass]="{'disabled': currentPage === totalPages}"></div>
+</div>

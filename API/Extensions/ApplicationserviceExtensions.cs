@@ -10,13 +10,15 @@ namespace API.Extensions
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config)
         {
-            services.AddScoped<IArticleRepository, ArticleRepository>();
+            services.AddScoped<UserService>();
+            services.AddScoped<ArticleService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<IArticleRepository, ArticleRepository>();
             services.AddScoped<IAdminTokenService, AdminTokenService>();
             services.AddScoped<ICloudinaryService, CloudinaryService>();
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));
-            services.AddScoped<ArticleService>();
-            services.AddScoped<UserService>();
 
 
 

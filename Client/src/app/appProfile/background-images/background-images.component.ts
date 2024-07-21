@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BackgroundImage } from 'src/app/appModels/BackgroundImage';
 import { AdminService } from 'src/app/appService/admin.service';
+import { ConfirmService } from 'src/app/appService/confirm.service';
 
 @Component({
   selector: 'app-background-images',
@@ -14,7 +15,7 @@ export class BackgroundImagesComponent implements OnInit {
   alertMessage: string = '';
   alertType: string = '';
 
-  constructor(private adminService: AdminService) { }
+  constructor(private adminService: AdminService, private confirmService: ConfirmService) { }
 
   ngOnInit(): void {
     this.loadAllBackgroundImages();
@@ -22,7 +23,7 @@ export class BackgroundImagesComponent implements OnInit {
 
   loadAllBackgroundImages() {
     this.adminService.getAllBackgroundImages().subscribe({
-      next: (images: any) => {
+      next: (images: BackgroundImage[]) => {
         this.backgroundImages = images || [];
       }
     })
@@ -43,8 +44,8 @@ export class BackgroundImagesComponent implements OnInit {
     if (this.files.length > 0) {
       let uploadCount = this.files.length;
       this.files.forEach(file => {
-        const backgroundImage: BackgroundImage = { id: 0, url: '', publicId: '' };
-        this.adminService.addBackgroundImage(1, backgroundImage, file).subscribe({
+        // const backgroundImage: BackgroundImage = { id: 0, url: '', publicId: '' };
+        this.adminService.addBackgroundImage(1, file).subscribe({
           next: (image) => {
             this.backgroundImages.push(image);
             uploadCount--;
@@ -52,12 +53,12 @@ export class BackgroundImagesComponent implements OnInit {
             if (uploadCount === 0) {
               this.loadAllBackgroundImages();
               this.uploadProgress = 0;
-              this.showAlert('Background Picture Uploaded Successfully!', 'success');
+              this.confirmService.showAlert('Background Picture Uploaded Successfully!', 'success');
             }
           },
           error: (err) => {
             console.error('Failed to upload background image', err);
-            this.showAlert('Failed to upload background images.', 'danger');
+            this.confirmService.showAlert('Failed to upload background images.', 'danger');
           }
         });
       });
@@ -71,21 +72,12 @@ export class BackgroundImagesComponent implements OnInit {
     this.adminService.deleteBackgroundImage(id).subscribe({
       next: () => {
         this.backgroundImages = this.backgroundImages.filter(image => image.id !== id)
-        this.showAlert('Background Picture Deleted Successfully.', 'success');
+        this.confirmService.showAlert('Background Picture Deleted Successfully.', 'success');
       },
       error: (err) => {
         console.error('Failed to delete background image', err);
-        this.showAlert('Failed to delete background image.', 'danger');
+        this.confirmService.showAlert('Failed to delete background image.', 'danger');
       }
     });
   }
-
-  showAlert(message: string, type: string) {
-    this.alertMessage = message;
-    this.alertType = type;
-    setTimeout(() => {
-      this.alertMessage = '';
-    }, 5000);
-  }
-
 }

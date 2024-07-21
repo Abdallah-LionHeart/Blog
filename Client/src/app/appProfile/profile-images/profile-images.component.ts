@@ -1,7 +1,8 @@
 // src/app/admin/profile-images/profile-images.component.ts
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ProfileImage } from 'src/app/appModels/ProfileImage';
 import { AdminService } from 'src/app/appService/admin.service';
+import { ConfirmService } from 'src/app/appService/confirm.service';
 
 
 @Component({
@@ -11,13 +12,14 @@ import { AdminService } from 'src/app/appService/admin.service';
 })
 
 export class ProfileImagesComponent implements OnInit {
+  @Output() profileImagesUpdated = new EventEmitter<void>();
   profileImages: ProfileImage[] = [];
   files: File[] = [];
   uploadProgress: number = 0;
   alertMessage: string = '';
   alertType: string = '';
 
-  constructor(private adminService: AdminService) { }
+  constructor(private adminService: AdminService, public confirmService: ConfirmService) { }
 
   ngOnInit(): void {
     this.loadAllProfileImages();
@@ -46,21 +48,21 @@ export class ProfileImagesComponent implements OnInit {
     if (this.files.length > 0) {
       let uploadCount = this.files.length;
       this.files.forEach(file => {
-        const profileImage: ProfileImage = { id: 0, url: '', isMain: false, publicId: '' };
-        this.adminService.addProfileImage(1, profileImage, file).subscribe({
-          next: (image) => {
-            this.profileImages.push(image);
+        // const profileImage: ProfileImage = { id: 0, url: '', isMain: false, publicId: '' };
+        this.adminService.addProfileImage(1, file).subscribe({
+          next: (newImage: ProfileImage) => {
+            this.profileImages.push(newImage);
             uploadCount--;
             this.uploadProgress = ((this.files.length - uploadCount) / this.files.length) * 100;
             if (uploadCount === 0) {
               this.loadAllProfileImages();
               this.uploadProgress = 0;
-              this.showAlert('Image uploaded successfully!', 'success');
+              this.confirmService.showAlert('Image uploaded successfully!', 'success');
             }
           },
           error: (err) => {
             console.error('Failed to upload profile image', err)
-            this.showAlert('Failed to upload images.', 'danger')
+            this.confirmService.showAlert('Failed to upload images.', 'danger')
           }
         });
       });
@@ -74,11 +76,11 @@ export class ProfileImagesComponent implements OnInit {
     this.adminService.deleteProfileImage(id).subscribe({
       next: () => {
         this.profileImages = this.profileImages.filter(image => image.id !== id);
-        this.showAlert('Image deleted successfully.', 'success');
+        this.confirmService.showAlert('Image deleted successfully.', 'success');
       },
       error: (err) => {
         console.error('Failed to delete profile image', err)
-        this.showAlert('Failed to delete image.', 'danger');
+        this.confirmService.showAlert('Failed to delete image.', 'danger');
       }
     });
   }
@@ -86,23 +88,14 @@ export class ProfileImagesComponent implements OnInit {
   setMainProfileImage(id: number) {
     this.adminService.setMainProfileImage(id).subscribe({
       next: () => {
-        this.profileImages.forEach(image => {
-          image.isMain = image.id === id;
-        });
-        this.showAlert('Profile Picture Updated.', 'success');
+        this.profileImages.forEach(image => image.isMain = image.id === id);
+        this.profileImagesUpdated.emit();
+        this.confirmService.showAlert('Profile Picture Updated.', 'success');
       },
       error: (err) => {
         console.error('failed to set profile image', err);
-        this.showAlert('Failed to Updated.', 'danger');
+        this.confirmService.showAlert('Failed to Updated.', 'danger');
       }
     });
-  }
-
-  showAlert(message: string, type: string) {
-    this.alertMessage = message;
-    this.alertType = type;
-    setTimeout(() => {
-      this.alertMessage = '';
-    }, 5000);
   }
 }

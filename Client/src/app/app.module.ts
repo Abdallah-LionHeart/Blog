@@ -10,16 +10,25 @@ import { LoginComponent } from './appAccount/login/login.component';
 import { ResetPasswordConfirmComponent } from './appAccount/reset-password-confirm/reset-password-confirm.component';
 import { ResetPasswordComponent } from './appAccount/reset-password/reset-password.component';
 import { DashborardComponent } from './appAdmin/dashborard/dashborard.component';
+import { ArticleCreateComponent } from './appArticle/article-create/article-create.component';
+import { ArticleDetailsComponent } from './appArticle/article-details/article-details.component';
+import { ArticleEditComponent } from './appArticle/article-edit/article-edit.component';
+import { ArticleEventComponent } from './appArticle/article-event/article-event.component';
 import { ArticleFormComponent } from './appArticle/article-form/article-form.component';
+import { ArticleListComponent } from './appArticle/article-list/article-list.component';
+import { ArticleSearchComponent } from './appArticle/article-search/article-search.component';
 import { ArticleComponent } from './appArticle/article/article.component';
 import { HomeComponent } from './appHome/home/home.component';
+import { MainProfileComponent } from './appMain/main-profile/main-profile.component';
+import { ConfirmDialogComponent } from './appModals/confirm-dialog/confirm-dialog.component';
 import { SharedModule } from './appModule/shared.module';
 import { NavComponent } from './appNav/nav/nav.component';
 import { BackgroundImagesComponent } from './appProfile/background-images/background-images.component';
 import { ProfileImagesComponent } from './appProfile/profile-images/profile-images.component';
 import { ProfileComponent } from './appProfile/profile/profile.component';
 import { UserManagementComponent } from './appProfile/user-management/user-management.component';
-import { CreateArticleComponent } from './appArticle/create-article/create-article.component';
+import { HeaderComponent } from './appSection/header/header.component';
+import { SectionHeaderComponent } from './appSection/section-header/section-header.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +46,17 @@ import { CreateArticleComponent } from './appArticle/create-article/create-artic
     ProfileImagesComponent,
     BackgroundImagesComponent,
     ConfirmLoginComponent,
-    CreateArticleComponent
+    ArticleCreateComponent,
+    ArticleListComponent,
+    ArticleSearchComponent,
+    ArticleEventComponent,
+    ArticleDetailsComponent,
+    ArticleEditComponent,
+    ConfirmDialogComponent,
+    MainProfileComponent,
+    HeaderComponent,
+    SectionHeaderComponent,
+
   ],
   imports: [
     BrowserModule,

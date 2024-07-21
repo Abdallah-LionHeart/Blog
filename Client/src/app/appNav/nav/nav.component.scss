@@ -1,47 +1,50 @@
+nav {
+ background-color: #efefeff5;
+}
+
+/* Custom Navbar Styles */
+.navbar-light .navbar-nav .nav-link {
+ color: black;
+}
+
+.navbar-light .nav-link:hover {
+ color: lightblue;
+}
+
+.navbar-light .navbar-nav .nav-link.active {
+ color: black;
+ /* Keep the active link black */
+}
+
 .navbar {
- display: flex;
- justify-content: space-between;
- align-items: center;
- padding: 10px 20px;
+ transition: height 0.3s;
 }
 
-.logo {
- display: flex;
- align-items: center;
+@media (min-width: 992px) {
+ .navbar {
+  height: 70px;
+  /* Larger height for large screens */
+ }
 }
 
-.logo img {
- height: 40px;
- margin-right: 10px;
+@media (max-width: 991px) {
+ .navbar {
+  height: 55px;
+  /* Smaller height for small screens */
+ }
 }
 
-.nav-links {
- list-style: none;
- display: flex;
- gap: 20px;
+/* Responsive Social Links */
+.nav-link.social-link a {
+ margin-left: 10px;
 }
 
-.nav-links li {
- display: inline;
-}
+@media (max-width: 575.98px) {
+ .navbar-nav {
+  text-align: center;
+ }
 
-.nav-links a {
- text-decoration: none;
- color: #000;
- font-weight: bold;
-}
-
-.social-icons a {
- margin-left: 15px;
-}
-
-.social-icons img {
- margin: 4px;
-}
-
-.bi {
- color: white;
- font-size: 1.5rem;
- margin: 8px;
-
+ .navbar-nav .nav-link {
+  margin-left: 0;
+ }
 }

@@ -17,7 +17,7 @@ export class AdminService {
 
 
   getUsers() {
-    return this.http.get<User>(this.baseUrl);
+    return this.http.get<User[]>(this.baseUrl);
   }
 
   getUser(id: number) {
@@ -29,21 +29,15 @@ export class AdminService {
     return this.http.put<User>(this.baseUrl + id, user);
   }
 
-  addProfileImage(userId: number, profileImage: ProfileImage, file: File) {
+  addProfileImage(userId: number, file: File) {
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('url', profileImage.url);
-    formData.append('isMain', profileImage.isMain.toString());
-    formData.append('publicId', profileImage.publicId);
     return this.http.post<ProfileImage>(this.baseUrl + userId + '/profile-images', formData);
   }
 
-  addBackgroundImage(userId: number, backgroundImage: BackgroundImage, file: File) {
+  addBackgroundImage(userId: number, file: File) {
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('appUserId', userId.toString());
-    formData.append('url', backgroundImage.url);
-    formData.append('publicId', backgroundImage.publicId);
     return this.http.post<BackgroundImage>(this.baseUrl + userId + '/background-images', formData);
   }
 
