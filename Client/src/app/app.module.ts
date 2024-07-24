@@ -29,9 +29,15 @@ import { ProfileComponent } from './appProfile/profile/profile.component';
 import { UserManagementComponent } from './appProfile/user-management/user-management.component';
 import { HeaderComponent } from './appSection/header/header.component';
 import { SectionHeaderComponent } from './appSection/section-header/section-header.component';
-
+import {MatButtonModule} from '@angular/material/button';
+import { ImageCarouselComponent } from './appMain/main-profile/image-carousel/image-carousel.component';
+import { FooterComponent } from './footer/footer.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { ArticalItemComponent } from './appArticle/article-list/artical-item/artical-item.component';
+import { SafePipe } from './pipes/safe.pipe';
+import { PaginationItemComponent } from './appArticle/article-list/pagination-item/pagination-item.component';
 @NgModule({
-  declarations: [
+  declarations: [	
     AppComponent,
     LoginComponent,
     ProfileComponent,
@@ -56,8 +62,12 @@ import { SectionHeaderComponent } from './appSection/section-header/section-head
     MainProfileComponent,
     HeaderComponent,
     SectionHeaderComponent,
-
-  ],
+    ImageCarouselComponent,
+      FooterComponent,
+      ArticalItemComponent,
+      SafePipe,
+      PaginationItemComponent
+   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -66,6 +76,8 @@ import { SectionHeaderComponent } from './appSection/section-header/section-head
     SharedModule,
     ReactiveFormsModule,
     FormsModule,
+    MatButtonModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

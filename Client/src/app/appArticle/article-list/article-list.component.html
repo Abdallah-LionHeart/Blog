@@ -30,102 +30,27 @@
  </div>
 </div> -->
 
-
-
-
-
-<!-- <div class="container">
-  <h2>Articles</h2>
+<div class="article-container">
+<div class="container ">
+    <!-- Filter Section -->
+    <div class="filter-section mb-4">
+      <button class="btn btn-outline-primary me-2" (click)="filterArticles('recently')">Recently</button>
+      <button class="btn btn-outline-primary me-2" (click)="filterArticles('lastWeek')">Last week</button>
+      <button class="btn btn-outline-primary me-2" (click)="filterArticles('lastMonth')">Last month</button>
+      <button class="btn btn-outline-primary me-2" (click)="filterArticles('oldest')">Oldest</button>
+      <input type="text" class="form-control d-inline-block w-auto ms-2" placeholder="Search" (input)="searchArticles($event)">
+    </div>
   <div class="row">
-    <div *ngFor="let article of articles" [ngClass]="getArticleClass(article)" class="col-12 col-md-6 mb-4">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">{{ article.title }}</h5>
-          <div class="media-container">
-            <div class="media-content">
-              <p class="card-text">{{ article.content }}</p>
-            </div>
-            <div class="media-display">
-              <ng-container *ngIf="article.images.length > 0">
-                <div class="media-slider">
-                  <ng-container *ngFor="let image of article.images">
-                    <img *ngIf="!article.videos.length" [src]="image.url" class="img-fluid" alt="Article Image">
-                  </ng-container>
-                </div>
-              </ng-container>
-              <ng-container *ngIf="article.videos.length > 0">
-                <div class="media-slider">
-                  <ng-container *ngFor="let video of article.videos">
-                    <video *ngIf="!video.isExternal" [src]="video.url" controls class="img-fluid"></video>
-                    <div *ngIf="video.isExternal" [innerHTML]="getVideoEmbed(video.url)"></div>
-                  </ng-container>
-                </div>
-              </ng-container>
-            </div>
-          </div>
-        </div>
-        <div class="card-footer">
-          <p class="publish-date">Published on: {{ article.publishDate | date:'longDate' }}</p>
-          <div class="card-buttons">
-            <button class="btn btn-primary" routerLink="/articles/details/{{article.id}}">Details</button>
-            <button class="btn btn-primary" routerLink="/articles/edit/{{article.id}}">Edit</button>
-          </div>
-        </div>
-      </div>
+    <div class="col-md-6" *ngFor="let article of paginatedArticles">
+      <app-artical-item  [article]="article"></app-artical-item>
     </div>
   </div>
-</div> -->
 
-
-
-
-
-
-
-
-<div class="container-fluid container-lg container-sm ms-8">
- <div class="row">
-  <div *ngFor="let article of articles" [ngClass]="getArticleClass(article)" class="col-12 col-md-6 mb-4">
-   <div class="card">
-    <div class="card-body">
-     <h5 class="card-title">{{ article.title }}</h5>
-     <div class="media-container">
-      <div class="media-content">
-       <p class="card-text">{{ article.content }}</p>
-      </div>
-      <div class="media-display">
-       <!-- Images -->
-       <ng-container *ngIf="article.images.length > 0">
-        <div class="media-slider">
-         <ng-container *ngFor="let image of article.images">
-          <img [src]="image.url" class="img-fluid" alt="Article Image">
-         </ng-container>
-        </div>
-       </ng-container>
-       <!-- Videos -->
-       <ng-container *ngIf="article.videos.length > 0">
-        <div class="media-slider">
-         <ng-container *ngFor="let video of article.videos">
-          <ng-container *ngIf="!video.isExternal">
-           <video controls [src]="video.url" class="video-fluid"></video>
-          </ng-container>
-          <ng-container *ngIf="video.isExternal">
-           <div [innerHTML]="getVideoEmbed(video.url)"></div>
-          </ng-container>
-         </ng-container>
-        </div>
-       </ng-container>
-      </div>
-     </div>
-    </div>
-    <div class="card-footer">
-     <p class="publish-date">Published on: {{ article.publishDate | date:'longDate' }}</p>
-     <div class="card-buttons">
-      <button class="btn btn-sm btn-primary" routerLink="/articles/details/{{article.id}}">Details</button>
-      <button class="btn btn-sm btn-primary" routerLink="/articles/edit/{{article.id}}">Edit</button>
-     </div>
-    </div>
-   </div>
-  </div>
- </div>
-</div>
+<hr class="mt-5">
+<app-pagination-item
+  [totalItems]="articles.length"
+  [itemsPerPage]="itemsPerPage"
+  [currentPage]="currentPage"
+  (pageChange)="onPageChange($event)">
+</app-pagination-item>
+</div></div>

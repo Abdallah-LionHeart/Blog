@@ -1,50 +1,82 @@
-nav {
- background-color: #efefeff5;
+// nav {
+//  background-color: #efefeff5;
+// }
+
+// /* Custom Navbar Styles */
+// .navbar-light .navbar-nav .nav-link {
+//  color: black;
+// }
+
+// .navbar-light .nav-link:hover {
+//  color: lightblue;
+// }
+
+// .navbar-light .navbar-nav .nav-link.active {
+//  color: black;
+//  /* Keep the active link black */
+// }
+
+// .navbar {
+//  transition: height 0.3s;
+// }
+
+// @media (min-width: 992px) {
+//  .navbar {
+//   height: 70px;
+//   /* Larger height for large screens */
+//  }
+// }
+
+// @media (max-width: 991px) {
+//  .navbar {
+//   height: 55px;
+//   /* Smaller height for small screens */
+//  }
+// }
+
+// /* Responsive Social Links */
+// .nav-link.social-link a {
+//  margin-left: 10px;
+// }
+
+// @media (max-width: 575.98px) {
+//  .navbar-nav {
+//   text-align: center;
+//  }
+
+//  .navbar-nav .nav-link {
+//   margin-left: 0;
+//  }
+// }
+
+
+// variables
+
+// $nav-main-color:#eef2ff; style  1
+// $nav-main-color:#fff5ef ; style 2
+
+$nav-main-color: #ffcda3;
+
+.navbar--blog{
+  border-bottom: 1px solid transparent;
+  background: $nav-main-color;
+  padding: 12px;
 }
-
-/* Custom Navbar Styles */
-.navbar-light .navbar-nav .nav-link {
- color: black;
+.navbar-toggler{
+  background-color: transparent !important;
+  border:none !important
 }
-
-.navbar-light .nav-link:hover {
- color: lightblue;
+.navbar-toggler:focus{
+  box-shadow: none !important;
 }
-
-.navbar-light .navbar-nav .nav-link.active {
- color: black;
- /* Keep the active link black */
+.login--action {
+  &__btn{
+    border-radius: 20px !important;
+    -webkit-border-radius: 20px !important;
+    -moz-border-radius: 20px !important;
+    -ms-border-radius: 20px !important;
+    -o-border-radius: 20px !important;
+    // background: #6366f1;
+    // border: #6366f1;
 }
-
-.navbar {
- transition: height 0.3s;
-}
-
-@media (min-width: 992px) {
- .navbar {
-  height: 70px;
-  /* Larger height for large screens */
- }
-}
-
-@media (max-width: 991px) {
- .navbar {
-  height: 55px;
-  /* Smaller height for small screens */
- }
-}
-
-/* Responsive Social Links */
-.nav-link.social-link a {
- margin-left: 10px;
-}
-
-@media (max-width: 575.98px) {
- .navbar-nav {
-  text-align: center;
- }
-
- .navbar-nav .nav-link {
-  margin-left: 0;
- }
 }

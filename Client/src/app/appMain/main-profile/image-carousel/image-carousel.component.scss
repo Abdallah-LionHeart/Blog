@@ -1,0 +1,44 @@
+.custom-carousel {
+    width: 100%;
+    height:100% !important; /* Customize the height */
+  }
+
+  .custom-carousel .carousel-inner {
+    height: 100%; /* Ensure inner carousel takes full height */
+  }
+  .custom-carousel .carousel-item{
+    height: 100%;
+  }
+  .custom-carousel .carousel-item img {
+    width: 100%;
+    height: 100% !important; /* Make images cover the carousel height */
+    object-fit: cover; /* Ensure images cover the container without distortion */
+  }
+  
+  .custom-carousel .carousel-control-prev-icon,
+  .custom-carousel .carousel-control-next-icon {
+    background-color: rgb(6 39 68) ;/* Custom background for the arrows */
+    border-radius: 50%; /* Make the arrows circular */
+    width: 43px;
+    height: 43px;
+    background-size: 50% 50% !important;
+  }
+  
+  .custom-carousel .carousel-indicators button {
+    background-color: #000; /* Custom color for indicators */
+  }
+.carousel-control-prev{
+  left: -10px !important;
+}
+.carousel-control-next{
+  right: -10px !important; 
+}
+
+@media (max-width:475px) {
+  .carousel-control-prev{
+    left: 0px !important;
+  }
+  .carousel-control-next{
+    right: 0px !important; 
+  }
+}

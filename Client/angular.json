@@ -33,12 +33,15 @@
               "node_modules/font-awesome/css/font-awesome.css",
               "node_modules/font-awesome/css/font-awesome.min.css",
               "node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
-              "node_modules/font-awesome/css/font-awesome.css",
-              "node_modules/font-awesome/css/font-awesome.min.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
+                "node_modules/owl.carousel/dist/assets/owl.carousel.css",
+  "node_modules/owl.carousel/dist/assets/owl.theme.default.css",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": ["node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
+            "node_modules/jquery/dist/jquery.min.js",
+  "node_modules/owl.carousel/dist/owl.carousel.min.js"
+          ]
           },
           "configurations": {
             "production": {
@@ -101,10 +104,13 @@
               "@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": ["node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"]
           }
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "a164e762-c6de-4fb6-8b1b-1b4244cc0759"
   }
 }
