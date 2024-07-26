@@ -13,6 +13,4 @@ export interface Article {
  videos: VideoDto[];
  youTubeLink: string;
  facebookLink: string;
- createdAt: Date;
- updatedAt: Date;
 }

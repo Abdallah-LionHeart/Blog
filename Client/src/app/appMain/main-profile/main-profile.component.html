@@ -1,55 +1,34 @@
-<!-- <ng-container>
- <div class="profile-container">
-  <div class="profile-image-container" *ngIf="profileImage">
-   <img [src]="profileImage.url" alt="Profile Image" class="profile-image">
-  </div>
-  <div class="carousel-container">
-   <owl-carousel-o [options]="customOptions" class="background-carousel">
-    <ng-container *ngFor="let image of backgroundImages">
-     <ng-template carouselSlide [id]="image.id.toString()">
-      <img [src]="image.url" [alt]="'Background image ' + image.id" class="background-image">
-     </ng-template>
-    </ng-container>
-   </owl-carousel-o>
-  </div>
- </div>
-</ng-container>
-
-
- -->
-
-
 <!-- profile Home section ============= -->
 
 <div class="home--profile container  mt-3">
   <div class="row">
     <div class="col-12 col-md-5 ">
 
-        <div class="card home--profile__card w-100  p-4 border-0 ">
+      <div class="card home--profile__card w-100  p-4 border-0" *ngIf="user">
 
-            <div>
-                <div class="image d-flex justify-content-center">
-            <img src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80"  >
-            </div>
+        <div>
+          <div class="image d-flex justify-content-center">
+            <img [src]="profileImage?.url">
+          </div>
 
-            <div class="mx-3 mt-4 xl-5 ">
-               <h4 class="mb-2 mt-0 fw-bold text-center">Alex HMorrision</h4>
-               <span class="text-center ">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iusto, repudiandae.</span>
-            </div>
+          <div class="mx-3 mt-4 xl-5 ">
+            <h4 class="mb-2 mt-0 fw-bold text-center">{{user.firstName}}</h4>
+            <span class="text-center ">{{user.overview}}</span>
+          </div>
 
 
-            </div>
-            <div class="home--profile__card__socials d-flex mt-3 justify-content-center">
-              <a href="#"><i class="fa fa-facebook"> </i></a>
-              <a href="#"><i class="fa fa-youtube"> </i></a>
-              <a href="#"><i class="fa fa-linkedin"> </i></a>
-              <a href="#"><i class="fa fa-dribble"> </i></a>
+        </div>
+        <div class="home--profile__card__socials d-flex mt-3 justify-content-center">
+          <a href="#"><i class="fa fa-facebook"> </i></a>
+          <a href="#"><i class="fa fa-youtube"> </i></a>
+          <a href="#"><i class="fa fa-linkedin"> </i></a>
+          <a href="#"><i class="fa fa-dribble"> </i></a>
 
-            </div>
-     </div>
+        </div>
+      </div>
     </div>
     <div class="col-12 col-md-7 mt-3 mt-sm-0 images--carousel">
-<app-image-carousel></app-image-carousel>
+      <app-image-carousel></app-image-carousel>
 
     </div>
   </div>

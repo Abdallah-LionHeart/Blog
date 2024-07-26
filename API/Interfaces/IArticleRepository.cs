@@ -17,7 +17,7 @@ namespace API.Interfaces
         Task RemoveVideo(int id);
         Task<Image> GetImageById(int id);
         Task<Video> GetVideoById(int id);
-        Task<PaginatedResult<Article>> GetPaginated(ArticleParams articleParams);
-        Task<PaginatedResult<Article>> SearchArticles(ArticleParams articleParams, string searchTerm, string filter);
+        Task<PagedList<Article>> GetAllArticles(ArticleParams articleParams);
+        Task<PagedList<Article>> SearchArticles(ArticleParams articleParams, string searchTerm, string filter);
     }
 }

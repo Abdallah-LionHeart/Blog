@@ -1,69 +1,46 @@
-<!-- <div class="container" #container>
- <div class="left" *ngIf="totalPages > 1" (click)="currentPage != 1 && changePage(-1)" [ngClass]="{'disabled': currentPage === 1}"></div>
- <div class="cards" [ngClass]="{'w-100': totalPages === 1}">
-  <div class="overflow" [ngStyle]="{'width': overflowWidth, 'left': pagePosition}">
-   <div class="card" *ngFor="let event of events" [ngStyle]="{'width': cardWidth || 100}">
-    <div class="card-body">
-     <h5 class="card-title">{{ event.title }}</h5>
-     <p class="card-text">{{ event.content }}</p>
-     <p class="card-text"><small class="text-muted">Published on: {{ event.publishDate | date:'longDate' }}</small></p>
-     <div *ngFor="let image of event.images">
-      <img [src]="image.url" class="img-fluid" alt="Event Image">
-     </div>
-     <div *ngFor="let video of event.videos">
-      <video *ngIf="!video.isExternal" [src]="video.url" controls class="img-fluid"></video>
-      <div *ngIf="video.isExternal" [innerHTML]="getVideoEmbed(video.url)"></div>
-     </div>
-    </div>
-   </div>
-  </div>
- </div>
- <div class="right" *ngIf="totalPages > 1" (click)="currentPage != totalPages && changePage(+1)" [ngClass]="{'disabled': currentPage === totalPages}"></div>
-</div>
- -->
 <div class="artical--events pb-5 pt-5 mt-5">
-<div class="container">
-  <h2 class="event--tite text-center h1 fw-bolder mb-5 fs-3">Our Popular Events</h2>
- <div class="carousel-container ">
-  <div class="owl-carousel owl-theme">
-    <div class="item" *ngFor="let card of events">
-      <div class="card border-0 shadow ">
-        <img [src]="card.image" alt="Card Image" class="card-image img-fluid">
-        <div class="card-content">
-          <div class="event--info text-left">
-            <div>
-              <h2 class="fw-bold">{{ card.title }}</h2>
-              <p class="d-flex justify-content-between align-items-center">
-                <span class="text-black">Published on :</span>
-                <span>
-                {{ card.date }} ago
-              </span>
-              </p>
-            </div>
-            <div class="event--action mt-4 d-flex justify-content-between align-items-center">
-              <div class="d-flex">
-              <button class="btn  btn-icon me-3 " style="background-color: #ea4c89; color:#fff">
-                <fa-icon [icon]="faEdit"></fa-icon> <span class="ms-1"> Edit</span>
-              </button>
+  <div class="container">
+    <h2 class="event--tite text-center h1 fw-bolder mb-5 fs-3">Our Popular Events</h2>
+    <div class="carousel-container ">
+      <div class="owl-carousel owl-theme">
+        <div class="item" *ngFor="let card of events">
+          <div class="card border-0 shadow ">
+            <img [src]="card.image" alt="Card Image" class="card-image img-fluid">
+            <div class="card-content">
+              <div class="event--info text-left">
+                <div>
+                  <h2 class="fw-bold">{{ card.title }}</h2>
+                  <p class="d-flex justify-content-between align-items-center">
+                    <span class="text-black">Published on :</span>
+                    <span>
+                      {{ card.date }} ago
+                    </span>
+                  </p>
+                </div>
+                <div class="event--action mt-4 d-flex justify-content-between align-items-center">
+                  <div class="d-flex">
+                    <button class="btn  btn-icon me-3 " style="background-color: #ea4c89; color:#fff">
+                      <fa-icon [icon]="faEdit"></fa-icon> <span class="ms-1"> Edit</span>
+                    </button>
 
-              <button class="btn btn-secondary btn-icon ">
-                <fa-icon [icon]="faCircleInfo"></fa-icon> <span class="ms-1"> Details</span>
-              </button>
+                    <button class="btn btn-secondary btn-icon ">
+                      <fa-icon [icon]="faCircleInfo"></fa-icon> <span class="ms-1"> Details</span>
+                    </button>
 
-             </div>
-             <span class=" text-primary text-center ms-5" >
-              <i class="bi bi-facebook " style="font-size: 25px;"></i><span class="ms-1"> </span>
-            </span>
+                  </div>
+                  <span class=" text-primary text-center ms-5">
+                    <i class="bi bi-facebook " style="font-size: 25px;"></i><span class="ms-1"> </span>
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
+      <div class="custom-nav">
+        <button (click)="prevSlide()"> <fa-icon [icon]="faArrowLeftLong"></fa-icon></button>
+        <button (click)="nextSlide()"> <fa-icon [icon]="faArrowRightLong"></fa-icon></button>
+      </div>
     </div>
   </div>
-  <div class="custom-nav">
-    <button (click)="prevSlide()">  <fa-icon [icon]="faArrowLeftLong"></fa-icon></button>
-    <button (click)="nextSlide()">  <fa-icon [icon]="faArrowRightLong"></fa-icon></button>
-  </div>
-</div>
-</div>
 </div>

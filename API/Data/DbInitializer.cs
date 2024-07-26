@@ -1,5 +1,6 @@
 using API.Data;
 using API.Entities;
+using CloudinaryDotNet;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -81,165 +82,142 @@ public static class DbInitializer
         if (!await context.Articles.AnyAsync())
         {
             var articles = new List<Article>
-{
-    new Article
-    {
-        Title = "Event Article 1",
-        Content = "Details about the first event.",
-        Headline = "Event Headline 1",
-        IsEvent = true,
-        FacebookLink = "http://facebook.com/eventarticle1",
-        YouTubeLink = "http://youtube.com/eventarticle1"
-    },
-    new Article
-    {
-        Title = "Event Article 2",
-        Content = "Details about the second event.",
-        Headline = "Event Headline 2",
-        IsEvent = true,
-        FacebookLink = "http://facebook.com/eventarticle2",
-        YouTubeLink = "http://youtube.com/eventarticle2"
-    },
-    new Article
-    {
-        Title = "Event Article 3",
-        Content = "Details about the third event.",
-        Headline = "Event Headline 3",
-        IsEvent = true,
-        FacebookLink = "http://facebook.com/eventarticle3",
-        YouTubeLink = "http://youtube.com/eventarticle3"
-    },
-    new Article
-    {
-        Title = "Event Article 4",
-        Content = "Details about the fourth event.",
-        Headline = "Event Headline 4",
-        IsEvent = true,
-        FacebookLink = "http://facebook.com/eventarticle4",
-        YouTubeLink = "http://youtube.com/eventarticle4"
-    },
-    new Article
-    {
-        Title = "Event Article 5",
-        Content = "Details about the fifth event.",
-        Headline = "Event Headline 5",
-        IsEvent = true,
-        FacebookLink = "http://facebook.com/eventarticle5",
-        YouTubeLink = "http://youtube.com/eventarticle5"
-    },
-    new Article
-    {
-        Title = "Event Article 6",
-        Content = "Details about the sixth event.",
-        Headline = "Event Headline 6",
-        IsEvent = true,
-        FacebookLink = "http://facebook.com/eventarticle6",
-        YouTubeLink = "http://youtube.com/eventarticle6"
-    },
-    new Article
-    {
-        Title = "Event Article 7",
-        Content = "Details about the seventh event.",
-        Headline = "Event Headline 7",
-        IsEvent = true,
-        FacebookLink = "http://facebook.com/eventarticle7",
-        YouTubeLink = "http://youtube.com/eventarticle7"
-    },
-    new Article
-    {
-        Title = "Event Article 8",
-        Content = "Details about the eighth event.",
-        Headline = "Event Headline 8",
-        IsEvent = true,
-        FacebookLink = "http://facebook.com/eventarticle8",
-        YouTubeLink = "http://youtube.com/eventarticle8"
-    },
-    new Article
-    {
-        Title = "Event Article 9",
-        Content = "Details about the ninth event.",
-        Headline = "Event Headline 9",
-        IsEvent = true,
-        FacebookLink = "http://facebook.com/eventarticle9",
-        YouTubeLink = "http://youtube.com/eventarticle9"
-    },
-    new Article
-    {
-        Title = "Event Article 10",
-        Content = "Details about the tenth event.",
-        Headline = "Event Headline 10",
-        IsEvent = true,
-        FacebookLink = "http://facebook.com/eventarticle10",
-        YouTubeLink = "http://youtube.com/eventarticle10"
-    },
-    new Article
-    {
-        Title = "Regular Article 1",
-        Content = "This is the first regular article.",
-        Headline = "Regular Headline 1",
-        IsEvent = false,
-        FacebookLink = "http://facebook.com/regulararticle1",
-        YouTubeLink = "http://youtube.com/regulararticle1"
-    },
-    new Article
-    {
-        Title = "Regular Article 2",
-        Content = "This is the second regular article.",
-        Headline = "Regular Headline 2",
-        IsEvent = false,
-        FacebookLink = "http://facebook.com/regulararticle2",
-        YouTubeLink = "http://youtube.com/regulararticle2"
-    },
-    new Article
-    {
-        Title = "Regular Article 3",
-        Content = "This is the third regular article.",
-        Headline = "Regular Headline 3",
-        IsEvent = false,
-        FacebookLink = "http://facebook.com/regulararticle3",
-        YouTubeLink = "http://youtube.com/regulararticle3"
-    },
-    new Article
-    {
-        Title = "Regular Article 4",
-        Content = "This is the fourth regular article.",
-        Headline = "Regular Headline 4",
-        IsEvent = false,
-        FacebookLink = "http://facebook.com/regulararticle4",
-        YouTubeLink = "http://youtube.com/regulararticle4"
-    },
-    new Article
-    {
-        Title = "Regular Article 5",
-        Content = "This is the fifth regular article.",
-        Headline = "Regular Headline 5",
-        IsEvent = false,
-        FacebookLink = "http://facebook.com/regulararticle5",
-        YouTubeLink = "http://youtube.com/regulararticle5"
-    }
-};
-            context.Articles.AddRange(articles);
-            await context.SaveChangesAsync();
-
-            // Seed Images and Videos for Article
-            foreach (var article in articles)
             {
-                var image = new Image
+                new Article
                 {
-                    Url = "https://plus.unsplash.com/premium_photo-1688561384438-bfa9273e2c00?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                    ArticleId = article.Id
-                };
-
-                var video = new Video
+                    Title = "Vestibulum eu leo accumsan, congue erat fermentum, blandit magna.",
+                    Content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
+                    Headline = "Vivamus porta ligula id nisl mattis, ac ullamcorper erat ultrices.",
+                    IsEvent = true,
+                    FacebookLink = "http://facebook.com/eventarticle1",
+                    YouTubeLink = "https://youtu.be/xk4RK2oGa3c?si=D7LhDY8mzvg4P9uf",
+                    Images = new List<Image>
+                    {
+                        new Image { Url = "https://images.pexels.com/photos/27052153/pexels-photo-27052153/free-photo-of-relax.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load" },
+                        new Image { Url = "https://images.pexels.com/photos/26997896/pexels-photo-26997896/free-photo-of-woman-in-t-shirt-and-skirt-walking-by-field-in-countryside.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load" }
+                    },
+                    Videos = new List<Video>
+                    {
+                        new Video { Url = "https://videos.pexels.com/video-files/3226171/3226171-sd_640_360_24fps.mp4", IsExternal = true }
+                    }
+                },
+                new Article
                 {
-                    Url = "https://videocdn.cdnpk.net/videos/052a09da-c166-402b-b10d-cffd8756e747/horizontal/previews/videvo_watermarked/large.mp4",
-                    IsExternal = true,
-                    ArticleId = article.Id
-                };
+                    Title = "Aenean quis turpis eget dolor sodales vestibulum sagittis ullamcorper nisi.",
+                    Content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam congue lacus urna, ut eleifend lacus faucibus eget. Praesent bibendum commodo metus non luctus. Integer luctus nunc nulla, ut vestibulum dolor tincidunt ut. Nam pharetra velit ut neque tempus, vel rutrum velit congue. Curabitur a ultrices ex. Mauris libero velit, facilisis vitae enim non, rhoncus viverra massa. Phasellus sit amet consequat mi, et varius purus. Maecenas in placerat neque, sed congue sapien. In a ultrices velit. Aenean consequat neque sed magna pretium, at porttitor augue rutrum. Praesent iaculis sodales sem, id tempor elit porttitor ut. Sed placerat dictum nisi, eget sollicitudin.",
+                    Headline = "Proin fermentum arcu nec risus condimentum, ut vestibulum dolor suscipit.",
+                    IsEvent = true,
+                    FacebookLink = "",
+                    YouTubeLink = "https://youtu.be/ryQIbcprzNA?si=VkzX-cyrtN10rDm-",
+                    Images = new List<Image>
+                    {
+                        new Image {Url = "https://images.pexels.com/photos/27200209/pexels-photo-27200209/free-photo-of-a-street-with-a-tree-in-bloom-and-people-walking.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load"},
+                    },
+                    Videos = new List<Video>()
+                },
+                new Article
+                {
+                    Title = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et ante orci. Maecenas at convallis purus, a suscipit mi. In hac habitasse platea dictumst. Vivamus tincidunt sapien non tortor sollicitudin",
+                    Content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas lacus nunc, congue quis aliquam vitae, sagittis ut dui. Cras vel nulla accumsan, ullamcorper magna non, efficitur lacus. Suspendisse gravida, quam ut pretium dapibus, nunc lectus dapibus quam, sed consequat mi diam eu nibh. Nullam eleifend nisl diam, in iaculis dui euismod venenatis. Etiam efficitur elementum ipsum, non sagittis neque rutrum a. Vestibulum a tempor justo, eget porttitor diam. Etiam non viverra eros. Morbi in auctor enim, et imperdiet odio. Sed.",
+                    Headline = "Proin fermentum arcu nec risus condimentum, ut vestibulum dolor suscipit.",
+                    IsEvent = true,
+                    FacebookLink = "",
+                    YouTubeLink = "https://youtu.be/ryQIbcprzNA?si=VkzX-cyrtN10rDm-",
+                    Images = new List<Image>
+                    {
+                        new Image {Url = "https://images.pexels.com/photos/26976861/pexels-photo-26976861/free-photo-of-rear-view-of-a-woman-wrapped-in-a-white-shawl-standing-on-the-sand-dune.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load"},
+                    },
+                    Videos = new List<Video>
+                    {
+                        new Video { Url = "https://videos.pexels.com/video-files/1093662/1093662-sd_640_360_30fps.mp4", IsExternal = false },
+                        new Video { Url = "https://videos.pexels.com/video-files/2759477/2759477-sd_640_360_30fps.mp4", IsExternal = false }
+                    }
+                },
+                new Article
+                {
+                    Title = "Proin fermentum arcu nec risus condimentum, ut vestibulum dolor suscipit.",
+                    Content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
+                    Headline = "Proin fermentum arcu nec risus condimentum, ut vestibulum dolor suscipit.",
+                    IsEvent = false,
+                    FacebookLink = "",
+                    YouTubeLink = "https://youtu.be/MG1ErejY3jw?si=4sRDu8fnLtwHxVTG",
+                    Images = new List<Image>
+                    {
+                        new Image { Url = "https://images.pexels.com/photos/18391175/pexels-photo-18391175/free-photo-of-young-woman-in-a-suit-standing-on-the-pavement-in-city.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load" }
+                    },
+                    Videos = new List<Video>()
+                },
+                new Article
+                {
+                    Title = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et ante orci. Maecenas at convallis purus, a suscipit mi. In hac habitasse platea dictumst. Vivamus tincidunt sapien non tortor sollicitudin",
+                    Content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam congue lacus urna, ut eleifend lacus faucibus eget. Praesent bibendum commodo metus non luctus. Integer luctus nunc nulla, ut vestibulum dolor tincidunt ut. Nam pharetra velit ut neque tempus, vel rutrum velit congue. Curabitur a ultrices ex. Mauris libero velit, facilisis vitae enim non, rhoncus viverra massa. Phasellus sit amet consequat mi, et varius purus. Maecenas in placerat neque, sed congue sapien. In a ultrices velit. Aenean consequat neque sed magna pretium, at porttitor augue rutrum. Praesent iaculis sodales sem, id tempor elit porttitor ut. Sed placerat dictum nisi, eget sollicitudin.",
+                    Headline = "Regular Headline 2",
+                    IsEvent = false,
+                    FacebookLink = "",
+                    YouTubeLink = "",
+                    Images = new List<Image>(),
+                    Videos = new List<Video>()
+                },
+                new Article
+                {
+                    Title = "Regular Article 2",
+                    Content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
+                    Headline = "Regular Headline 2",
+                    IsEvent = false,
+                    FacebookLink = "",
+                    YouTubeLink = "https://youtu.be/x_GA9_Eitic?si=RsoXAdxSv-TRMICW",
+                    Images = new List<Image>(),
+                    Videos = new List<Video>()
+                },
+                new Article
+                {
+                    Title = "Regular Article 2",
+                    Content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
+                    Headline = "Regular Headline 2",
+                    IsEvent = false,
+                    FacebookLink = "",
+                    YouTubeLink = "",
+                    Images = new List<Image>(),
+                    Videos = new List<Video>
+                    {
+                        new Video {Url ="https://videos.pexels.com/video-files/3126661/3126661-sd_640_360_24fps.mp4", IsExternal = false },
+                        new Video {Url ="https://youtu.be/lWo2WLVCHfE?si=sXL50kFjdS9KOHFh", IsExternal = true }
+                    }
+                },
+                new Article
+                {
+                    Title = "Regular Article 2",
+                    Content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et ante orci. Maecenas at convallis purus, a suscipit mi. In hac habitasse platea dictums",
+                    Headline = "Regular Headline 2",
+                    IsEvent = false,
+                    FacebookLink = "",
+                    YouTubeLink = "https://youtu.be/dlHtjDc1z8E?si=uIRdU6tes4OYvKAD",
+                    Images = new List<Image>
+                    {
+                        new Image { Url ="https://images.pexels.com/photos/27077981/pexels-photo-27077981/free-photo-of-currants-on-a-table.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load"}
+                    },
+                    Videos = new List<Video>()
+                },
+                new Article
+                {
+                    Title = "Vestibulum eu leo accumsan, congue erat fermentum, blandit magna.",
+                    Content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
+                    Headline = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et ante orci. Maecenas at convallis purus, a suscipit",
+                    IsEvent = false,
+                    FacebookLink = "",
+                    YouTubeLink = "https://youtu.be/dlHtjDc1z8E?si=uIRdU6tes4OYvKAD",
+                    Images = new List<Image>
+                    {
+                        new Image { Url ="https://images.pexels.com/photos/27077981/pexels-photo-27077981/free-photo-of-currants-on-a-table.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load"}
+                    },
+                    Videos = new List<Video>
+                    {
+                        new Video {Url ="https://videos.pexels.com/video-files/3058708/3058708-sd_640_360_24fps.mp4"}
+                    }
+                }
+            };
 
-                context.Images.Add(image);
-                context.Videos.Add(video);
-            }
+            context.Articles.AddRange(articles);
             await context.SaveChangesAsync();
         }
     }

@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { take } from 'rxjs';
-import { ArticleDto } from 'src/app/appModels/articleDto';
+import { Article } from 'src/app/appModels/article';
+import { ArticleParams } from 'src/app/appModels/articleParams';
+import { Pagination } from 'src/app/appModels/Pagination';
 import { User } from 'src/app/appModels/user';
 import { ArticleService } from 'src/app/appService/article.service';
-import { Artical } from 'src/app/interfaces/artical';
 
 
 @Component({
@@ -12,434 +13,132 @@ import { Artical } from 'src/app/interfaces/artical';
   styleUrls: ['./article-list.component.scss']
 })
 export class ArticleListComponent implements OnInit {
-  // articles!: Article[];
-  // article!: ArticleDto;
-  // user!: User;
+  @ViewChild('search') searchTerm!: ElementRef;
+  pagination!: Pagination;
+  articleParams!: ArticleParams;
+  articles!: Article[];
+  article!: Article;
+  user!: User;
+  selectedFilter: string = 'recently';
+  applyButtonHidden = false;
+  resetButtonHidden = true;
+  isFilterApplied = false;
+  searchActive: boolean = false;
 
-  // constructor(private articleService: ArticleService) { }
-
-  // ngOnInit() {
-  //   this.articleService.getAllArticles().subscribe({
-  //     next: (data: Article[]) => {
-  //       this.articles = data || [];
-  //     }
-  //   })
-  // }
-
-  // loadArticle(id: number) {
-  //   this.articleService.getArticleById(this.article.id).pipe(take(1)).subscribe({
-  //     next: (response: any) => this.article = response
-  //   })
-  // }
-
-  // loadArticles() {
-  //   this.articleService.getAllArticles().subscribe((data: Article[]) => {
-  //     this.articles = data;
-  //   });
-  // }
-
-
-  // getVideoEmbed(link: string): string {
-  //   if (link.includes('youtube.com')) {
-  //     const videoId = link.split('v=')[1];
-  //     return `<iframe width="560" height="315" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>`;
-  //   }
-  //   // Add more cases for different platforms if needed
-  //   return `<a href="${link}" target="_blank">${link}</a>`;
-  // }
-
-  // getArticleClass(article: any): string {
-  //   if (article.videos.length > 0 || article.images.length > 1) {
-  //     return 'col-12';
-  //   } else {
-  //     return 'col-6';
-  //   }
-  // }ngOnInit(): void {
-    
-// }
-  articles: Artical[] = [
-    {
-      title: "Our top 10 Javascript frameworks to use",
-      date: "2024-01-13",
-      images: [
-        "assets/images/event1.jpeg",
-        "assets/images/event2.jpeg"
-      ],
-      youtube: [
-        "https://www.youtube.com/embed/dQw4w9WgXcQ"
-      ],
-      author: "Drew Cano"
-    },
-    {
-      title: "Our top 10 Javascript frameworks to use",
-      date: "2024-06-25",
-      images: [
-        "assets/images/event1.jpeg",
-        "assets/images/event2.jpeg"
-      ],
-      youtube: [
-        "https://www.youtube.com/embed/dQw4w9WgXcQ"
-      ],
-      author: "Drew Cano"
-    },
-    {
-      title: "Our top 10 Javascript frameworks to use",
-      date: "13 Jan 2024",
-      images: [
-        "assets/images/event1.jpeg",
-        "assets/images/event2.jpeg"
-      ],
-      youtube: [
-        "https://www.youtube.com/embed/dQw4w9WgXcQ"
-      ],
-      author: "Drew Cano"
-    },
-    {
-      title: "Our top 10 Javascript frameworks to use",
-      date: "2023-01-13",
-      images: [
-        "assets/images/event1.jpeg",
-        "assets/images/event2.jpeg"
-      ],
-      youtube: [
-        "https://www.youtube.com/embed/dQw4w9WgXcQ"
-      ],
-      author: "Drew Cano"
-    },
-    {
-      title: "Our top 10 Javascript frameworks to use",
-      date: "13 Jan 2024",
-      images: [
-        "assets/images/event1.jpeg",
-        "assets/images/event2.jpeg"
-      ],
-      youtube: [
-        "https://www.youtube.com/embed/dQw4w9WgXcQ"
-      ],
-      author: "Drew Cano"
-    },
-    {
-      title: "Our top 10 Javascript frameworks to use",
-      date: "2024-07-25",
-      images: [
-        "assets/images/event4.jpeg",
-        "assets/images/event2.jpeg"
-      ],
-      youtube: [
-        "https://www.youtube.com/embed/dQw4w9WgXcQ"
-      ],
-      author: "Drew Cano"
-    },
-    {
-      title: "Our top 10 Javascript frameworks to use",
-      date: "13 Jan 2024",
-      images: [
-        "assets/images/event4.jpeg",
-        "assets/images/event2.jpeg"
-      ],
-      youtube: [
-        "https://www.youtube.com/embed/dQw4w9WgXcQ"
-      ],
-      author: "Drew Cano"
-    },
-    {
-      title: "Our top 10 Javascript frameworks to use",
-      date: "13 Jan 2024",
-      images: [
-        "assets/images/event4.jpeg",
-        "assets/images/event2.jpeg"
-      ],
-      youtube: [
-        "https://www.youtube.com/embed/dQw4w9WgXcQ"
-      ],
-      author: "Drew Cano"
-    },
-    {
-      title: "Hello From new arrtical ",
-      date: "13 Jan 2024",
-      images: [
-        "assets/images/event4.jpeg",
-        "assets/images/event2.jpeg"
-      ],
-      youtube: [
-        "https://www.youtube.com/embed/dQw4w9WgXcQ"
-      ],
-      author: "Drew Cano"
-    },
-    {
-      title: "Our top 10 Javascript frameworks to use",
-      date: "13 Jan 2024",
-      images: [
-        "assets/images/event4.jpeg",
-        "assets/images/event2.jpeg"
-      ],
-      youtube: [
-        "https://www.youtube.com/embed/dQw4w9WgXcQ"
-      ],
-      author: "Drew Cano"
-    },
-    {
-      title: "Our top 10 Javascript frameworks to use",
-      date: "13 Jan 2024",
-      images: [
-        "assets/images/event3.jpeg",
-        "assets/images/event2.jpeg"
-      ],
-      youtube: [
-        "https://www.youtube.com/embed/dQw4w9WgXcQ"
-      ],
-      author: "Drew Cano"
-    },
-    {
-      title: "Our top 10 Javascript frameworks to use",
-      date: "13 Jan 2024",
-      images: [
-        "assets/images/event3.jpeg",
-        "assets/images/event2.jpeg"
-      ],
-      youtube: [
-        "https://www.youtube.com/embed/dQw4w9WgXcQ"
-      ],
-      author: "Drew Cano"
-    },
-    {
-      title: "Our top 10 Javascript frameworks to use",
-      date: "13 Jan 2024",
-      images: [
-        "assets/images/event3.jpeg",
-        "assets/images/event2.jpeg"
-      ],
-      youtube: [
-        "https://www.youtube.com/embed/dQw4w9WgXcQ"
-      ],
-      author: "Drew Cano"
-    },
-    {
-      title: "Our top 10 Javascript frameworks to use",
-      date: "13 Jan 2024",
-      images: [
-        "assets/images/event3.jpeg",
-        "assets/images/event2.jpeg"
-      ],
-      youtube: [
-        "https://www.youtube.com/embed/dQw4w9WgXcQ"
-      ],
-      author: "Drew Cano"
-    },
-    {
-      title: "Our top 10 Javascript frameworks to use",
-      date: "13 Jan 2024",
-      images: [
-        "assets/images/event3.jpeg",
-        "assets/images/event2.jpeg"
-      ],
-      youtube: [
-        "https://www.youtube.com/embed/dQw4w9WgXcQ"
-      ],
-      author: "Drew Cano"
-    },
-    {
-      title: "Our top 10 Javascript frameworks to use",
-      date: "13 Jan 2024",
-      images: [
-        "assets/images/event3.jpeg",
-        "assets/images/event2.jpeg"
-      ],
-      youtube: [
-        "https://www.youtube.com/embed/dQw4w9WgXcQ"
-      ],
-      author: "Drew Cano"
-    },
-    {
-      title: "Our top 10 Javascript frameworks to use",
-      date: "13 Jan 2024",
-      images: [
-        "assets/images/event3.jpeg",
-        "assets/images/event2.jpeg"
-      ],
-      youtube: [
-        "https://www.youtube.com/embed/dQw4w9WgXcQ"
-      ],
-      author: "Drew Cano"
-    },
-    {
-      title: "Our top 10 Javascript frameworks to use",
-      date: "13 Jan 2024",
-      images: [
-        "assets/images/event1.jpeg",
-        "assets/images/event2.jpeg"
-      ],
-      youtube: [
-        "https://www.youtube.com/embed/dQw4w9WgXcQ"
-      ],
-      author: "Drew Cano"
-    },
-    {
-      title: "Our top 10 Javascript frameworks to use",
-      date: "13 Jan 2024",
-      images: [
-        "assets/images/event1.jpeg",
-        "assets/images/event2.jpeg"
-      ],
-      youtube: [
-        "https://www.youtube.com/embed/dQw4w9WgXcQ"
-      ],
-      author: "Drew Cano"
-    },
-    {
-      title: "Our top 10 Javascript frameworks to use",
-      date: "13 Jan 2024",
-      images: [
-        "assets/images/event1.jpeg",
-        "assets/images/event2.jpeg"
-      ],
-      youtube: [
-        "https://www.youtube.com/embed/dQw4w9WgXcQ"
-      ],
-      author: "Drew Cano"
-    },
-    {
-      title: "Our top 10 Javascript frameworks to use",
-      date: "13 Jan 2024",
-      images: [
-        "assets/images/event1.jpeg",
-        "assets/images/event2.jpeg"
-      ],
-      youtube: [
-        "https://www.youtube.com/embed/dQw4w9WgXcQ"
-      ],
-      author: "Drew Cano"
-    },
-    {
-      title: "Our top 10 Javascript frameworks to use",
-      date: "13 Jan 2024",
-      images: [
-        "assets/images/event1.jpeg",
-        "assets/images/event2.jpeg"
-      ],
-      youtube: [
-        "https://www.youtube.com/embed/dQw4w9WgXcQ"
-      ],
-      author: "Drew Cano"
-    },
-    {
-      title: "Our top 10 Javascript frameworks to use",
-      date: "13 Jan 2024",
-      images: [
-        "assets/images/event1.jpeg",
-        "assets/images/event2.jpeg"
-      ],
-      youtube: [
-        "https://www.youtube.com/embed/dQw4w9WgXcQ"
-      ],
-      author: "Drew Cano"
-    },
-    {
-      title: "Our top 10 Javascript frameworks to use",
-      date: "13 Jan 2024",
-      images: [
-        "assets/images/event1.jpeg",
-        "assets/images/event2.jpeg"
-      ],
-      youtube: [
-        "https://www.youtube.com/embed/dQw4w9WgXcQ"
-      ],
-      author: "Drew Cano"
-    },
-    {
-      title: "Our top 10 Javascript frameworks to use",
-      date: "13 Jan 2024",
-      images: [
-        "assets/images/event1.jpeg",
-        "assets/images/event2.jpeg"
-      ],
-      youtube: [
-        "https://www.youtube.com/embed/dQw4w9WgXcQ"
-      ],
-      author: "Drew Cano"
-    },
-    {
-      title: "Our top 10 Javascript frameworks to use",
-      date: "13 Jan 2024",
-      images: [
-        "assets/images/event1.jpeg",
-        "assets/images/event2.jpeg"
-      ],
-      youtube: [
-        "https://www.youtube.com/embed/dQw4w9WgXcQ"
-      ],
-      author: "Drew Cano"
-    },
-    {
-      title: "Our top 10 Javascript frameworks to use",
-      date: "13 Jan 2024",
-      images: [
-        "assets/images/event1.jpeg",
-        "assets/images/event2.jpeg"
-      ],
-      youtube: [
-        "https://www.youtube.com/embed/dQw4w9WgXcQ"
-      ],
-      author: "Drew Cano"
-    },
-    {
-      title: "Our top 10 Javascript frameworks to use",
-      date: "13 Jan 2024",
-      images: [
-        "assets/images/event1.jpeg",
-        "assets/images/event2.jpeg"
-      ],
-      youtube: [
-        "https://www.youtube.com/embed/dQw4w9WgXcQ"
-      ],
-      author: "Drew Cano"
-    },
-  ];
-
-  filteredArticles: Artical[] = [];
-  currentPage: number = 1;
-  itemsPerPage: number = 6;
-
-  ngOnInit(): void {
-    this.filteredArticles = this.articles;
+  constructor(private articleService: ArticleService) {
+    this.articleParams = this.articleService.getArticleParams();
   }
 
-  get paginatedArticles(): Artical[] {
-    const start = (this.currentPage - 1) * this.itemsPerPage;
-    const end = start + this.itemsPerPage;
-    return this.filteredArticles.slice(start, end);
-  }
-
-  onPageChange(page: number): void {
-    this.currentPage = page;
-  }
-
-  filterArticles(filter: string): void {
-    const now = new Date();
-    this.filteredArticles = this.articles.filter(article => {
-      const articleDate = new Date(article.date);
-      switch (filter) {
-        case 'recently':
-          return articleDate >= new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000); // Last 7 days
-        case 'lastWeek':
-          return articleDate >= new Date(now.getTime() - 14 * 24 * 60 * 60 * 1000) &&
-                 articleDate < new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-        case 'lastMonth':
-          return articleDate >= new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000) &&
-                 articleDate < new Date(now.getTime() - 14 * 24 * 60 * 60 * 1000);
-        case 'oldest':
-          return articleDate < new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
-        default:
-          return true;
+  ngOnInit() {
+    this.loadArticles();
+    this.articleService.getAllArticles().subscribe({
+      next: (data: Article[]) => {
+        this.articles = data || [];
       }
-    });
+    })
   }
 
-  searchArticles(event: any): void {
-    const searchTerm = event.target.value.toLowerCase();
-    this.filteredArticles = this.articles.filter(article =>
-      article.title.toLowerCase().includes(searchTerm) ||
-      article.author.toLowerCase().includes(searchTerm)
-    );
+  loadArticle(id: number) {
+    this.articleService.getArticleById(this.article.id).pipe(take(1)).subscribe({
+      next: (response: any) => this.article = response
+    })
   }
+
+  loadArticles() {
+    this.articleService.getPaginatedArticles(this.articleParams).subscribe({
+      next: response => {
+        if (response.result && response.pagination) {
+          this.articles = response.result;
+          this.pagination = response.pagination;
+        }
+      }
+    })
+  }
+
+  getVideoEmbed(link: string): string {
+    if (link.includes('youtube.com')) {
+      const videoId = link.split('v=')[1];
+      return `<iframe width="560" height="315" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>`;
+    }
+    // Add more cases for different platforms if needed
+    return `<a href="${link}" target="_blank">${link}</a>`;
+  }
+
+  // filterArticles(filter: string) {
+  //   this.selectedFilter = filter;
+  //   this.articleParams.orderBy = filter;
+  //   this.articleService.setArticleParams(this.articleParams);
+  //   this.loadArticles();
+  // }
+  filterArticles(event: Event) {
+    const selectElement = event.target as HTMLSelectElement;
+    const filter = selectElement.value;
+    this.selectedFilter = filter;
+    this.articleParams.orderBy = filter;
+    this.articleService.setArticleParams(this.articleParams);
+    this.loadArticles();
+  }
+
+  resetFilters() {
+    this.articleParams.orderBy = 'recently';
+    this.articleService.setArticleParams(this.articleParams);
+    // this.articleParams = new ArticleParams();
+    this.loadArticles();
+    this.isFilterApplied = false;
+  }
+
+  onSearch() {
+    const params = this.articleService.getArticleParams();
+    params.search = this.searchTerm.nativeElement.value;
+    // params.pageNumber = 1;
+    this.articleService.setArticleParams(params);
+    this.articleParams = params;
+    this.loadArticles();
+    this.searchActive = true;
+  }
+
+  onReset() {
+    if (this.searchTerm) this.searchTerm.nativeElement.value = '';
+    this.articleParams = new ArticleParams();
+    this.articleService.setArticleParams(this.articleParams);
+    this.loadArticles();
+    this.searchActive = true;
+  }
+
+  PageChanged(event: any) {
+    const params = this.articleService.getArticleParams();
+    if (params.pageNumber !== event) {
+      params.pageNumber = event;
+      this.articleService.setArticleParams(params);
+      this.articleParams = params;
+      this.loadArticles();
+    }
+  }
+
+  onPageChange(page: number) {
+    if (this.articleParams.pageNumber !== page) {
+      this.articleParams.pageNumber = page;
+      this.loadArticles();
+    }
+  }
+
 }
+
+
+
+
+
+
+// resetFilters() {
+//   this.articleParams = new ArticleParams();
+//   this.loadArticles();
+//   this.applyButtonHidden = false;
+//   this.resetButtonHidden = true;
+//   this.isFilterApplied = false;
+//   return this.articleParams;
+// }
+
+// applyFilters() {
+//   this.loadArticles();
+//   this.isFilterApplied = true;
+// }

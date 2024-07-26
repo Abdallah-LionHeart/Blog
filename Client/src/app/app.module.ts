@@ -1,8 +1,10 @@
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ConfirmLoginComponent } from './appAccount/confirm-login/confirm-login.component';
@@ -10,15 +12,18 @@ import { LoginComponent } from './appAccount/login/login.component';
 import { ResetPasswordConfirmComponent } from './appAccount/reset-password-confirm/reset-password-confirm.component';
 import { ResetPasswordComponent } from './appAccount/reset-password/reset-password.component';
 import { DashborardComponent } from './appAdmin/dashborard/dashborard.component';
+import { ArticleCardsComponent } from './appArticle/article-cards/article-cards.component';
 import { ArticleCreateComponent } from './appArticle/article-create/article-create.component';
 import { ArticleDetailsComponent } from './appArticle/article-details/article-details.component';
 import { ArticleEditComponent } from './appArticle/article-edit/article-edit.component';
 import { ArticleEventComponent } from './appArticle/article-event/article-event.component';
-import { ArticleFormComponent } from './appArticle/article-form/article-form.component';
 import { ArticleListComponent } from './appArticle/article-list/article-list.component';
+import { ArticlePagingComponent } from './appArticle/article-paging/article-paging.component';
 import { ArticleSearchComponent } from './appArticle/article-search/article-search.component';
 import { ArticleComponent } from './appArticle/article/article.component';
 import { HomeComponent } from './appHome/home/home.component';
+import { AboutComponent } from './appMain/about/about.component';
+import { ImageCarouselComponent } from './appMain/image-carousel/image-carousel.component';
 import { MainProfileComponent } from './appMain/main-profile/main-profile.component';
 import { ConfirmDialogComponent } from './appModals/confirm-dialog/confirm-dialog.component';
 import { SharedModule } from './appModule/shared.module';
@@ -27,24 +32,18 @@ import { BackgroundImagesComponent } from './appProfile/background-images/backgr
 import { ProfileImagesComponent } from './appProfile/profile-images/profile-images.component';
 import { ProfileComponent } from './appProfile/profile/profile.component';
 import { UserManagementComponent } from './appProfile/user-management/user-management.component';
+import { FooterComponent } from './appSection/footer/footer.component';
 import { HeaderComponent } from './appSection/header/header.component';
 import { SectionHeaderComponent } from './appSection/section-header/section-header.component';
-import {MatButtonModule} from '@angular/material/button';
-import { ImageCarouselComponent } from './appMain/main-profile/image-carousel/image-carousel.component';
-import { FooterComponent } from './footer/footer.component';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { ArticalItemComponent } from './appArticle/article-list/artical-item/artical-item.component';
 import { SafePipe } from './pipes/safe.pipe';
-import { PaginationItemComponent } from './appArticle/article-list/pagination-item/pagination-item.component';
 @NgModule({
-  declarations: [	
+  declarations: [
     AppComponent,
     LoginComponent,
     ProfileComponent,
     ResetPasswordComponent,
     DashborardComponent,
     ArticleComponent,
-    ArticleFormComponent,
     HomeComponent,
     NavComponent,
     ResetPasswordConfirmComponent,
@@ -63,11 +62,12 @@ import { PaginationItemComponent } from './appArticle/article-list/pagination-it
     HeaderComponent,
     SectionHeaderComponent,
     ImageCarouselComponent,
-      FooterComponent,
-      ArticalItemComponent,
-      SafePipe,
-      PaginationItemComponent
-   ],
+    FooterComponent,
+    SafePipe,
+    AboutComponent,
+    ArticleCardsComponent,
+    ArticlePagingComponent,
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

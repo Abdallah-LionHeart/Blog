@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { OwlOptions } from 'ngx-owl-carousel-o';
 import { BackgroundImage } from 'src/app/appModels/BackgroundImage';
 import { ProfileImage } from 'src/app/appModels/ProfileImage';
 import { User } from 'src/app/appModels/user';
@@ -14,77 +13,30 @@ export class MainProfileComponent implements OnInit {
   user!: User;
   backgroundImages: BackgroundImage[] = [];
   profileImage: ProfileImage | undefined;
+  profileImageUrl!: string;
   slidesStore: Array<{ id: number, src: string, alt: string, title: string }> = [];
 
-  customOptions: OwlOptions = {
-    loop: true,
-    mouseDrag: true,
-    touchDrag: true,
-    pullDrag: true,
-    // dots: true,
-    navSpeed: 700,
-    // autoplay: true,
-    // navText: ['', ''],
-    responsive: {
-      0: {
-        items: 1
-      },
-      400: {
-        items: 1
-      },
-      740: {
-        items: 1
-      },
-      940: {
-        items: 3
-      }
-    },
-    // nav: true
-  }
+
 
   constructor(private adminService: AdminService) { }
 
   ngOnInit() {
     const userId = 1; // Adjust this as needed
     this.loadUser(userId);
-    this.loadBackgroundImages(userId);
-    this.loadAllBackgroundImages();
     this.loadProfileImages();
   }
 
-  loadAllBackgroundImages() {
-    this.adminService.getAllBackgroundImages().subscribe({
-      next: (images: BackgroundImage[]) => {
-        this.backgroundImages = images || [];
-      }
-    })
-  }
 
   loadUser(userId: number) {
     this.adminService.getUser(userId).subscribe(user => {
       this.user = user;
     });
   }
-  loadBackgroundImages(userId: number) {
-    this.adminService.getBackgroundImages(userId).subscribe({
-      next: (images: any) => {
-        this.backgroundImages = images || [];
-      }
-    });
-  }
 
-  loadBackgroundImagess() {
-    this.adminService.getAllBackgroundImages().subscribe({
-      next: (images: BackgroundImage[]) => {
-        this.backgroundImages = images;
-      },
-      error: (err: any) => {
-        console.error('Error loading background images:', err);
-      },
-      complete: () => {
-        console.log('Background images loading completed');
-      }
-    });
+  loadProfileImage() {
+    if (this.user && this.user.profileImages && this.user.profileImages.length > 0) {
+      this.profileImageUrl = this.user.profileImages.find(img => img.isMain)?.url || this.user.profileImages[0].url;
+    }
   }
 
   loadProfileImages() {

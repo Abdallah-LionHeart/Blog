@@ -1,7 +1,0 @@
-<div class="pagination d-flex justify-content-between a">
-  <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1"> <fa-icon [icon]="faArrowLeftLong"></fa-icon> Previous </button>
-<div>  <ng-container *ngFor="let page of pages">
-  <button (click)="onPageChange(page)" [class.active]="page === currentPage " class="m-2" >{{ page }}</button>
-</ng-container></div>
-  <button (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === totalPages">Next <fa-icon [icon]="faArrowRightLong"> </fa-icon> </button>
-</div>

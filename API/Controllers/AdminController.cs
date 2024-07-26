@@ -61,6 +61,13 @@ namespace API.Controllers
             return Ok(images);
         }
 
+        [HttpGet("{userId}/background-images")]
+        public async Task<ActionResult<IEnumerable<BackgroundImageDto>>> GetUserBackgroundImages(int userId)
+        {
+            var images = await _userService.GetUserBackgroundImages(userId);
+            return Ok(images);
+        }
+
         [HttpGet("profile-images")]
         public async Task<ActionResult<IEnumerable<ProfileImageDto>>> GetAllProfileImages()
         {
@@ -112,14 +119,6 @@ namespace API.Controllers
             }
             await _userService.SetMainProfileImage(id);
             return NoContent();
-        }
-
-
-        [HttpGet("{userId}/background-images")]
-        public async Task<ActionResult<IEnumerable<BackgroundImage>>> GetUserBackgroundImages(int userId)
-        {
-            var images = await _userService.GetUserBackgroundImages(userId);
-            return Ok(images);
         }
 
         [HttpPost("{userId}/background-images")]

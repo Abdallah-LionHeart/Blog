@@ -1,56 +1,31 @@
-<!-- <div class="container">
- <h2>Articles</h2>
- <div *ngFor="let article of articles" [ngClass]="getArticleClass(article)" class="card mb-3">
-  <div class="card-body">
-   <h5 class="card-title">{{ article.title }}</h5>
-   <div class="row">
-    <div class="col-md-6 card-content">
-     <p class="card-text">{{ article.content }}</p>
-     <p class="card-text"><small class="text-muted">Published on: {{ article.publishDate | date:'longDate' }}</small></p>
-    </div>
-    <div class="col-md-6 card-media">
-     <div *ngIf="article.images.length > 0" class="media-slider">
-      <ng-container *ngFor="let image of article.images">
-       <img *ngIf="!article.videos.length" [src]="image.url" class="img-fluid" alt="Article Image">
-      </ng-container>
-     </div>
-     <div *ngIf="article.videos.length > 0" class="media-slider">
-      <ng-container *ngFor="let video of article.videos">
-       <video *ngIf="!video.isExternal" [src]="video.url" controls class="img-fluid"></video>
-       <div *ngIf="video.isExternal" [innerHTML]="getVideoEmbed(video.url)"></div>
-      </ng-container>
-     </div>
-    </div>
-   </div>
-   <div class="d-flex justify-content-between">
-    <button class="btn btn-primary" routerLink="/articles/details/{{article.id}}">Details</button>
-    <button class="btn btn-primary" routerLink="/articles/edit/{{article.id}}">Edit</button>
-   </div>
-  </div>
- </div>
-</div> -->
-
 <div class="article-container">
-<div class="container ">
-    <!-- Filter Section -->
-    <div class="filter-section mb-4">
-      <button class="btn btn-outline-primary me-2" (click)="filterArticles('recently')">Recently</button>
-      <button class="btn btn-outline-primary me-2" (click)="filterArticles('lastWeek')">Last week</button>
-      <button class="btn btn-outline-primary me-2" (click)="filterArticles('lastMonth')">Last month</button>
-      <button class="btn btn-outline-primary me-2" (click)="filterArticles('oldest')">Oldest</button>
-      <input type="text" class="form-control d-inline-block w-auto ms-2" placeholder="Search" (input)="searchArticles($event)">
-    </div>
-  <div class="row">
-    <div class="col-md-6" *ngFor="let article of paginatedArticles">
-      <app-artical-item  [article]="article"></app-artical-item>
-    </div>
-  </div>
+  <div class="container ">
+    <div class="filter-section mb-4 d-flex flex-wrap align-items-center">
+      <select class="form-select custom-select me-2" (change)="filterArticles($event)">
+        <option value="recently" [selected]="selectedFilter === 'recently'">Recent</option>
+        <option value="lastWeek" [selected]="selectedFilter === 'lastWeek'">Last week</option>
+        <option value="lastMonth" [selected]="selectedFilter === 'lastMonth'">Last month</option>
+        <option value="lastDay" [selected]="selectedFilter === 'lastDay'">Last day</option>
+      </select>
+      <div class="input-group search-input flex-grow-1">
 
-<hr class="mt-5">
-<app-pagination-item
-  [totalItems]="articles.length"
-  [itemsPerPage]="itemsPerPage"
-  [currentPage]="currentPage"
-  (pageChange)="onPageChange($event)">
-</app-pagination-item>
-</div></div>
+        <button class="btn btn-outline-secondary btn-reset-filters" type="button" (click)="resetFilters()">Reset Filters</button>
+      </div>
+      <div class="input-group search-input flex-grow-1">
+        <input #search type="text" class="form-control" placeholder="Search" (keyup.enter)="onSearch()">
+        <button *ngIf="!searchActive" class="btn btn-outline-secondary btn-search" type="button" (click)="onSearch()">Search</button>
+        <button *ngIf="searchActive" class="btn btn-outline-secondary btn-reset" type="button" (click)="onReset()">Reset</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6" *ngFor="let article of articles">
+        <app-article-cards [article]="article"></app-article-cards>
+      </div>
+    </div>
+
+    <hr class="mt-5">
+    <!-- <app-article-paging [totalItems]="pagination.totalItems" [itemsPerPage]="pagination.itemsPerPage" [currentPage]="pagination.currentPage" (pageChange)="onPageChange($event)">
+    </app-article-paging> -->
+
+  </div>
+</div>

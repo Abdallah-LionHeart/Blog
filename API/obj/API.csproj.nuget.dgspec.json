@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\ProjectFiles\\Blog\\API\\API.csproj": {}
+    "D:\\ProjectFiles\\CloneBlog\\Blog\\API\\API.csproj": {}
   },
   "projects": {
-    "D:\\ProjectFiles\\Blog\\API\\API.csproj": {
+    "D:\\ProjectFiles\\CloneBlog\\Blog\\API\\API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\ProjectFiles\\Blog\\API\\API.csproj",
+        "projectUniqueName": "D:\\ProjectFiles\\CloneBlog\\Blog\\API\\API.csproj",
         "projectName": "API",
-        "projectPath": "D:\\ProjectFiles\\Blog\\API\\API.csproj",
+        "projectPath": "D:\\ProjectFiles\\CloneBlog\\Blog\\API\\API.csproj",
         "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-        "outputPath": "D:\\ProjectFiles\\Blog\\API\\obj\\",
+        "outputPath": "D:\\ProjectFiles\\CloneBlog\\Blog\\API\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config"

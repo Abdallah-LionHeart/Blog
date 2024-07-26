@@ -1,0 +1,58 @@
+$secong-bg: #fff5ef;
+
+.home--profile {
+ &__card {
+  background-color: $secong-bg;
+
+  img {
+   width: 180px;
+   height: 180px;
+   border-radius: 50%;
+   -webkit-border-radius: 50%;
+   -moz-border-radius: 50%;
+   -ms-border-radius: 50%;
+   -o-border-radius: 50%;
+   border: 2px solid #ea4c89;
+  }
+
+  &__socials {
+   a {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    margin: 0 5px;
+
+    i {
+     color: #fff;
+    }
+   }
+
+   a:nth-child(1) {
+    background: #3b5998;
+
+   }
+
+   a:nth-child(2) {
+    background: #ff0000;
+
+   }
+
+   a:nth-child(3) {
+    background: #007bb5;
+
+   }
+
+   a:nth-child(4) {
+    background: #ea4c89;
+
+   }
+  }
+ }
+}

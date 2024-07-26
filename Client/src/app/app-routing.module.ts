@@ -8,13 +8,12 @@ import { ArticleCreateComponent } from './appArticle/article-create/article-crea
 import { ArticleDetailsComponent } from './appArticle/article-details/article-details.component';
 import { ArticleEditComponent } from './appArticle/article-edit/article-edit.component';
 import { ArticleEventComponent } from './appArticle/article-event/article-event.component';
-import { ArticleFormComponent } from './appArticle/article-form/article-form.component';
 import { ArticleListComponent } from './appArticle/article-list/article-list.component';
 import { ArticleSearchComponent } from './appArticle/article-search/article-search.component';
 import { ArticleComponent } from './appArticle/article/article.component';
 import { preventUnsavedChangesGuard } from './appGuard/prevent-unsaved-changes.guard';
-import { preventUnsavedCreatedGuard } from './appGuard/prevent-unsaved-created.guard';
 import { HomeComponent } from './appHome/home/home.component';
+import { AboutComponent } from './appMain/about/about.component';
 import { MainProfileComponent } from './appMain/main-profile/main-profile.component';
 import { NavComponent } from './appNav/nav/nav.component';
 import { ProfileComponent } from './appProfile/profile/profile.component';
@@ -34,13 +33,13 @@ const routes: Routes = [
   { path: 'articles/edit/:id', component: ArticleEditComponent, canDeactivate: [preventUnsavedChangesGuard] },
   { path: 'search', component: ArticleSearchComponent },
   { path: 'event', component: ArticleEventComponent },
-  { path: 'create', component: ArticleCreateComponent, canDeactivate: [preventUnsavedCreatedGuard] },
+  { path: 'create', component: ArticleCreateComponent },
 
   { path: 'main', component: MainProfileComponent },
   { path: 'article', component: ArticleComponent },
-  { path: 'articles/new', component: ArticleFormComponent },
   { path: 'nav', component: NavComponent },
   { path: 'home', component: HomeComponent },
+  { path: 'about', component: AboutComponent },
 ];
 
 @NgModule({

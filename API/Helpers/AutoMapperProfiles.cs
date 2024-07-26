@@ -12,11 +12,11 @@ namespace API.Helpers
             CreateMap<AppUser, AppUserDto>()
                .ForMember(dest => dest.ProfileImageUrl, opt => opt.MapFrom(src => src.ProfileImages.FirstOrDefault(pi => pi.IsMain).Url))
                .ForMember(dest => dest.BackgroundImageUrl, opt => opt.MapFrom(src => src.BackgroundImages.FirstOrDefault().Url));
-            CreateMap<ProfileImage, ProfileImageDto>();
-            CreateMap<BackgroundImage, BackgroundImageDto>();
+            CreateMap<ProfileImage, ProfileImageDto>().ReverseMap();
+            CreateMap<BackgroundImage, BackgroundImageDto>().ReverseMap();
             CreateMap<AppUserDto, AppUser>();
-            CreateMap<ProfileImageDto, ProfileImage>();
-            CreateMap<BackgroundImageDto, BackgroundImage>();
+            // CreateMap<ProfileImageDto, ProfileImage>();
+            // CreateMap<BackgroundImageDto, BackgroundImage>();
 
             CreateMap<ArticleDto, Article>().ReverseMap();
             CreateMap<ArticleCreateDto, Article>()

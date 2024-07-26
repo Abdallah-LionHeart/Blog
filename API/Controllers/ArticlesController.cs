@@ -1,5 +1,6 @@
 using API.DTOs;
 using API.Entities;
+using API.Extensions;
 using API.Helpers;
 using API.Services;
 using AutoMapper;
@@ -120,19 +121,21 @@ namespace API.Controllers
         }
 
         [HttpGet("paginated")]
-        public async Task<ActionResult<PaginatedResult<ArticleDto>>> GetPaginatedArticles([FromQuery] ArticleParams articleParams)
+        public async Task<ActionResult<PagedList<ArticleDto>>> GetPaginatedArticles([FromQuery] ArticleParams articleParams)
         {
-            var result = await _service.GetPaginatedArticles(articleParams);
-            return Ok(result);
+            var article = await _service.GetPaginatedArticles(articleParams);
+            Response.AddPaginationHeader(new PaginationHeader(article.CurrentPage, article.PageSize, article.TotalCount, article.TotalPages));
+            return Ok(article);
         }
 
 
         [HttpGet("search")]
-        public async Task<ActionResult<PaginatedResult<ArticleDto>>> SearchArticles([FromQuery] ArticleParams articleParams, [FromQuery] string searchTerm, [FromQuery] string filter)
+        public async Task<ActionResult<PagedList<ArticleDto>>> SearchArticles([FromQuery] ArticleParams articleParams, [FromQuery] string searchTerm, [FromQuery] string filter)
         {
             var result = await _service.SearchArticles(articleParams, searchTerm, filter);
             return Ok(result);
         }
+
 
     }
 }

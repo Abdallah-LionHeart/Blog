@@ -154,106 +154,6 @@ namespace API.Services
             await _uow.CompleteAsync();
         }
 
-
-        // public async Task AddAedrticle(ArticleCreateDto articleDto)
-        // {
-        //     var article = _mapper.Map<Article>(articleDto);
-        //     if (articleDto.Images != null)
-        //     {
-        //         foreach (var imageFile in articleDto.Images)
-        //         {
-        //             var uploadResult = await _cloudinaryService.UploadImageAsync(imageFile);
-        //             var image = new Image
-        //             {
-        //                 Url = uploadResult.SecureUrl.AbsoluteUri,
-        //                 PublicId = uploadResult.PublicId
-        //             };
-        //             article.Images.Add(image);
-        //         }
-        //     }
-
-        //     if (articleDto.Videos != null)
-        //     {
-        //         foreach (var videoFile in articleDto.Videos)
-        //         {
-        //             var uploadResult = await _cloudinaryService.UploadVideoAsync(videoFile);
-        //             var video = new Video
-        //             {
-        //                 Url = uploadResult.SecureUrl.AbsoluteUri,
-        //                 PublicId = uploadResult.PublicId,
-        //                 IsExternal = false
-        //             };
-        //             article.Videos.Add(video);
-        //         }
-        //     }
-
-        //     if (!string.IsNullOrEmpty(articleDto.YouTubeLink))
-        //     {
-        //         var video = new Video
-        //         {
-        //             Url = articleDto.YouTubeLink,
-        //             IsExternal = true
-        //         };
-        //         article.Videos.Add(video);
-        //     }
-
-        //     await _uow.Articles.Add(article);
-        //     await _uow.CompleteAsync();
-        // }
-
-        // public async Task UpdateArticle(ArticleUpdateDto articleDto)
-        // {
-        //     var article = await _uow.Articles.GetById(articleDto.Id);
-        //     if (article == null)
-        //     {
-        //         throw new Exception("Article not found");
-        //     }
-
-        //     _mapper.Map(articleDto, article);
-
-        //     if (articleDto.Images != null)
-        //     {
-        //         foreach (var imageFile in articleDto.Images)
-        //         {
-        //             var uploadResult = await _cloudinaryService.UploadImageAsync(imageFile);
-        //             var image = new Image
-        //             {
-        //                 Url = uploadResult.SecureUrl.AbsoluteUri,
-        //                 PublicId = uploadResult.PublicId
-        //             };
-        //             article.Images.Add(image);
-        //         }
-        //     }
-
-        //     if (articleDto.Videos != null)
-        //     {
-        //         foreach (var videoFile in articleDto.Videos)
-        //         {
-        //             var uploadResult = await _cloudinaryService.UploadVideoAsync(videoFile);
-        //             var video = new Video
-        //             {
-        //                 Url = uploadResult.SecureUrl.AbsoluteUri,
-        //                 PublicId = uploadResult.PublicId,
-        //                 IsExternal = false
-        //             };
-        //             article.Videos.Add(video);
-        //         }
-        //     }
-
-        //     if (!string.IsNullOrEmpty(articleDto.YouTubeLink))
-        //     {
-        //         var video = new Video
-        //         {
-        //             Url = articleDto.YouTubeLink,
-        //             IsExternal = true
-        //         };
-        //         article.Videos.Add(video);
-        //     }
-
-        //     await _uow.Articles.Update(article);
-        //     await _uow.CompleteAsync();
-        // }
-
         public async Task DeleteArticle(int id)
         {
             await _uow.Articles.Delete(id);
@@ -321,18 +221,18 @@ namespace API.Services
             return _uow.Articles.GetVideoById(id);
         }
 
-        public async Task<PaginatedResult<ArticleDto>> GetPaginatedArticles(ArticleParams articleParams)
+        public async Task<PagedList<ArticleDto>> GetPaginatedArticles(ArticleParams articleParams)
         {
-            var result = await _uow.Articles.GetPaginated(articleParams);
-            var articlesDto = _mapper.Map<IEnumerable<ArticleDto>>(result.Items);
-            return new PaginatedResult<ArticleDto>(articlesDto, result.TotalCount, result.PageNumber, result.PageSize);
+            var result = await _uow.Articles.GetAllArticles(articleParams);
+            var articlesDto = _mapper.Map<IEnumerable<ArticleDto>>(result);
+            return new PagedList<ArticleDto>(articlesDto, result.TotalCount, result.CurrentPage, result.PageSize);
         }
 
-        public async Task<PaginatedResult<ArticleDto>> SearchArticles(ArticleParams articleParams, string searchTerm, string filter)
+        public async Task<PagedList<ArticleDto>> SearchArticles(ArticleParams articleParams, string searchTerm, string filter)
         {
             var result = await _uow.Articles.SearchArticles(articleParams, searchTerm, filter);
-            var articlesDto = _mapper.Map<IEnumerable<ArticleDto>>(result.Items);
-            return new PaginatedResult<ArticleDto>(articlesDto, result.TotalCount, result.PageNumber, result.PageSize);
+            var articlesDto = _mapper.Map<IEnumerable<ArticleDto>>(result);
+            return new PagedList<ArticleDto>(articlesDto, result.TotalCount, result.CurrentPage, result.PageSize);
         }
 
     }

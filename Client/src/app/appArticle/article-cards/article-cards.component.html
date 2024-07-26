@@ -1,0 +1,42 @@
+<div class="article shadow">
+  <div class="slider">
+    <div class="slides" [style.transform]="'translateX(-' + currentSlide * 100 + '%)'">
+      <ng-container *ngFor="let mediaItem of media">
+        <!-- Display images -->
+        <img *ngIf="!mediaItem.includes('youtube')" [src]="mediaItem" class="img-fluid" alt="Article media">
+
+        <!-- Display YouTube videos -->
+        <iframe *ngIf="mediaItem.includes('youtube')" [src]="mediaItem | safe" frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+
+        <!-- Display other videos -->
+        <video *ngIf="mediaItem.includes('http')" controls class="w-100">
+          <source [src]="mediaItem" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </ng-container>
+    </div>
+    <button class="arrow left" (click)="prevSlide()"><fa-icon [icon]="faArrowLeftLong"></fa-icon></button>
+    <button class="arrow right" (click)="nextSlide()"><fa-icon [icon]="faArrowRightLong"></fa-icon></button>
+  </div>
+  <div class="content">
+    <h4 class="title">{{ article.headline }}</h4>
+    <p class="d-flex justify-content-between align-items-center mt-2">
+      <span class="text-black">Published on :</span>
+      <span class="date">{{ article.publishDate | date:'short' }}</span>
+    </p>
+    <div class="event--action mt-4 d-flex justify-content-between align-items-center">
+      <div class="d-flex">
+        <button class="btn btn-sm btn-icon me-3" style="background-color: #ea4c89; color:#fff" routerLink="/articles/edit/{{article.id}}">
+          <fa-icon [icon]="faEdit"></fa-icon> <span class="ms-1"> Edit</span>
+        </button>
+        <button class="btn btn-sm btn-secondary btn-icon" routerLink="/articles/details/{{article.id}}">
+          <fa-icon [icon]="faCircleInfo"></fa-icon> <span class="ms-1"> Details</span>
+        </button>
+      </div>
+      <span class="text-primary text-center ms-5">
+        <i class="bi bi-facebook" style="font-size: 25px;"></i><span class="ms-1"></span>
+      </span>
+    </div>
+  </div>
+</div>

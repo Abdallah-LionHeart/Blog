@@ -95,12 +95,19 @@ namespace API.Repositories
         {
             return await _context.Videos.FindAsync(id);
         }
-
-        public async Task<PaginatedResult<Article>> GetPaginated(ArticleParams articleParams)
+        public async Task<PagedList<Article>> GetAllArticles(ArticleParams articleParams)
         {
             var query = _context.Articles.Include(a => a.Images).Include(a => a.Videos).AsQueryable();
 
-            // Apply filtering
+            if (!string.IsNullOrWhiteSpace(articleParams.Search))
+            {
+                var searchTerm = articleParams.Search;
+                query = query.Where(a =>
+                    a.Title.ToLower().Contains(searchTerm) ||
+                    a.Content.ToLower().Contains(searchTerm) ||
+                    a.Headline.ToLower().Contains(searchTerm));
+            }
+
             switch (articleParams.OrderBy.ToLower())
             {
                 case "lastday":
@@ -114,21 +121,14 @@ namespace API.Repositories
                     break;
                 case "recent":
                 default:
-                    query = query.OrderByDescending(a => a.PublishDate).Where(a => a.PublishDate >= DateTime.UtcNow.AddDays(0));
+                    query = query.OrderByDescending(a => a.PublishDate);
                     break;
             }
 
-            var totalCount = await query.CountAsync();
-
-            var articles = await query
-                .Skip((articleParams.PageNumber - 1) * articleParams.PageSize)
-                .Take(articleParams.PageSize)
-                .ToListAsync();
-
-            return new PaginatedResult<Article>(articles, totalCount, articleParams.PageNumber, articleParams.PageSize);
+            return await PagedList<Article>.CreateAsync(query, articleParams.PageNumber, articleParams.PageSize);
         }
 
-        public async Task<PaginatedResult<Article>> SearchArticles(ArticleParams articleParams, string searchTerm, string filter)
+        public async Task<PagedList<Article>> SearchArticles(ArticleParams articleParams, string searchTerm, string filter)
         {
             var query = _context.Articles.Include(a => a.Images).Include(a => a.Videos).AsQueryable();
 
@@ -137,13 +137,7 @@ namespace API.Repositories
                 query = query.Where(a => a.Title.Contains(searchTerm) || a.Content.Contains(searchTerm) || a.Headline.Contains(searchTerm));
             }
 
-            var totalCount = await query.CountAsync();
-            var articles = await query
-                .Skip((articleParams.PageNumber - 1) * articleParams.PageSize)
-                .Take(articleParams.PageSize)
-                .ToListAsync();
-
-            return new PaginatedResult<Article>(articles, totalCount, articleParams.PageNumber, articleParams.PageSize);
+            return await PagedList<Article>.CreateAsync(query, articleParams.PageNumber, articleParams.PageSize);
         }
     }
 }

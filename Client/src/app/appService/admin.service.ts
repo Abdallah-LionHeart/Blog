@@ -51,11 +51,11 @@ export class AdminService {
   }
 
   getProfileImages(userId: number) {
-    return this.http.get<ProfileImage>(this.baseUrl + userId + 'profile-images');
+    return this.http.get<ProfileImage>(this.baseUrl + userId + '/profile-images');
   }
 
   getBackgroundImages(userId: number) {
-    return this.http.get<BackgroundImage>(this.baseUrl + userId + 'background-images');
+    return this.http.get<BackgroundImage>(this.baseUrl + userId + '/background-images');
   }
 
   getAllProfileImages() {

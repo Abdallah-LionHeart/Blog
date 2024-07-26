@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ArticleDto } from 'src/app/appModels/articleDto';
-import { PaginatedResult } from 'src/app/appModels/PaginatedResult';
+import { PaginatedResult } from 'src/app/appModels/Pagination';
 import { ArticleService } from 'src/app/appService/article.service';
 
 
@@ -33,8 +33,8 @@ export class ArticleSearchComponent {
   searchArticles() {
     if (this.searchTerm.trim() || this.filter) {
       this.articleService.searchArticles(this.searchTerm, this.pageNumber, this.pageSize, this.filter).subscribe((data: PaginatedResult<ArticleDto>) => {
-        this.articles = data.items;
-        this.totalItems = data.totalCount;
+        this.articles;
+        this.totalItems;
       });
     } else {
       this.loadArticles();
