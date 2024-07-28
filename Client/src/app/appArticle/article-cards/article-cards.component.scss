@@ -3,7 +3,7 @@
  overflow: hidden;
  width: 100%;
  margin: 20px 0;
- height: 400px;
+ height: 354px;
 }
 
 .slider {
@@ -19,7 +19,7 @@
 }
 
 .slides img,
-.slides iframe {
+.slides iframe,video {
  width: 100%;
  height: 230px;
  object-fit: cover;
@@ -30,8 +30,8 @@
  position: absolute;
  top: 40%;
  transform: translateY(-50%);
- background-color: transparent;
- color: rgb(136, 135, 135);
+ background-color: #ea4c89;
+ color: #fff;
  border: none;
  padding: 10px;
  width: 30px;
@@ -60,7 +60,11 @@
  margin: 0 0 10px;
  font-size: 1.5em;
 }
-
+@media (max-width:475px) {
+  .title{
+    font-size: 1rem;
+  }
+}
 .date,
 .author {
  margin: 0;

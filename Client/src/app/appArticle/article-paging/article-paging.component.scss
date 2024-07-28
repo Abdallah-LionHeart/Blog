@@ -17,8 +17,16 @@
  -o-border-radius: 5px;
  color: #fff
 }
+.page-link{
+  background-color: #555;
+  color:#fff;
+  cursor: pointer;
+  border: none;
+outline:none
 
-.pagination button.active {
+}
+
+.page-item.active .page-link {
  background-color: #ea4c89;
  color: white;
 }

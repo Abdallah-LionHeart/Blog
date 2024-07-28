@@ -1,4 +1,4 @@
-<div class="article-container">
+<!-- <div class="article-container">
   <div class="container ">
     <div class="filter-section mb-4 d-flex flex-wrap align-items-center">
       <select class="form-select custom-select me-2" (change)="filterArticles($event)">
@@ -24,8 +24,51 @@
     </div>
 
     <hr class="mt-5">
-    <!-- <app-article-paging [totalItems]="pagination.totalItems" [itemsPerPage]="pagination.itemsPerPage" [currentPage]="pagination.currentPage" (pageChange)="onPageChange($event)">
-    </app-article-paging> -->
+    <<app-article-paging [totalItems]="pagination.totalItems" [itemsPerPage]="pagination.itemsPerPage" [currentPage]="pagination.currentPage" (pageChange)="onPageChange($event)">
+    </app-article-paging>
 
   </div>
+</div> -->
+
+<div class="article-container">
+  <div class="container mt-3">
+    <div class="row">
+      <div class="col-12">
+        <div class="filter-section  row">
+          <div class="col-auto mb-2 mb-sm-0">
+            <select class="form-select" (change)="filterArticles($event)">
+              <option value="recently" [selected]="selectedFilter === 'recently'">Recent</option>
+              <option value="lastWeek" [selected]="selectedFilter === 'lastWeek'">Last week</option>
+              <option value="lastMonth" [selected]="selectedFilter === 'lastMonth'">Last month</option>
+              <option value="lastDay" [selected]="selectedFilter === 'lastDay'">Last day</option>
+            </select>
+          </div>
+          <div class="col-auto  mb-2 mb-sm-0">
+            <button class="btn btn-outline-secondary" type="button" (click)="resetFilters()">Reset Filters</button>
+          </div>
+          <div class="col">
+            <div class="input-group">
+              <input #search type="text" class="form-control" placeholder="Search" (keyup.enter)="onSearch()">
+              <button *ngIf="!searchActive" class="btn btn-secondary" type="button" (click)="onSearch()">Search</button>
+              <button *ngIf="searchActive" class="btn btn-outline-secondary" type="button" (click)="onReset()">Reset</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<div class="container">
+  <div class="row">
+    <div class="col-md-6" *ngFor="let article of articles">
+      <app-article-cards [article]="article"></app-article-cards>
+    </div>
+  </div>
+</div>
+  <hr class="mt-5">
+  <app-article-paging
+    [totalItems]="pagination.totalItems"
+    [itemsPerPage]="pagination.itemsPerPage"
+    [currentPage]="pagination.currentPage"
+    (pageChange)="onPageChange($event)">
+  </app-article-paging>
 </div>

@@ -65,9 +65,9 @@ export class ArticleEditComponent implements OnInit {
       this.articleForm.patchValue(article);
       this.imagePreviews = this.transformImageDtos(article.images || []);
       this.videoPreviews = this.transformVideoDtos(article.videos || []);
-      this.youTubeThumbnail = this.extractYouTubeVideoId(article.youTubeLink)
-        ? this.generateYouTubeThumbnailUrl(this.extractYouTubeVideoId(article.youTubeLink)!)
-        : '';
+      // this.youTubeThumbnail = this.extractYouTubeVideoId(article.youTubeLink)
+        // ? this.generateYouTubeThumbnailUrl(this.extractYouTubeVideoId(article.youTubeLink)!)
+        // : '';
     });
   }
 

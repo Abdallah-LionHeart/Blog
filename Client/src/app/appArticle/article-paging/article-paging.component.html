@@ -16,7 +16,7 @@
   </button>
 </div> -->
 
-
+<!--
 <div class="pagination d-flex justify-content-between">
   <button (click)="PageChanged(pagination.currentPage - 1)" [disabled]="pagination.currentPage === 1">
     <fa-icon [icon]="faArrowLeftLong"></fa-icon>
@@ -32,4 +32,21 @@
   <button (click)="PageChanged(pagination.currentPage + 1)" [disabled]="pagination.currentPage === pagination.totalPages">
     Next <fa-icon [icon]="faArrowRightLong"></fa-icon>
   </button>
-</div>
+</div> -->
+<nav aria-label="Page navigation" *ngIf="totalPages > 1">
+  <ul class="pagination justify-content-center">
+    <li class="page-item" [class.disabled]="currentPage === 1">
+      <a class="page-link" (click)="changePage(currentPage - 1)" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <li class="page-item" *ngFor="let page of pageNumbers" [class.active]="page === currentPage">
+      <a class="page-link" (click)="changePage(page)">{{ page }}</a>
+    </li>
+    <li class="page-item" [class.disabled]="currentPage === totalPages">
+      <a class="page-link" (click)="changePage(currentPage + 1)" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>

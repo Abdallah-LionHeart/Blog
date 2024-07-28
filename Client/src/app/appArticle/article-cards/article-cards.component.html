@@ -1,16 +1,16 @@
-<div class="article shadow">
+<!-- <div class="article shadow">
   <div class="slider">
     <div class="slides" [style.transform]="'translateX(-' + currentSlide * 100 + '%)'">
-      <ng-container *ngFor="let mediaItem of media">
+      <ng-container *ngFor="let mediaItem of media"> -->
         <!-- Display images -->
-        <img *ngIf="!mediaItem.includes('youtube')" [src]="mediaItem" class="img-fluid" alt="Article media">
+        <!-- <img *ngIf="!mediaItem.includes('youtube')" [src]="mediaItem" class="img-fluid" alt="Article media"> -->
 
         <!-- Display YouTube videos -->
-        <iframe *ngIf="mediaItem.includes('youtube')" [src]="mediaItem | safe" frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+        <!-- <iframe *ngIf="mediaItem.includes('youtube')" [src]="mediaItem | safe" frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe> -->
 
         <!-- Display other videos -->
-        <video *ngIf="mediaItem.includes('http')" controls class="w-100">
+        <!-- <video *ngIf="mediaItem.includes('http')" controls class="w-100">
           <source [src]="mediaItem" type="video/mp4">
           Your browser does not support the video tag.
         </video>
@@ -39,4 +39,51 @@
       </span>
     </div>
   </div>
+</div> -->
+
+
+
+<!-- Display article card only if there's media available -->
+
+
+
+<div *ngIf="media.length > 0">
+  <div class="article shadow">
+    <div class="slider">
+      <div class="slides" [style.transform]="'translateX(-' + currentSlide * 100 + '%)'">
+        <ng-container *ngFor="let mediaItem of media">
+          <img *ngIf="isImage(mediaItem)" [src]="mediaItem" class="img-fluid" alt="Article media">
+          <iframe *ngIf="isYouTube(mediaItem)" [src]="mediaItem" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="youtube-iframe">
+          </iframe>
+          <video *ngIf="isVideo(mediaItem)" controls class="w-100">
+            <source [src]="mediaItem" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </ng-container>
+      </div>
+      <button *ngIf="media.length > 1" class="arrow left" (click)="prevSlide()"><fa-icon [icon]="faArrowLeftLong"></fa-icon></button>
+      <button *ngIf="media.length > 1" class="arrow right" (click)="nextSlide()"><fa-icon [icon]="faArrowRightLong"></fa-icon></button>
+    </div>
+    <div class="content">
+      <h4 class="title mt-3">{{ truncatedHeadline }}</h4>
+      <div class="event--action mt-4 d-flex justify-content-between align-items-center">
+        <p class="d-flex align-items-center mt-2">
+          <span class="text-black d-none d-sm-block">Published on :</span>
+          <span class="date">{{ article.publishDate | date:'short' }}</span>
+        </p>
+        <div class="d-flex">
+          <button class="btn btn-sm btn-icon me-3" style="background-color: #ea4c89; color:#fff" routerLink="/articles/edit/{{article.id}}">
+            <fa-icon [icon]="faEdit"></fa-icon> <span class="ms-1"> Edit</span>
+          </button>
+          <button class="btn btn-sm btn-icon" style="background-color: #000; color:#fff" routerLink="/articles/detail/{{article.id}}">
+            <fa-icon [icon]="faCircleInfo"></fa-icon> <span class="ms-1"> Details</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+
+
+

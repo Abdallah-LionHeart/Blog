@@ -8,9 +8,9 @@ export interface Article {
  headline: string;
  content: string;
  isEvent: Boolean;
- publishDate: Date;
+ publishDate: string;
  images: ImageDto[];
  videos: VideoDto[];
- youTubeLink: string;
- facebookLink: string;
+ youTubeLink: string | null;
+ facebookLink: string |null ;
 }

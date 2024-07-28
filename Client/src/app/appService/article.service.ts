@@ -106,8 +106,8 @@ export class ArticleService {
     formData.append('content', article.content);
     formData.append('headline', article.headline);
     formData.append('isEvent', article.isEvent.toString());
-    formData.append('youTubeLink', article.youTubeLink);
-    formData.append('facebookLink', article.facebookLink);
+    // formData.append('youTubeLink', article.youTubeLink);
+    // formData.append('facebookLink', article.facebookLink);
 
     images.forEach((image, index) => {
       formData.append('images', image, `image_${index}`);
@@ -131,8 +131,8 @@ export class ArticleService {
     formData.append('content', article.content);
     formData.append('headline', article.headline);
     formData.append('isEvent', article.isEvent.toString());
-    formData.append('youTubeLink', article.youTubeLink);
-    formData.append('facebookLink', article.facebookLink);
+    // formData.append('youTubeLink', article.youTubeLink);
+    // formData.append('facebookLink', article.facebookLink);
 
     images.forEach((image, index) => {
       formData.append('images', image, `image_${index}`);
