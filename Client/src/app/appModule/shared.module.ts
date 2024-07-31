@@ -10,7 +10,9 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
 import { NgxFileDropModule } from 'ngx-file-drop';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { NgxSpinnerModule } from "ngx-spinner";
 import { BreadcrumbModule } from 'xng-breadcrumb';
+
 @NgModule({
   declarations: [],
   imports: [
@@ -25,8 +27,12 @@ import { BreadcrumbModule } from 'xng-breadcrumb';
     MatIconModule,
     BreadcrumbModule,
     PaginationModule,
-    ModalModule.forRoot()
-
+    ModalModule.forRoot(),
+    NgxSpinnerModule.forRoot(
+      {
+        type: 'line-scale'
+      }
+    )
   ],
 
   exports: [

@@ -38,7 +38,7 @@
 
 
 
-<div class="d-flex justify-content-center align-items-center min-vh-100">
+<!-- <div class="d-flex justify-content-center align-items-center min-vh-100">
  <div class="col-12 col-md-6 col-lg-4">
   <div *ngIf="confirmationCodeSent" class="alert alert-info">
    <p class="text">confirmation Code Sent to your email</p>
@@ -74,9 +74,59 @@
      </div>
      <div class="row justify-content-center">
       <div class="col-12 text-center">
-       <!-- <button [disabled]="loginForm.invalid" class="btn btn-dark btn-md ms-2" type="submit">Reset Password</button> -->
-       <button type="submit" [disabled]="loginForm.invalid">Login</button>
-       <a routerLink="['/reset-password-request']" class="link-secondary text-decoration-none">Forgot Password!</a>
+       <button class="btn btn-primary me-4" type="submit" [disabled]="loginForm.invalid">Login</button>
+       <a routerLink="['/reset-password-request']" class="link-secondary text-decoration-none text-muted">Forgot Password!</a>
+      </div>
+     </div>
+    </form>
+   </div>
+  </div>
+ </div>
+</div> -->
+
+
+
+<div class="d-flex justify-content-center align-items-center min-vh-100">
+ <div class="col-12 col-md-6 col-lg-4">
+  <div *ngIf="loginError" class="alert alert-danger">
+   <p class="text">Login failed. Please check your credentials.</p>
+  </div>
+  <h3 class="text-center">Login</h3>
+  <div class="container">
+   <div class="reset-form justify-content-center">
+    <form [formGroup]="loginForm" (ngSubmit)="logIn()">
+     <div class="row gy-3 justify-content-center">
+      <div class="col-12">
+       <label for="email">Email</label>
+       <input id="email" formControlName="email" type="text" class="form-control" required>
+       <div *ngIf="loginForm.controls['email'].invalid && loginForm.controls['email'].touched" class="text-danger">
+        A valid email is required
+       </div>
+      </div>
+     </div>
+     <div class="row gy-3 justify-content-center">
+      <div class="col-12">
+       <label for="password">Password</label>
+       <input [type]="changeType ? 'password' : 'text'" id="password" formControlName="password" class="form-control" required />
+       <div *ngIf="loginForm.controls['password'].invalid && loginForm.controls['password'].touched" class="text-danger">
+        Password is required
+       </div>
+      </div>
+     </div>
+     <div class="row justify-content-center">
+      <div class="col-12">
+       <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="showPassword" (click)="viewPass()">
+        <label class="form-check-label" for="showPassword">
+         Show Password
+        </label>
+       </div>
+      </div>
+     </div>
+     <div class="row justify-content-center">
+      <div class="col-12 text-center">
+       <button class="btn btn-primary me-4" type="submit" [disabled]="loginForm.invalid">Login</button>
+       <a routerLink="/reset-password-request" class="link-secondary text-decoration-none text-muted">Forgot Password!</a>
       </div>
      </div>
     </form>

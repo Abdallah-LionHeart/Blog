@@ -7,8 +7,8 @@
       <div class="card home--profile__card w-100  p-4 border-0" *ngIf="user">
 
         <div>
-          <div class="image d-flex justify-content-center">
-            <img [src]="profileImage?.url">
+          <div class="image d-flex justify-content-center" *ngIf="profileImage">
+            <img [src]="profileImage.url">
           </div>
 
           <div class="mx-3 mt-4 xl-5 ">

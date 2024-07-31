@@ -22,15 +22,15 @@ public static class DbInitializer
         var adminUser = new Admin
         {
             UserName = "UmSadam",
-            Email = "umSadam@outlook.com",
+            Email = "umsadam@outlook.com",
             FirstName = "Sadam",
             LastName = "Magableh",
-            EmailConfirmed = true
+            // EmailConfirmed = true
         };
 
         if (await userManager.FindByNameAsync(adminUser.UserName) == null)
         {
-            var result = await userManager.CreateAsync(adminUser, "Magableh@Admin2024");
+            var result = await userManager.CreateAsync(adminUser, "Pa$$w0rd");
             if (result.Succeeded)
             {
                 await userManager.AddToRoleAsync(adminUser, adminRole);
@@ -151,7 +151,7 @@ public static class DbInitializer
                 {
                     Title = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et ante orci. Maecenas at convallis purus, a suscipit mi. In hac habitasse platea dictumst. Vivamus tincidunt sapien non tortor sollicitudin",
                     Content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam congue lacus urna, ut eleifend lacus faucibus eget. Praesent bibendum commodo metus non luctus. Integer luctus nunc nulla, ut vestibulum dolor tincidunt ut. Nam pharetra velit ut neque tempus, vel rutrum velit congue. Curabitur a ultrices ex. Mauris libero velit, facilisis vitae enim non, rhoncus viverra massa. Phasellus sit amet consequat mi, et varius purus. Maecenas in placerat neque, sed congue sapien. In a ultrices velit. Aenean consequat neque sed magna pretium, at porttitor augue rutrum. Praesent iaculis sodales sem, id tempor elit porttitor ut. Sed placerat dictum nisi, eget sollicitudin.",
-                    Headline = "Regular Headline 2",
+                    Headline = "Regular Headline 11",
                     IsEvent = false,
                     FacebookLink = "",
                     YouTubeLink = "",
@@ -162,7 +162,7 @@ public static class DbInitializer
                 {
                     Title = "Regular Article 2",
                     Content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
-                    Headline = "Regular Headline 2",
+                    Headline = "Regular Headline 12",
                     IsEvent = false,
                     FacebookLink = "",
                     YouTubeLink = "https://youtu.be/x_GA9_Eitic?si=RsoXAdxSv-TRMICW",
@@ -173,7 +173,7 @@ public static class DbInitializer
                 {
                     Title = "Regular Article 2",
                     Content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
-                    Headline = "Regular Headline 2",
+                    Headline = "Regular Headline 13",
                     IsEvent = false,
                     FacebookLink = "",
                     YouTubeLink = "",
@@ -188,7 +188,7 @@ public static class DbInitializer
                 {
                     Title = "Regular Article 2",
                     Content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et ante orci. Maecenas at convallis purus, a suscipit mi. In hac habitasse platea dictums",
-                    Headline = "Regular Headline 2",
+                    Headline = "Regular Headline 14",
                     IsEvent = false,
                     FacebookLink = "",
                     YouTubeLink = "https://youtu.be/dlHtjDc1z8E?si=uIRdU6tes4OYvKAD",
@@ -214,6 +214,109 @@ public static class DbInitializer
                     {
                         new Video {Url ="https://videos.pexels.com/video-files/3058708/3058708-sd_640_360_24fps.mp4"}
                     }
+                      },
+
+                new Article
+                {
+                    Title = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et ante orci. Maecenas at convallis purus, a suscipit mi. In hac habitasse platea dictumst. Vivamus tincidunt sapien non tortor sollicitudin",
+                    Content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam congue lacus urna, ut eleifend lacus faucibus eget. Praesent bibendum commodo metus non luctus. Integer luctus nunc nulla, ut vestibulum dolor tincidunt ut. Nam pharetra velit ut neque tempus, vel rutrum velit congue. Curabitur a ultrices ex. Mauris libero velit, facilisis vitae enim non, rhoncus viverra massa. Phasellus sit amet consequat mi, et varius purus. Maecenas in placerat neque, sed congue sapien. In a ultrices velit. Aenean consequat neque sed magna pretium, at porttitor augue rutrum. Praesent iaculis sodales sem, id tempor elit porttitor ut. Sed placerat dictum nisi, eget sollicitudin.",
+                    Headline = "Regular Headline 15",
+                    IsEvent = false,
+                    FacebookLink = "",
+                    YouTubeLink = "",
+                    Images = new List<Image>(),
+                    Videos = new List<Video>()
+                },
+                new Article
+                {
+                    Title = "Regular Article 10",
+                    Content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
+                    Headline = "Regular Headline 16",
+                    IsEvent = false,
+                    FacebookLink = "",
+                    YouTubeLink = "https://youtu.be/x_GA9_Eitic?si=RsoXAdxSv-TRMICW",
+                    Images = new List<Image>(),
+                    Videos = new List<Video>()
+                },
+                new Article
+                {
+                    Title = "Regular Article 11",
+                    Content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
+                    Headline = "Regular Headline 17",
+                    IsEvent = false,
+                    FacebookLink = "",
+                    YouTubeLink = "",
+                    Images = new List<Image>(),
+                    Videos = new List<Video>
+                    {
+                        new Video {Url ="https://videos.pexels.com/video-files/3126661/3126661-sd_640_360_24fps.mp4", IsExternal = false },
+                        new Video {Url ="https://youtu.be/lWo2WLVCHfE?si=sXL50kFjdS9KOHFh", IsExternal = true }
+                    }
+                },
+                new Article
+                {
+                    Title = "Regular Article 12",
+                    Content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et ante orci. Maecenas at convallis purus, a suscipit mi. In hac habitasse platea dictums",
+                    Headline = "Regular Headline 18",
+                    IsEvent = false,
+                    FacebookLink = "",
+                    YouTubeLink = "https://youtu.be/dlHtjDc1z8E?si=uIRdU6tes4OYvKAD",
+                    Images = new List<Image>
+                    {
+                        new Image { Url ="https://images.pexels.com/photos/27077981/pexels-photo-27077981/free-photo-of-currants-on-a-table.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load"}
+                    },
+                    Videos = new List<Video>()
+                },
+                new Article
+                {
+                    Title = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et ante orci. Maecenas at convallis purus, a suscipit mi. In hac habitasse platea dictumst. Vivamus tincidunt sapien non tortor sollicitudin",
+                    Content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam congue lacus urna, ut eleifend lacus faucibus eget. Praesent bibendum commodo metus non luctus. Integer luctus nunc nulla, ut vestibulum dolor tincidunt ut. Nam pharetra velit ut neque tempus, vel rutrum velit congue. Curabitur a ultrices ex. Mauris libero velit, facilisis vitae enim non, rhoncus viverra massa. Phasellus sit amet consequat mi, et varius purus. Maecenas in placerat neque, sed congue sapien. In a ultrices velit. Aenean consequat neque sed magna pretium, at porttitor augue rutrum. Praesent iaculis sodales sem, id tempor elit porttitor ut. Sed placerat dictum nisi, eget sollicitudin.",
+                    Headline = "Regular Headline 19",
+                    IsEvent = false,
+                    FacebookLink = "",
+                    YouTubeLink = "",
+                    Images = new List<Image>(),
+                    Videos = new List<Video>()
+                },
+                new Article
+                {
+                    Title = "Regular Article 15",
+                    Content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
+                    Headline = "Regular Headline 20",
+                    IsEvent = false,
+                    FacebookLink = "",
+                    YouTubeLink = "https://youtu.be/x_GA9_Eitic?si=RsoXAdxSv-TRMICW",
+                    Images = new List<Image>(),
+                    Videos = new List<Video>()
+                },
+                new Article
+                {
+                    Title = "Regular Article 14",
+                    Content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
+                    Headline = "Regular Headline 21",
+                    IsEvent = false,
+                    FacebookLink = "",
+                    YouTubeLink = "",
+                    Images = new List<Image>(),
+                    Videos = new List<Video>
+                    {
+                        new Video {Url ="https://videos.pexels.com/video-files/3126661/3126661-sd_640_360_24fps.mp4", IsExternal = false },
+                        new Video {Url ="https://youtu.be/lWo2WLVCHfE?si=sXL50kFjdS9KOHFh", IsExternal = true }
+                    }
+                },
+                new Article
+                {
+                    Title = "Regular Article 16",
+                    Content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et ante orci. Maecenas at convallis purus, a suscipit mi. In hac habitasse platea dictums",
+                    Headline = "Regular Headline 22",
+                    IsEvent = false,
+                    FacebookLink = "",
+                    YouTubeLink = "https://youtu.be/dlHtjDc1z8E?si=uIRdU6tes4OYvKAD",
+                    Images = new List<Image>
+                    {
+                        new Image { Url ="https://images.pexels.com/photos/27077981/pexels-photo-27077981/free-photo-of-currants-on-a-table.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load"}
+                    },
+                    Videos = new List<Video>()
                 }
             };
 

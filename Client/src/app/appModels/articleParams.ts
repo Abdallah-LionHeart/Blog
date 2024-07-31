@@ -1,6 +1,8 @@
+
 export class ArticleParams {
  pageNumber = 1;
- pageSize = 8;
+ pageSize = 3;
  search = '';
- orderBy = 'recent';
+ orderBy = 'recently';
+
 }

@@ -39,7 +39,7 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" routerLink="/home">Home</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="(accountService.currentAdmin$ | async) as Admin">
           <a class="nav-link" routerLink="/profile">Profile</a>
         </li>
         <li class="nav-item">
@@ -50,9 +50,8 @@
         </li>
       </ul>
       <div class="login--action ">
-        <button class="btn btn-secondary  px-4 login--action__btn" routerLink="/login">
-          Login
-        </button>
+        <button class="btn btn-secondary px-4 login--action__btn me-3" routerLink="/login"> Login </button>
+        <button class="btn btn-secondary px-4 login--action__btn" routerLink="/home" (click)="logout()"> logout </button>
       </div>
     </div>
   </div>

@@ -1,38 +1,3 @@
-<!-- <div class="pagination d-flex justify-content-between a">
-  <button (click)="PageChanged(currentPage - 1)" [disabled]="currentPage === 1">
-    <fa-icon [icon]="faArrowLeftLong"></fa-icon>
-    Previous
-  </button>
-  <div>
-    <ng-container *ngFor="let page of pages">
-      <button (click)="PageChanged(page)" [class.active]="page === currentPage " class="m-2">
-        {{ page }}
-      </button>
-    </ng-container>
-  </div>
-  <button (click)="PageChanged(currentPage + 1)" [disabled]="currentPage === totalPages">
-    Next <fa-icon [icon]="faArrowRightLong">
-    </fa-icon>
-  </button>
-</div> -->
-
-<!--
-<div class="pagination d-flex justify-content-between">
-  <button (click)="PageChanged(pagination.currentPage - 1)" [disabled]="pagination.currentPage === 1">
-    <fa-icon [icon]="faArrowLeftLong"></fa-icon>
-    Previous
-  </button>
-  <div>
-    <ng-container *ngFor="let page of pages">
-      <button (click)="PageChanged(page)" [class.active]="page === pagination.currentPage" class="m-2">
-        {{ page }}
-      </button>
-    </ng-container>
-  </div>
-  <button (click)="PageChanged(pagination.currentPage + 1)" [disabled]="pagination.currentPage === pagination.totalPages">
-    Next <fa-icon [icon]="faArrowRightLong"></fa-icon>
-  </button>
-</div> -->
 <nav aria-label="Page navigation" *ngIf="totalPages > 1">
   <ul class="pagination justify-content-center">
     <li class="page-item" [class.disabled]="currentPage === 1">
@@ -50,3 +15,20 @@
     </li>
   </ul>
 </nav>
+<!-- <nav aria-label="Page navigation" *ngIf="totalPages > 1">
+  <ul class="pagination justify-content-center">
+    <li class="page-item" [class.disabled]="currentPage === 1">
+      <a class="page-link" (click)="changePage(currentPage - 1)" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <li class="page-item" *ngFor="let page of [].constructor(totalPages); let pageIndex = index" [class.active]="pageIndex + 1 === currentPage">
+      <a class="page-link" (click)="changePage(pageIndex + 1)">{{ pageIndex + 1 }}</a>
+    </li>
+    <li class="page-item" [class.disabled]="currentPage === totalPages">
+      <a class="page-link" (click)="changePage(currentPage + 1)" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav> -->

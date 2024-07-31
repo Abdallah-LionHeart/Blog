@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -7,7 +7,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ConfirmLoginComponent } from './appAccount/confirm-login/confirm-login.component';
 import { LoginComponent } from './appAccount/login/login.component';
 import { ResetPasswordConfirmComponent } from './appAccount/reset-password-confirm/reset-password-confirm.component';
 import { ResetPasswordComponent } from './appAccount/reset-password/reset-password.component';
@@ -22,6 +21,8 @@ import { ArticlePagingComponent } from './appArticle/article-paging/article-pagi
 import { ArticleSearchComponent } from './appArticle/article-search/article-search.component';
 import { ArticleComponent } from './appArticle/article/article.component';
 import { HomeComponent } from './appHome/home/home.component';
+import { JwtInterceptor } from './appInterceptors/jwt.interceptor';
+import { LoadingInterceptor } from './appInterceptors/loading.interceptor';
 import { AboutComponent } from './appMain/about/about.component';
 import { ImageCarouselComponent } from './appMain/image-carousel/image-carousel.component';
 import { MainProfileComponent } from './appMain/main-profile/main-profile.component';
@@ -50,7 +51,6 @@ import { SafePipe } from './pipes/safe.pipe';
     UserManagementComponent,
     ProfileImagesComponent,
     BackgroundImagesComponent,
-    ConfirmLoginComponent,
     ArticleCreateComponent,
     ArticleListComponent,
     ArticleSearchComponent,
@@ -79,7 +79,10 @@ import { SafePipe } from './pipes/safe.pipe';
     MatButtonModule,
     FontAwesomeModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,0 +1,147 @@
+.article-details {
+ padding: 20px;
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ width: 100%;
+ max-width: 1200px;
+ margin: 0 auto;
+
+ .headline {
+  font-size: 2.5em;
+  font-weight: bold;
+  width: 100%;
+  text-align: right;
+  margin-bottom: 30px;
+  margin-top: 4rem;
+ }
+
+ .title {
+  font-size: 2em;
+  font-weight: bold;
+  width: 100%;
+  text-align: right;
+  margin-bottom: 30px;
+  margin-top: 2rem;
+ }
+
+ .slider {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  margin-bottom: 20px;
+
+  .slides {
+   display: flex;
+   transition: transform 0.5s ease-in-out;
+   width: 100%;
+  }
+
+  .slides img,
+  .slides iframe,
+  .slides video {
+   width: 100%;
+   height: 400px;
+   object-fit: cover;
+   flex-shrink: 0;
+  }
+
+  .arrow {
+   position: absolute;
+   top: 50%;
+   transform: translateY(-50%);
+   background-color: #ea4c89;
+   color: #fff;
+   border: none;
+   padding: 10px;
+   width: 40px;
+   height: 40px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   border-radius: 50%;
+   cursor: pointer;
+   z-index: 2;
+  }
+
+  .arrow.left {
+   left: 10px;
+  }
+
+  .arrow.right {
+   right: 10px;
+  }
+ }
+
+ .content {
+  width: 100%;
+  padding: 0 20px;
+
+  .article-content {
+   font-size: 1.2em;
+   margin-bottom: 30px;
+   margin-top: 3rem;
+   text-align: right;
+  }
+
+  .publish-date {
+   font-size: 1em;
+   color: #555;
+   text-align: right;
+  }
+
+  .facebook-icon {
+   font-size: 1.5em;
+   color: #3b5998;
+   margin-right: 10px;
+   text-align: left;
+  }
+
+  hr {
+   margin: 20px 0;
+  }
+
+  .social-share {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   width: 100%;
+  }
+ }
+
+ @media (max-width: 768px) {
+  .headline {
+   font-size: 2em;
+  }
+
+  .title {
+   font-size: 1.5em;
+  }
+
+  .slider .slides img,
+  .slider .slides iframe,
+  .slider .slides video {
+   height: 300px;
+  }
+ }
+
+ @media (max-width: 475px) {
+  .headline {
+   font-size: 1.5em;
+  }
+
+  .title {
+   font-size: 1.2em;
+  }
+
+  .slider .slides img,
+  .slider .slides iframe,
+  .slider .slides video {
+   height: 200px;
+  }
+
+  .content .article-content {
+   font-size: 1em;
+  }
+ }
+}

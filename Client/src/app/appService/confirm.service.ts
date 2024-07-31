@@ -12,7 +12,7 @@ export class ConfirmService {
   alertType: string = '';
   constructor(private modalservice: BsModalService) { }
 
-  confirm(title = 'Confirmation', message = 'Are You sure? Your Article Will discard.', btnOkText = 'Ok', btnCancelText = 'Cancel'): Observable<boolean> {
+  confirm(title = 'Confirmation', message = 'Are You Sure? Your Changes Will discard.', btnOkText = 'Ok', btnCancelText = 'Cancel'): Observable<boolean> {
     const config = {
       initialState: {
         title, message, btnOkText, btnCancelText

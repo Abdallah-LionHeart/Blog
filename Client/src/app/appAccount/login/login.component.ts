@@ -13,6 +13,7 @@ export class LoginComponent {
   changeType: boolean = true;
   visible: boolean = true;
   confirmationCodeSent = false;
+  loginError = false;
 
   constructor(private fb: FormBuilder, private accountService: AccountService, private router: Router) {
   }
@@ -25,15 +26,40 @@ export class LoginComponent {
   }
 
   logIn() {
+    if (this.loginForm.invalid) {
+      return;
+    }
+
     this.accountService.login(this.loginForm.value).subscribe({
       next: () => {
-        this.confirmationCodeSent = true;
-        setTimeout(() => {
-          this.router.navigate(['/confirm-login'], { queryParams: { email: this.loginForm.controls['email'].value } });
-        }, 3000);
+        this.router.navigate(['/home']);
+      },
+      error: (err) => {
+        console.error('Login error', err);
+        this.loginError = true;
       }
-    })
+    });
   }
+
+
+  // logIn() {
+  //   this.accountService.login(this.loginForm.value).subscribe({
+  //     next: (response: any) => {
+  //       if (response.confirmationCodeSent) {
+  //         this.confirmationCodeSent = true;
+  //         setTimeout(() => {
+  //           this.router.navigate(['/confirm-login'], { queryParams: { email: this.loginForm.controls['email'].value } });
+  //         }, 3000);
+  //       }
+  //       else {
+  //         this.loginError = true;
+  //       }
+  //     }
+  //   });
+  // }
+
+
+
   viewPass() {
     this.visible = !this.visible;
     this.changeType = !this.changeType;

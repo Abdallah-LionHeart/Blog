@@ -5,7 +5,7 @@
       <div class="owl-carousel owl-theme">
         <div class="item" *ngFor="let card of events">
           <div class="card border-0 shadow ">
-            <img [src]="card.image" alt="Card Image" class="card-image img-fluid">
+            <img [src]="card.images[0].url" alt="Card Image" class="card-image img-fluid">
             <div class="card-content">
               <div class="event--info text-left">
                 <div>
@@ -13,17 +13,17 @@
                   <p class="d-flex justify-content-between align-items-center">
                     <span class="text-black">Published on :</span>
                     <span>
-                      {{ card.date }} ago
+                      {{ card.publishDate | date: 'shortDate' }} ago
                     </span>
                   </p>
                 </div>
                 <div class="event--action mt-4 d-flex justify-content-between align-items-center">
                   <div class="d-flex">
-                    <button class="btn  btn-icon me-3 " style="background-color: #ea4c89; color:#fff">
-                      <fa-icon [icon]="faEdit"></fa-icon> <span class="ms-1"> Edit</span>
+                    <button class="btn btn-secondary btn-sm btn-icon me-3" routerLink="/articles/edit/{{card.id}}">
+                      <fa-icon [icon]="faEdit"></fa-icon> <span class="ms-1">Edit</span>
                     </button>
 
-                    <button class="btn btn-secondary btn-icon ">
+                    <button class="btn btn-secondary btn-icon btn-sm" routerLink="/articles/detail/{{card.id}}">
                       <fa-icon [icon]="faCircleInfo"></fa-icon> <span class="ms-1"> Details</span>
                     </button>
 

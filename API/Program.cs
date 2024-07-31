@@ -36,20 +36,13 @@ var app = builder.Build();
 app.UseMiddleware<ExceptionMiddleware>();
 
 
-// using (var scope = app.Services.CreateScope())
-// {
-//     var services = scope.ServiceProvider;
-//     var userManager = services.GetRequiredService<UserManager<Admin>>();
-//     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-//     await DbInitializer.SeedAdminUser(userManager, roleManager);
-// }
-
 
 // Configure the HTTP request pipeline.
 // if (app.Environment.IsDevelopment())
 // {
 //     app.UseDeveloperExceptionPage();
 // }
+// app.UseHttpsRedirection();
 app.UseRouting();
 app.UseCors(builder =>
     builder
@@ -59,7 +52,7 @@ app.UseCors(builder =>
         .WithOrigins("https://localhost:4200")
 );
 
-app.UseHttpsRedirection();
+
 app.UseAuthentication();
 app.UseAuthorization();
 

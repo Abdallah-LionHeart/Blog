@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ConfirmLoginComponent } from './appAccount/confirm-login/confirm-login.component';
 import { LoginComponent } from './appAccount/login/login.component';
 import { ResetPasswordConfirmComponent } from './appAccount/reset-password-confirm/reset-password-confirm.component';
 import { ResetPasswordComponent } from './appAccount/reset-password/reset-password.component';
@@ -23,13 +22,12 @@ const routes: Routes = [
 
   { path: '', component: HomeComponent, data: { breadcrumb: 'Home' } },
   { path: 'login', component: LoginComponent },
-  { path: 'confirm-login', component: ConfirmLoginComponent },
   { path: 'reset-password-request', component: ResetPasswordComponent },
   { path: 'reset-password-confirm', component: ResetPasswordConfirmComponent },
   { path: 'user-management', component: UserManagementComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'articles', component: ArticleListComponent },
-  { path: 'articles/details/:id', component: ArticleDetailsComponent, data: { breadcrumb: { alias: 'ArticleDetailsComponent' } } },
+  { path: 'articles/detail/:id', component: ArticleDetailsComponent, data: { breadcrumb: { alias: 'ArticleDetailsComponent' } } },
   { path: 'articles/edit/:id', component: ArticleEditComponent, canDeactivate: [preventUnsavedChangesGuard] },
   { path: 'search', component: ArticleSearchComponent },
   { path: 'event', component: ArticleEventComponent },

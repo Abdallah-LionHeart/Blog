@@ -119,7 +119,7 @@ namespace API.Repositories
                 case "lastmonth":
                     query = query.Where(a => a.PublishDate >= DateTime.UtcNow.AddMonths(-1));
                     break;
-                case "recent":
+                case "recently":
                 default:
                     query = query.OrderByDescending(a => a.PublishDate);
                     break;

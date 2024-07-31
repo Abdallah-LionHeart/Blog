@@ -1,6 +1,7 @@
 using API.DTOs;
 using API.Entities;
 using API.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,25 +24,41 @@ namespace API.Controllers
             _emailService = emailService;
         }
 
+        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
         {
             var user = await _userManager.FindByEmailAsync(loginDto.Email);
-            if (user == null) return Unauthorized("Email does not exists.");
+            if (user == null) return Unauthorized("Email does not exist.");
 
             var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
-            if (!result.Succeeded) return Unauthorized("Wrong Password");
+            if (!result.Succeeded) return Unauthorized("Wrong password.");
 
-            user.EmailConfirmationCode = GenerateConfirmationCode();
-            user.EmailConfirmationExpiry = DateTime.UtcNow.AddMinutes(15);
-
-            await _userManager.UpdateAsync(user);
-
-            var message = $"Your login confirmation code is {user.EmailConfirmationCode}";
-            await _emailService.SendEmailAsync(user.Email, "Login Confirmation Code", message);
-
-            return Ok("Confirmation code sent to email.");
+            var token = await _tokenService.CreateToken(user);
+            return Ok(new { token });
         }
+
+
+        // [AllowAnonymous]
+        // [HttpPost("login")]
+        // public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
+        // {
+        //     var user = await _userManager.FindByEmailAsync(loginDto.Email);
+        //     if (user == null) return Unauthorized("Email does not exists.");
+
+        //     var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
+        //     if (!result.Succeeded) return Unauthorized("Wrong Password");
+
+        //     user.EmailConfirmationCode = GenerateConfirmationCode();
+        //     user.EmailConfirmationExpiry = DateTime.UtcNow.AddMinutes(15);
+
+        //     await _userManager.UpdateAsync(user);
+
+        //     var message = $"Your login confirmation code is {user.EmailConfirmationCode}";
+        //     await _emailService.SendEmailAsync(user.Email, "Login Confirmation Code", message);
+
+        //     return Ok("Confirmation code sent to email.");
+        // }
 
         [HttpPost("confirm-login")]
         public async Task<IActionResult> ConfirmLogin([FromBody] ConfirmLoginDto confirmDto)

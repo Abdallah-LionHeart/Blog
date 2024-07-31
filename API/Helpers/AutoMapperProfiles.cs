@@ -14,7 +14,7 @@ namespace API.Helpers
                .ForMember(dest => dest.BackgroundImageUrl, opt => opt.MapFrom(src => src.BackgroundImages.FirstOrDefault().Url));
             CreateMap<ProfileImage, ProfileImageDto>().ReverseMap();
             CreateMap<BackgroundImage, BackgroundImageDto>().ReverseMap();
-            CreateMap<AppUserDto, AppUser>();
+            // CreateMap<AppUserDto, AppUser>();
             // CreateMap<ProfileImageDto, ProfileImage>();
             // CreateMap<BackgroundImageDto, BackgroundImage>();
 
@@ -26,6 +26,10 @@ namespace API.Helpers
                     .ForMember(dest => dest.Images, opt => opt.Ignore())
                     .ForMember(dest => dest.Videos, opt => opt.Ignore())
                     .ReverseMap();
+
+            CreateMap<ArticleUpdateDto, Article>()
+                 .ForMember(dest => dest.Images, opt => opt.MapFrom(src => src.Images))
+                .ForMember(dest => dest.Videos, opt => opt.MapFrom(src => src.Videos));
 
             CreateMap<Article, ArticleUpdateDto>()
                 .ForMember(dest => dest.Images, opt => opt.Ignore())
