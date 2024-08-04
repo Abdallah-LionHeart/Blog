@@ -10,5 +10,6 @@ namespace API.DTOs
         public string FacebookLink { get; set; }
         public List<ImageDto> Images { get; set; } = new List<ImageDto>();
         public List<VideoDto> Videos { get; set; } = new List<VideoDto>();
+        public List<TagDto> Tags { get; set; }
     }
 }

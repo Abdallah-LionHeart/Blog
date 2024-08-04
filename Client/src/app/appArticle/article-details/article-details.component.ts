@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { faArrowLeftLong, faArrowRightLong } from '@fortawesome/free-solid-svg-icons';
 import { Article } from 'src/app/appModels/article';
 import { ArticleService } from 'src/app/appService/article.service';
@@ -19,7 +19,7 @@ export class ArticleDetailsComponent implements OnInit {
   faArrowLeftLong = faArrowLeftLong;
   // faFacebook = faFacebook;
 
-  constructor(private sanitizer: DomSanitizer, private route: ActivatedRoute, private articleService: ArticleService) { }
+  constructor(private sanitizer: DomSanitizer, private route: ActivatedRoute, private articleService: ArticleService, private router: Router) { }
 
   ngOnInit(): void {
     this.initializeMedia();
@@ -33,12 +33,24 @@ export class ArticleDetailsComponent implements OnInit {
         next: data => {
           this.article = data;
           this.initializeMedia();
+          console.log(data);
         },
         error: err => {
           console.error('Error fetching article', err);
         }
       });
     }
+  }
+
+  deleteArticle(id: number) {
+    this.articleService.deleteArticle(id).subscribe({
+      next: () => {
+        if (this.article) {
+          this.article.id === id;
+        }
+      }
+    })
+    this.router.navigateByUrl('/articles');
   }
 
   initializeMedia(): void {

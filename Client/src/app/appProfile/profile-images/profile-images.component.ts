@@ -1,6 +1,7 @@
 // src/app/admin/profile-images/profile-images.component.ts
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ProfileImage } from 'src/app/appModels/ProfileImage';
+import { User } from 'src/app/appModels/user';
 import { AdminService } from 'src/app/appService/admin.service';
 import { ConfirmService } from 'src/app/appService/confirm.service';
 
@@ -15,6 +16,7 @@ export class ProfileImagesComponent implements OnInit {
   @Output() profileImagesUpdated = new EventEmitter<void>();
   profileImages: ProfileImage[] = [];
   files: File[] = [];
+  user!: User;
   uploadProgress: number = 0;
   alertMessage: string = '';
   alertType: string = '';

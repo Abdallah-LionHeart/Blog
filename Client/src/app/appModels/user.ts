@@ -3,20 +3,26 @@ import { ProfileImage } from "./ProfileImage";
 
 export interface User {
  id: number;
+ token: string;
+ userName: string;
+ email: string;
  firstName: string;
  lastName: string;
- email: string;
+ publicEmail: string;
  education: string;
  experience: string;
  position: string;
  overview: string;
- phoneNumber: string;
+ publicPhoneNumber: string;
  age: number;
- facebookLink: string;
- twitterLink: string;
- youTubeLink: string;
- profileImageUrl: string;
- backgroundImageUrl: string;
+ facebookAccount: string;
+ xAccount: string;
+ youTubeAccount: string;
+ whatsAppAccount: string;
+ otherAccount: string;
  profileImages: ProfileImage[];
  backgroundImages: BackgroundImage[];
+ profileImageUrl: string;
+ backgroundImageUrl: string;
+
 }

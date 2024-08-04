@@ -12,7 +12,6 @@
   <div class="form-group mb-3">
    <label for="title">Title</label>
    <textarea class="form-control" id="title" formControlName="title"></textarea>
-   <!-- <input type="text" class="form-control" id="title"> -->
   </div>
   <div class="form-group mb-3">
    <label for="content">Content</label>
@@ -32,10 +31,6 @@
     <img [src]="youTubeThumbnail" alt="YouTube Thumbnail" class="img-thumbnail">
    </div>
   </div>
-  <!-- <div class="form-group mb-3">
-   <label for="youTubeLink">YouTube Link</label>
-   <input type="text" class="form-control" id="youTubeLink" formControlName="youTubeLink">
-  </div> -->
   <div class="form-group mb-3">
    <label for="facebookLink">Facebook Link</label>
    <input type="text" class="form-control" id="facebookLink" formControlName="facebookLink">
@@ -49,7 +44,6 @@
      <button type="button" class="btn btn-danger btn-sm" (click)="removeFile(i, 'images')">
       <i class="bi bi-x-circle"></i>
      </button>
-     <!-- <p>{{ img.name }}</p> -->
     </div>
    </div>
   </div>
@@ -62,8 +56,30 @@
      <button type="button" class="btn btn-danger btn-sm" (click)="removeFile(i, 'videos')">
       <i class="bi bi-x-circle"></i>
      </button>
-     <!-- <p>{{ video.name }}</p> -->
     </div>
+   </div>
+  </div>
+  <div class="form-group mb-3">
+   <label for="tags">Tags</label>
+   <div class="d-flex flex-wrap align-items-center">
+    <input type="text" class="form-control me-2" id="tags" placeholder="Enter tags separated by commas" (change)="onTagsInput($event)">
+    <div *ngFor="let tag of tags" class="form-check form-check-inline">
+     <input type="checkbox" class="form-check-input" [id]="tag.id" [value]="tag.id" (change)="onTagSelect(tag, $event)" [checked]="selectedTags.includes(tag)">
+     <label class="form-check-label" [for]="tag.id">{{ tag.name }}</label>
+    </div>
+   </div>
+  </div>
+  <div class="form-group mb-3">
+   <label>Selected Tags</label>
+   <div class="d-flex flex-wrap">
+    <span *ngFor="let tag of selectedTags" class="badge bg-primary me-2 mb-2">
+     {{ tag.name }}
+     <button type="button" class="btn-close btn-close-white btn-sm ms-1" (click)="removeTag(tag, false)"></button>
+    </span>
+    <span *ngFor="let tag of userDefinedTags" class="badge bg-secondary me-2 mb-2">
+     {{ tag }}
+     <button type="button" class="btn-close btn-close-white btn-sm ms-1" (click)="removeTag(tag, true)"></button>
+    </span>
    </div>
   </div>
   <button type="submit" class="btn btn-primary mt-3">Create</button>

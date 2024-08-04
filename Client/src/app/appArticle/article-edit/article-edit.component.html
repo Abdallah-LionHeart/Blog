@@ -36,6 +36,20 @@
    <input type="text" class="form-control" id="facebookLink" formControlName="facebookLink">
   </div>
   <div class="form-group mb-3">
+   <label for="tags">Tags</label>
+   <input type="text" class="form-control" id="tags" formControlName="tags" (input)="onTagsInput($event)">
+   <div class="tags-container mt-2">
+    <span *ngFor="let tag of selectedTags" class="badge bg-primary me-1">
+     {{ tag.name }}
+     <button type="button" class="btn-close btn-sm ms-1" aria-label="Close" (click)="removeTag(tag, false)"></button>
+    </span>
+    <span *ngFor="let tag of userDefinedTags" class="badge bg-secondary me-1">
+     {{ tag }}
+     <button type="button" class="btn-close btn-sm ms-1" aria-label="Close" (click)="removeTag(tag, true)"></button>
+    </span>
+   </div>
+  </div>
+  <div class="form-group mb-3">
    <label for="images">Images</label>
    <input type="file" class="form-control" id="images" (change)="onFileChange($event, 'images')" multiple>
    <div class="preview-container mt-3">
@@ -60,5 +74,6 @@
    </div>
   </div>
   <button type="submit" class="btn btn-primary mt-3">Update</button>
+  <button class="btn btn-outline-danger ms-3 mt-3" (click)="deleteArticle(articleId)"><i class="fa fa-remove fa-1x"></i> Delete</button>
  </form>
 </div>

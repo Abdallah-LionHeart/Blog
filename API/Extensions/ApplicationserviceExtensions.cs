@@ -15,7 +15,7 @@ namespace API.Extensions
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IArticleRepository, ArticleRepository>();
-            services.AddScoped<IAdminTokenService, AdminTokenService>();
+            services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<ICloudinaryService, CloudinaryService>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));

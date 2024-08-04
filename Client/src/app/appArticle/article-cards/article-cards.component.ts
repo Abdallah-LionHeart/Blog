@@ -23,6 +23,7 @@ export class ArticleCardsComponent {
   ngOnInit(): void {
     this.initializeMedia();
     this.truncateHeadline();
+    console.log(this.article);
   }
 
   initializeMedia(): void {

@@ -1,8 +1,8 @@
 <div class="artical--events pb-5 pt-5 mt-5">
   <div class="container">
-    <h2 class="event--tite text-center h1 fw-bolder mb-5 fs-3">Our Popular Events</h2>
+    <h2 class="event--tite text-center h1 fw-bolder mb-5 fs-3">Latest Events</h2>
     <div class="carousel-container ">
-      <div class="owl-carousel owl-theme">
+      <div class="owl-carousel owl-theme" *ngIf="events">
         <div class="item" *ngFor="let card of events">
           <div class="card border-0 shadow ">
             <img [src]="card.images[0].url" alt="Card Image" class="card-image img-fluid">
@@ -13,7 +13,7 @@
                   <p class="d-flex justify-content-between align-items-center">
                     <span class="text-black">Published on :</span>
                     <span>
-                      {{ card.publishDate | date: 'shortDate' }} ago
+                      {{ card.publishDate | date: 'shortDate' }}
                     </span>
                   </p>
                 </div>

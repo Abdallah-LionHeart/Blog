@@ -1,0 +1,54 @@
+mat-toolbar {
+ position: relative;
+ z-index: 5;
+}
+
+.content {
+ padding: 24px;
+
+}
+
+mat-sidenav-container {
+ height: calc(100vh - 64px);
+
+}
+
+mat-sidenav,
+mat-sidenav-content {
+ transition: all 400ms ease-in-out;
+}
+
+:host ::ng-deep .mat-sidenav-content {
+ width: auto !important;
+ margin-left: 0 !important;
+}
+
+.mat-drawer-inner-container {
+ overflow-x: hidden;
+}
+
+:host ::ng-deep .mat-drawer-inner-container {
+ overflow-x: hidden;
+}
+
+/* Styles for screen sizes less than 413px */
+@media (max-width: 413px) {
+ mat-sidenav {
+  overflow: hidden; // Prevent scrollbars
+ }
+
+ .mat-drawer-content {
+  transition: margin-left 400ms ease-in-out;
+ }
+}
+
+/* Styles for larger screens */
+@media (min-width: 414px) {
+ mat-sidenav {
+  overflow: hidden; // Prevent scrollbars
+ }
+
+ .mat-drawer-content {
+  transition: margin-left 400ms ease-in-out;
+ }
+}

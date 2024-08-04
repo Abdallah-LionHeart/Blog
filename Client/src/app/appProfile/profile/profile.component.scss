@@ -72,9 +72,9 @@
 //  }
 // }
 
-.container {
- max-width: 90%;
-}
+// .container {
+//  max-width: 90%;
+// }
 
 .card {
  border-radius: 15px;
@@ -99,14 +99,30 @@ h4 {
  height: auto;
 }
 
+@media (min-width: 400px) and (max-width:500px) {
+ .profile-image {
+  max-width: 150px;
+  max-height: 150px;
+ }
+}
+
+@media (min-width: 500px) and (max-width:768px) {
+ .profile-image {
+  max-width: 250px;
+  max-height: 250px;
+ }
+}
+
 @media (min-width: 768px) {
  .profile-image {
   max-width: 300px;
+  max-height: 300px;
  }
 }
 
 @media (min-width: 992px) {
  .profile-image {
-  max-width: 400px;
+  max-width: 300px;
+  max-height: 300px;
  }
 }

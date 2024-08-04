@@ -90,6 +90,19 @@ namespace API.Services
                 article.Videos.Add(video);
             }
 
+            if (articleDto.Tags != null && articleDto.Tags.Any())
+            {
+                foreach (var tagDto in articleDto.Tags)
+                {
+                    var tagCreateDto = new TagCreateDto
+                    {
+                        Name = tagDto.Name,
+                        ArticleId = article.Id
+                    };
+                    await AddTag(tagCreateDto);
+                }
+            }
+
             await _uow.Articles.Add(article);
             await _uow.CompleteAsync();
 
@@ -148,6 +161,10 @@ namespace API.Services
                     IsExternal = true
                 };
                 article.Videos.Add(video);
+            }
+            if (articleDto.Tags != null && articleDto.Tags.Any())
+            {
+                article.Tags = articleDto.Tags.Select(tagDto => new Tag { Name = tagDto.Name, ArticleId = article.Id }).ToList();
             }
 
             await _uow.Articles.Update(article);
@@ -233,6 +250,48 @@ namespace API.Services
             var result = await _uow.Articles.SearchArticles(articleParams, searchTerm, filter);
             var articlesDto = _mapper.Map<IEnumerable<ArticleDto>>(result);
             return new PagedList<ArticleDto>(articlesDto, result.TotalCount, result.CurrentPage, result.PageSize);
+        }
+
+
+        public async Task<IEnumerable<TagDto>> GetAllTags()
+        {
+            var tags = await _uow.Articles.GetAllTags();
+            return _mapper.Map<IEnumerable<TagDto>>(tags);
+        }
+        public async Task AddTag(TagCreateDto tagCreateDto)
+        {
+            var tag = new Tag
+            {
+                Name = tagCreateDto.Name,
+                ArticleId = tagCreateDto.ArticleId // Associate the tag with an article
+            };
+            await _uow.Articles.AddTag(tag);
+            await _uow.CompleteAsync();
+        }
+
+        public async Task UpdateTag(TagDto tagDto)
+        {
+            var tag = await _uow.Articles.GetTagById(tagDto.Id);
+            if (tag == null)
+            {
+                throw new Exception("Tag not found");
+            }
+
+            tag.Name = tagDto.Name;
+            await _uow.Articles.UpdateTag(tag);
+            await _uow.CompleteAsync();
+        }
+
+        public async Task RemoveTag(int id)
+        {
+            await _uow.Articles.RemoveTag(id);
+            await _uow.CompleteAsync();
+        }
+
+        public async Task<IEnumerable<TagDto>> GetTagsByArticleId(int articleId)
+        {
+            var tags = await _uow.Articles.GetTagsByArticleId(articleId);
+            return _mapper.Map<IEnumerable<TagDto>>(tags);
         }
 
     }

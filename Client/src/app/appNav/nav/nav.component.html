@@ -25,13 +25,15 @@
   </div>
  </div>
 </nav> -->
-<nav class="navbar navbar-expand-lg  navbar--blog ">
+
+
+<!-- <nav class="navbar navbar-expand-lg  navbar--blog ">
   <div class="container">
     <a class="navbar-brand" href="#">Navbar</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
       aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
-      <!-- <i class="fa-solid fa-bars"></i> -->
+      <i class="fa-solid fa-bars"></i>
 
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -39,14 +41,14 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" routerLink="/home">Home</a>
         </li>
-        <li class="nav-item" *ngIf="(accountService.currentAdmin$ | async) as Admin">
+        <li class="nav-item" *ngIf="(accountService.currentUser$ | async) as User">
           <a class="nav-link" routerLink="/profile">Profile</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" routerLink="/event">Events</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/item">Item</a>
+          <a class="nav-link" routerLink="/create">create</a>
         </li>
       </ul>
       <div class="login--action ">
@@ -55,4 +57,4 @@
       </div>
     </div>
   </div>
-</nav>
+</nav> -->

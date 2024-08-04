@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { BackgroundImage } from '../appModels/BackgroundImage';
 import { ProfileImage } from '../appModels/ProfileImage';
 import { User } from '../appModels/user';
+import { UserDto } from '../appModels/userDto';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,7 @@ import { User } from '../appModels/user';
 export class AdminService {
   baseUrl = environment.apiUrl + 'admin/';
   users: User[] = [];
+  user!: UserDto;
 
   constructor(private http: HttpClient) { }
 

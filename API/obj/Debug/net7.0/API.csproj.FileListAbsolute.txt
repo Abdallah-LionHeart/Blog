@@ -270,3 +270,5 @@ D:\ProjectFiles\BlogApp\Blog\API\obj\Debug\net7.0\refint\API.dll
 D:\ProjectFiles\BlogApp\Blog\API\obj\Debug\net7.0\API.pdb
 D:\ProjectFiles\BlogApp\Blog\API\obj\Debug\net7.0\API.genruntimeconfig.cache
 D:\ProjectFiles\BlogApp\Blog\API\obj\Debug\net7.0\ref\API.dll
+D:\ProjectFiles\BlogApp\Blog\API\bin\Debug\net7.0\Data\SeedData\ArticleSeed.json
+D:\ProjectFiles\BlogApp\Blog\API\bin\Debug\net7.0\Data\SeedData\UserSeedData.json

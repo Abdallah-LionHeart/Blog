@@ -1,7 +1,6 @@
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -37,6 +36,8 @@ import { FooterComponent } from './appSection/footer/footer.component';
 import { HeaderComponent } from './appSection/header/header.component';
 import { SectionHeaderComponent } from './appSection/section-header/section-header.component';
 import { SafePipe } from './pipes/safe.pipe';
+import { NavbarComponent } from './appRoot/navbar/navbar.component';
+import { SideNavComponent } from './appRoot/side-nav/side-nav.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -67,6 +68,8 @@ import { SafePipe } from './pipes/safe.pipe';
     AboutComponent,
     ArticleCardsComponent,
     ArticlePagingComponent,
+    NavbarComponent,
+    SideNavComponent,
   ],
   imports: [
     BrowserModule,
@@ -76,7 +79,6 @@ import { SafePipe } from './pipes/safe.pipe';
     SharedModule,
     ReactiveFormsModule,
     FormsModule,
-    MatButtonModule,
     FontAwesomeModule
   ],
   providers: [

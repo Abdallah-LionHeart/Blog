@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Admin } from 'src/app/appModels/admin';
+import { UserDto } from 'src/app/appModels/userDto';
+
+
 import { AccountService } from 'src/app/appService/account.service';
 
 @Component({
@@ -20,10 +22,11 @@ export class NavComponent implements OnInit {
     this.accountService.logout();
   }
 
+
   setCurrentUser() {
-    const adminString = localStorage.getItem('admin')
-    if (!adminString) return;
-    const admin: Admin = JSON.parse(adminString);
-    this.accountService.setCurrentAdmin(admin);
+    const userString = localStorage.getItem('user');
+    if (!userString) return;
+    const user: UserDto = JSON.parse(userString);
+    this.accountService.setCurrentUser(user);
   }
 }

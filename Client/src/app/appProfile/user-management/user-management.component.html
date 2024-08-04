@@ -9,6 +9,10 @@
    </div>
    <form [formGroup]="userForm" (ngSubmit)="updateUser()">
     <div class="form-group">
+     <label for="userName">User Name</label>
+     <input type="text" id="userName" class="form-control" formControlName="userName">
+    </div>
+    <div class="form-group input-feild">
      <label for="firstName">First Name</label>
      <input type="text" id="firstName" class="form-control" formControlName="firstName">
     </div>
@@ -21,8 +25,12 @@
      <input type="email" id="email" class="form-control" formControlName="email">
     </div>
     <div class="form-group input-feild">
-     <label for="phoneNumber">Public Phone Number</label>
-     <input type="text" id="phoneNumber" class="form-control" formControlName="phoneNumber">
+     <label for="publicEmail">Public Email</label>
+     <input type="email" id="publicEmail" class="form-control" formControlName="publicEmail">
+    </div>
+    <div class="form-group input-feild">
+     <label for="publicPhoneNumber">Public Phone Number</label>
+     <input type="text" id="publicPhoneNumber" class="form-control" formControlName="publicPhoneNumber">
     </div>
     <div class="form-group input-feild">
      <label for="education">Education</label>
@@ -45,16 +53,24 @@
      <input type="number" id="age" class="form-control" formControlName="age">
     </div>
     <div class="form-group input-feild">
-     <label for="facebookLink">Facebook Link</label>
-     <input type="text" id="facebookLink" class="form-control" formControlName="facebookLink">
+     <label for="facebookAccount">Facebook Account</label>
+     <input type="text" id="facebookAccount" class="form-control" formControlName="facebookAccount">
     </div>
     <div class="form-group input-feild">
-     <label for="twitterLink">Twitter Link</label>
-     <input type="text" id="twitterLink" class="form-control" formControlName="twitterLink">
+     <label for="xAccount">X Account</label>
+     <input type="text" id="xAccount" class="form-control" formControlName="xAccount">
     </div>
     <div class="form-group input-feild">
-     <label for="youTubeLink">YouTube Link</label>
-     <input type="text" id="youTubeLink" class="form-control" formControlName="youTubeLink">
+     <label for="youTubeAccount">YouTube Account</label>
+     <input type="text" id="youTubeAccount" class="form-control" formControlName="youTubeAccount">
+    </div>
+    <div class="form-group input-feild">
+     <label for="whatsAppAccount">WhatsApp Account</label>
+     <input type="text" id="whatsAppAccount" class="form-control" formControlName="whatsAppAccount">
+    </div>
+    <div class="form-group input-feild">
+     <label for="otherAccount">Other Account</label>
+     <input type="text" id="otherAccount" class="form-control" formControlName="otherAccount">
     </div>
     <button type="submit" class="btn btn-primary mt-3" [disabled]="userForm.invalid">Update User</button>
    </form>

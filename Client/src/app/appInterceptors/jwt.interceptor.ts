@@ -10,16 +10,15 @@ import { AccountService } from '../appService/account.service';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
-
   constructor(private accountService: AccountService) { }
 
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    this.accountService.currentAdmin$.pipe(take(1)).subscribe({
-      next: admin => {
-        if (admin) {
+  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    this.accountService.currentUser$.pipe(take(1)).subscribe({
+      next: user => {
+        if (user) {
           request = request.clone({
             setHeaders: {
-              Authorization: `Bearer ${admin.token}`
+              Authorization: `Bearer ${user.token}`
             }
           })
         }

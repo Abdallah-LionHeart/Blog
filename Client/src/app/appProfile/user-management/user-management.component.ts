@@ -17,18 +17,22 @@ export class UserManagementComponent implements OnInit {
   constructor(private fb: FormBuilder, private adminService: AdminService) {
     this.userForm = this.fb.group({
       id: [''],
-      firstName: ['',],
-      lastName: ['',],
-      email: ['', [, Validators.email]],
-      phoneNumber: [''],
+      userName: [''],
+      firstName: [''],
+      lastName: [''],
+      email: ['', [Validators.email]],
+      publicEmail: ['', [Validators.email]],
       education: [''],
       experience: [''],
       position: [''],
       overview: [''],
-      age: ['', [, Validators.min(0)]],
-      facebookLink: [''],
-      twitterLink: [''],
-      youTubeLink: ['']
+      publicPhoneNumber: [''],
+      age: ['', [Validators.min(0)]],
+      facebookAccount: [''],
+      xAccount: [''],
+      youTubeAccount: [''],
+      whatsAppAccount: [''],
+      otherAccount: ['']
     });
   }
 

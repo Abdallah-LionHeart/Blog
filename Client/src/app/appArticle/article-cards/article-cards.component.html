@@ -6,6 +6,7 @@
           <img *ngIf="isImage(mediaItem)" [src]="mediaItem" class="img-fluid" alt="Article media">
           <iframe *ngIf="isYouTube(mediaItem)" [src]="mediaItem" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen
             class="youtube-iframe">
+            <!-- <iframe *ngIf="isYouTube(mediaItem)" [src]="getYouTubeEmbedUrl(mediaItem)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="youtube-iframe"> -->
           </iframe>
           <video *ngIf="isVideo(mediaItem)" controls class="w-100">
             <source [src]="mediaItem" type="video/mp4">
@@ -21,7 +22,7 @@
       <div class="event--action mt-4 d-flex justify-content-between align-items-center">
         <p class="d-flex align-items-center mt-2">
           <span class="text-black d-none d-sm-block">Published on :</span>
-          <span class="date">{{ article.publishDate | date:'short' }}</span>
+          <span class="date">{{ article.publishDate | date:'fullDate' }}</span>
         </p>
         <div class="d-flex">
           <button class="btn btn-sm btn-icon me-3" style="background-color: #ea4c89; color:#fff" routerLink="/articles/edit/{{article.id}}">

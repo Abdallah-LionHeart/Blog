@@ -8,6 +8,8 @@ import { ArticleDto } from '../appModels/articleDto';
 import { ArticleParams } from '../appModels/articleParams';
 import { ArticleUpdateDto } from '../appModels/ArticleUpdateDto';
 import { PaginatedResult } from '../appModels/Pagination';
+import { TagCreateDto } from '../appModels/tagCreateDto';
+import { TagDto } from '../appModels/tagDto';
 
 @Injectable({
   providedIn: 'root'
@@ -167,6 +169,31 @@ export class ArticleService {
       }
     });
   }
+
+  getAllTags() {
+    return this.http.get<TagDto[]>(this.baseUrl + 'tags');
+  }
+
+  addTag(tagDto: TagCreateDto) {
+    return this.http.post<TagDto>(this.baseUrl + 'tags', tagDto);
+  }
+
+  updateTag(tagDto: TagDto) {
+    return this.http.put<TagDto>(this.baseUrl + 'tags/' + tagDto.id, tagDto);
+  }
+
+  removeTag(id: number) {
+    return this.http.delete(this.baseUrl + 'tags/' + id);
+  }
+
+  getTagsByArticleId(articleId: number) {
+    return this.http.get<TagDto[]>(this.baseUrl + articleId + '/tags');
+  }
+
+
+
+
+
 
   private prepareFormData(article: ArticleCreateDto | ArticleUpdateDto): FormData {
     const formData = new FormData();

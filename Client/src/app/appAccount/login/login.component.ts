@@ -26,13 +26,11 @@ export class LoginComponent {
   }
 
   logIn() {
-    if (this.loginForm.invalid) {
-      return;
-    }
-
     this.accountService.login(this.loginForm.value).subscribe({
       next: () => {
-        this.router.navigate(['/home']);
+        setTimeout(() => {
+          this.router.navigate(['/profile']);
+        }, 3000);
       },
       error: (err) => {
         console.error('Login error', err);

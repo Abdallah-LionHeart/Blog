@@ -17,8 +17,8 @@
           <div class="col">
             <div class="input-group">
               <input #search type="text" class="form-control" placeholder="Search" (keyup.enter)="onSearch()">
-              <button *ngIf="!searchActive" class="btn btn-secondary" type="button" (click)="onSearch()">Search</button>
-              <button *ngIf="searchActive" class="btn btn-outline-secondary" type="button" (click)="onReset()">Reset</button>
+              <button *ngIf="!searchActive" class="btn btn-outline btn-search" type="button" (click)="onSearch()">Search</button>
+              <button *ngIf="searchActive" class="btn btn-outline btn-reset" type="button" (click)="onReset()">Reset</button>
             </div>
           </div>
         </div>
@@ -36,12 +36,24 @@
     </div>
   </div>
   <hr class="mt-5">
-  <!-- <app-article-paging [totalItems]="pagination.totalItems" [itemsPerPage]="pagination.itemsPerPage" [currentPage]="pagination.currentPage" (pageChange)="pageChanged($event)">
+  <!-- <app-article-paging [totalItems]="pagination.totalItems" [itemsPerPage]="pagination.itemsPerPage" [currentPage]="pagination.currentPage" (pageChange)="PageChanged($event)">
   </app-article-paging> -->
 
-  <div class="d-flex justify-content-center">
-    <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems" [itemsPerPage]="pagination.itemsPerPage" [maxSize]="10" [(ngModel)]="pagination.currentPage"
+  <!-- <div class="d-flex justify-content-center" *ngIf="totalCount > 0">
+    <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems" [itemsPerPage]="pagination.itemsPerPage" [maxSize]="15" [(ngModel)]="pagination.currentPage"
       (pageChanged)="PageChanged($event)" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
     </pagination>
+  </div>
+</div> -->
+
+
+  <div class="container">
+    <div class="mt-5 pagination">
+      <div class="col-12 d-flex justify-content-center" *ngIf="pagination">
+        <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems" [itemsPerPage]="pagination.itemsPerPage" [maxSize]="15" [(ngModel)]="pagination.currentPage"
+          (pageChanged)="PageChanged($event)" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
+        </pagination>
+      </div>
+    </div>
   </div>
 </div>

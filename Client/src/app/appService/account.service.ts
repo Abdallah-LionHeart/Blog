@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Admin } from '../appModels/admin';
+import { UserDto } from '../appModels/userDto';
 
 @Injectable({
   providedIn: 'root'
@@ -12,39 +12,34 @@ export class AccountService {
 
   baseUrl = environment.apiUrl + 'account/';
   loginUrl = 'https://localhost:5001/api/account/login';
-  private currentAdminSubject = new BehaviorSubject<Admin | null>(null);
-  currentAdmin$ = this.currentAdminSubject.asObservable();
+  private currentUserSource = new BehaviorSubject<UserDto | null>(null);
+  currentUser$ = this.currentUserSource.asObservable();
 
   constructor(private http: HttpClient) {
   }
 
 
   login(model: any) {
-    return this.http.post<Admin>(this.loginUrl, model).pipe(
-      map((response: Admin) => {
-        const admin = response;
-        if (admin) {
-          this.setCurrentAdmin(admin);
+    return this.http.post<UserDto>(this.loginUrl, model).pipe(
+      map((response: UserDto) => {
+        const user = response;
+        if (user) {
+          this.setCurrentUser(user);
         }
-        return admin;
+        return user;
       })
     )
   }
 
-  // confirmLogin(model: any) {
-  //   return this.http.post<Admin>(this.baseUrl + 'confirm-login', model).pipe(
-  //     map((admin: Admin) => {
-  //       if (admin) {
-  //         localStorage.setItem('admin', JSON.stringify(admin));
-  //       }
-  //     })
-  //   )
-  // }
-
 
   logout() {
-    localStorage.removeItem('admin');
-    this.currentAdminSubject.next(null);
+    localStorage.removeItem('user');
+    this.currentUserSource.next(null);
+  }
+
+  setCurrentUser(user: UserDto) {
+    localStorage.setItem('user', JSON.stringify(user));
+    this.currentUserSource.next(user);
   }
 
   resendVerificationCode(model: any) {
@@ -55,11 +50,6 @@ export class AccountService {
     return this.http.get<boolean>(this.baseUrl + 'email-exists?email=' + email);
   }
 
-
-  setCurrentAdmin(admin: Admin) {
-    localStorage.setItem('admin', JSON.stringify(admin));
-    this.currentAdminSubject.next(admin);
-  }
 
   resetPasswordRequest(model: any) {
     return this.http.post(this.baseUrl + 'reset-password-request', model);

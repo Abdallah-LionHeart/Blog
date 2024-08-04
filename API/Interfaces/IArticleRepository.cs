@@ -19,5 +19,11 @@ namespace API.Interfaces
         Task<Video> GetVideoById(int id);
         Task<PagedList<Article>> GetAllArticles(ArticleParams articleParams);
         Task<PagedList<Article>> SearchArticles(ArticleParams articleParams, string searchTerm, string filter);
+        Task AddTag(Tag tag);
+        Task UpdateTag(Tag tag);
+        Task RemoveTag(int id);
+        Task<Tag> GetTagById(int id);
+        Task<IEnumerable<Tag>> GetTagsByArticleId(int articleId);
+        Task<IEnumerable<Tag>> GetAllTags();
     }
 }

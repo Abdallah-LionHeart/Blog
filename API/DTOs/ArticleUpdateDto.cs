@@ -11,5 +11,6 @@ namespace API.DTOs
         public string FacebookLink { get; set; }
         public List<IFormFile> Images { get; set; }
         public List<IFormFile> Videos { get; set; }
+        public List<TagDto> Tags { get; set; }
     }
 }

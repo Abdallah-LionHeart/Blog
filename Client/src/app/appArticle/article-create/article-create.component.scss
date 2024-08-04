@@ -56,3 +56,61 @@ select {
 button[type="submit"] {
  margin-top: 1rem;
 }
+
+.form-group {
+ margin-bottom: 1rem;
+}
+
+.form-group label {
+ display: block;
+ margin-bottom: 0.5rem;
+}
+
+.d-flex {
+ display: flex;
+ flex-wrap: wrap;
+}
+
+.me-2 {
+ margin-right: 0.5rem;
+}
+
+.mb-2 {
+ margin-bottom: 0.5rem;
+}
+
+.p-2 {
+ padding: 0.5rem;
+}
+
+.tag-badge {
+ display: flex;
+ align-items: center;
+ padding: 0.5rem;
+}
+
+.btn-close {
+ margin-left: 0.5rem;
+ font-size: 0.75rem;
+ padding: 0;
+}
+
+.badge {
+ display: flex;
+ align-items: center;
+ padding: 0.5rem;
+}
+
+.progress {
+ height: 1.5rem;
+}
+
+.progress-bar {
+ background-color: #007bff;
+ height: 100%;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ color: white;
+ transition: width 0.3s;
+}

@@ -20,6 +20,11 @@ builder.Services.AddDbContext<BlogContext>(opt =>
     opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
+builder.Services.AddDbContext<AppIdentityDbContext>(opt =>
+{
+    opt.UseSqlite(builder.Configuration.GetConnectionString("IdentityConnection"));
+});
+
 builder.Services.AddApplicationServices(builder.Configuration);
 builder.Services.AddIdentityServices(builder.Configuration);
 builder.Services.AddCors();
@@ -58,23 +63,25 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-using (var scope = app.Services.CreateScope())
+using var scope = app.Services.CreateScope();
+var services = scope.ServiceProvider;
+var context = services.GetRequiredService<BlogContext>();
+var identityContext = services.GetRequiredService<AppIdentityDbContext>();
+var userManager = services.GetRequiredService<UserManager<AppUser>>();
+var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
+var logger = services.GetRequiredService<ILogger<Program>>();
+try
 {
-    var services = scope.ServiceProvider;
-    var context = services.GetRequiredService<BlogContext>();
-    var userManager = services.GetRequiredService<UserManager<Admin>>();
-    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-
-    try
-    {
-        context.Database.Migrate();
-        await DbInitializer.SeedData(context, userManager, roleManager);
-    }
-    catch (Exception ex)
-    {
-        var logger = services.GetRequiredService<ILogger<Program>>();
-        logger.LogError(ex, "An error occurred during migration");
-    }
+    await context.Database.MigrateAsync();
+    await identityContext.Database.MigrateAsync();
+    await BlogContextSeed.SeedAsync(context);
+    await AppIdentityDbContextSeed.SeedUserAsync(userManager, roleManager);
 }
+catch (Exception ex)
+{
+
+    logger.LogError(ex, "An error occurred during migration");
+}
+
 
 app.Run();

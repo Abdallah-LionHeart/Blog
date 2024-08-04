@@ -34,17 +34,30 @@ namespace API.Repositories
 
         public async Task<IEnumerable<Article>> GetAll()
         {
-            return await _context.Articles.Include(a => a.Images).Include(a => a.Videos).ToListAsync();
+            return await _context.Articles
+            .Include(a => a.Images)
+            .Include(a => a.Videos)
+            .Include(a => a.Tags)
+            .ToListAsync();
         }
 
         public async Task<IEnumerable<Article>> GetAllEvents()
         {
-            return await _context.Articles.Include(a => a.Images).Include(a => a.Videos).Where(a => a.IsEvent).ToListAsync();
+            return await _context.Articles
+            .Include(a => a.Images)
+            .Include(a => a.Videos)
+            .Include(a => a.Tags)
+            .Where(a => a.IsEvent)
+            .ToListAsync();
         }
 
         public async Task<Article> GetById(int id)
         {
-            return await _context.Articles.Include(a => a.Images).Include(a => a.Videos).FirstOrDefaultAsync(a => a.Id == id);
+            return await _context.Articles
+            .Include(a => a.Images)
+            .Include(a => a.Videos)
+               .Include(a => a.Tags)
+            .FirstOrDefaultAsync(a => a.Id == id);
         }
 
         public async Task Update(Article article)
@@ -97,7 +110,7 @@ namespace API.Repositories
         }
         public async Task<PagedList<Article>> GetAllArticles(ArticleParams articleParams)
         {
-            var query = _context.Articles.Include(a => a.Images).Include(a => a.Videos).AsQueryable();
+            var query = _context.Articles.Include(a => a.Images).Include(a => a.Videos).Include(a => a.Tags).AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(articleParams.Search))
             {
@@ -130,7 +143,7 @@ namespace API.Repositories
 
         public async Task<PagedList<Article>> SearchArticles(ArticleParams articleParams, string searchTerm, string filter)
         {
-            var query = _context.Articles.Include(a => a.Images).Include(a => a.Videos).AsQueryable();
+            var query = _context.Articles.Include(a => a.Images).Include(a => a.Videos).Include(a => a.Tags).AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(searchTerm))
             {
@@ -138,6 +151,43 @@ namespace API.Repositories
             }
 
             return await PagedList<Article>.CreateAsync(query, articleParams.PageNumber, articleParams.PageSize);
+        }
+
+        public async Task AddTag(Tag tag)
+        {
+            await _context.Tags.AddAsync(tag);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateTag(Tag tag)
+        {
+            _context.Entry(tag).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task RemoveTag(int id)
+        {
+            var tag = await _context.Tags.FindAsync(id);
+            if (tag != null)
+            {
+                _context.Tags.Remove(tag);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task<Tag> GetTagById(int id)
+        {
+            return await _context.Tags.FindAsync(id);
+        }
+
+        public async Task<IEnumerable<Tag>> GetTagsByArticleId(int articleId)
+        {
+            return await _context.Tags.Where(t => t.ArticleId == articleId).ToListAsync();
+        }
+
+        public async Task<IEnumerable<Tag>> GetAllTags()
+        {
+            return await _context.Tags.ToListAsync();
         }
     }
 }

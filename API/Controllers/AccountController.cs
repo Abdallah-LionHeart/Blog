@@ -4,6 +4,7 @@ using API.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
@@ -11,31 +12,37 @@ namespace API.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private readonly UserManager<Admin> _userManager;
-        private readonly SignInManager<Admin> _signInManager;
+        private readonly UserManager<AppUser> _userManager;
         private readonly IEmailService _emailService;
-        private readonly IAdminTokenService _tokenService;
+        private readonly ITokenService _tokenService;
 
-        public AccountController(UserManager<Admin> userManager, SignInManager<Admin> signInManager, IEmailService emailService, IAdminTokenService tokenService)
+        public AccountController(UserManager<AppUser> userManager, IEmailService emailService, ITokenService tokenService)
         {
             _tokenService = tokenService;
             _userManager = userManager;
-            _signInManager = signInManager;
+
             _emailService = emailService;
         }
 
-        [AllowAnonymous]
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
+        public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
-            var user = await _userManager.FindByEmailAsync(loginDto.Email);
+            var user = await _userManager.Users.Include(u => u.ProfileImages).FirstOrDefaultAsync(u => u.Email == loginDto.Email);
+            // var user = await _userManager.FindByEmailAsync(loginDto.Email);
             if (user == null) return Unauthorized("Email does not exist.");
 
-            var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
-            if (!result.Succeeded) return Unauthorized("Wrong password.");
+            var result = await _userManager.CheckPasswordAsync(user, loginDto.Password);
+            if (!result) return Unauthorized("Wrong password.");
 
-            var token = await _tokenService.CreateToken(user);
-            return Ok(new { token });
+
+            return new UserDto
+            {
+                Username = user.UserName,
+                Token = await _tokenService.CreateToken(user),
+                ProfileImageUrl = user.ProfileImages.FirstOrDefault(x => x.IsMain)?.Url,
+                FirstName = user.FirstName,
+                Email = user.Email
+            };
         }
 
 
@@ -60,30 +67,30 @@ namespace API.Controllers
         //     return Ok("Confirmation code sent to email.");
         // }
 
-        [HttpPost("confirm-login")]
-        public async Task<IActionResult> ConfirmLogin([FromBody] ConfirmLoginDto confirmDto)
-        {
-            var user = await _userManager.FindByEmailAsync(confirmDto.Email);
-            if (user == null) return NotFound("User not found.");
+        // [HttpPost("confirm-login")]
+        // public async Task<IActionResult> ConfirmLogin([FromBody] ConfirmLoginDto confirmDto)
+        // {
+        //     var user = await _userManager.FindByEmailAsync(confirmDto.Email);
+        //     if (user == null) return NotFound("User not found.");
 
-            if (user.EmailConfirmationCode != confirmDto.Code || user.EmailConfirmationExpiry < DateTime.UtcNow)
-            {
-                return BadRequest("Invalid or expired code.");
-            }
+        //     if (user.EmailConfirmationCode != confirmDto.Code || user.EmailConfirmationExpiry < DateTime.UtcNow)
+        //     {
+        //         return BadRequest("Invalid or expired code.");
+        //     }
 
-            user.EmailConfirmationCode = null;
-            user.EmailConfirmationExpiry = null;
-            await _userManager.UpdateAsync(user);
+        //     user.EmailConfirmationCode = null;
+        //     user.EmailConfirmationExpiry = null;
+        //     await _userManager.UpdateAsync(user);
 
-            var result = await _signInManager.PasswordSignInAsync(user.UserName, confirmDto.Password, false, false);
-            if (result.Succeeded)
-            {
-                var token = await _tokenService.CreateToken(user);
-                return Ok(new { token });
-            }
+        //     var result = await _signInManager.PasswordSignInAsync(user.UserName, confirmDto.Password, false, false);
+        //     if (result.Succeeded)
+        //     {
+        //         var token = await _tokenService.CreateToken(user);
+        //         return Ok(new { token });
+        //     }
 
-            return Unauthorized("Invalid login attempt.");
-        }
+        //     return Unauthorized("Invalid login attempt.");
+        // }
 
         [HttpPost("reset-password-request")]
         public async Task<IActionResult> ResetPasswordRequest([FromBody] ResetPasswordRequestDto request)

@@ -12,9 +12,14 @@ namespace API.Extensions
     {
         public static IServiceCollection AddIdentityServices(this IServiceCollection services, IConfiguration config)
         {
-            services.AddIdentity<Admin, IdentityRole>()
-                        .AddEntityFrameworkStores<BlogContext>()
-                        .AddDefaultTokenProviders();
+            services.AddIdentityCore<AppUser>(options =>
+             {
+                 options.Password.RequireNonAlphanumeric = false;
+             })
+             .AddRoles<AppRole>()
+             .AddRoleManager<RoleManager<AppRole>>()
+              .AddDefaultTokenProviders()
+             .AddEntityFrameworkStores<AppIdentityDbContext>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
                 {
@@ -30,6 +35,12 @@ namespace API.Extensions
                     };
 
                 });
+
+            services.AddAuthorization(option =>
+      {
+          option.AddPolicy("RequiredAdminRole", policy => policy.RequireRole("Admin"));
+      });
+
 
             return services;
 

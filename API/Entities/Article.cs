@@ -12,5 +12,6 @@ namespace API.Entities
         public string FacebookLink { get; set; }
         public List<Image> Images { get; set; } = new List<Image>();
         public List<Video> Videos { get; set; } = new List<Video>();
+        public List<Tag> Tags { get; set; } = new List<Tag>();
     }
 }

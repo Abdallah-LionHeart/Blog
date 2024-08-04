@@ -97,6 +97,22 @@
    text-align: left;
   }
 
+  .tags-container {
+   display: flex;
+   flex-wrap: wrap;
+   margin-top: 20px;
+
+   .tag-badge {
+    background-color: #f0f8ff;
+    color: #000;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9em;
+   }
+  }
+
   hr {
    margin: 20px 0;
   }

@@ -1,0 +1,27 @@
+<mat-toolbar class="mat-elevation-z3">
+ <button mat-icon-button (click)="toggleSidenav()">
+  <mat-icon>menu</mat-icon>
+ </button>
+ <div class="brand-logo">
+  <img src="assets/RHC.png" alt="Brand Logo" />
+ </div>
+
+ <span class="spacer"></span>
+
+ <!-- Login Button -->
+ <button mat-button>
+  <mat-icon>login</mat-icon>
+  Login
+ </button>
+
+</mat-toolbar>
+<mat-sidenav-container>
+ <mat-sidenav opened mode="side" [style.width]="sidenavWidth()">
+  <app-side-nav [collapsed]="collapsed()"></app-side-nav>
+ </mat-sidenav>
+ <mat-sidenav-content class="content" [style.width]="sidenavWidth()">
+
+  <router-outlet></router-outlet>
+
+ </mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Article } from 'src/app/appModels/article';
 import { ArticleParams } from 'src/app/appModels/articleParams';
 import { Pagination } from 'src/app/appModels/Pagination';
@@ -8,18 +8,18 @@ import { ArticleService } from 'src/app/appService/article.service';
 @Component({
   selector: 'app-article-list',
   templateUrl: './article-list.component.html',
-  styleUrls: ['./article-list.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  styleUrls: ['./article-list.component.scss']
 })
 export class ArticleListComponent implements OnInit {
   @ViewChild('search') searchTerm!: ElementRef;
-  pagination: Pagination = { totalItems: 0, itemsPerPage: 2, currentPage: 1, totalPages: 0 };
+  pagination: Pagination = { totalItems: 20, itemsPerPage: 4, currentPage: 1, totalPages: 10 };
   // pagination!: Pagination;
   articleParams: ArticleParams;
   articles: Article[] = [];
   article!: Article;
   selectedFilter: string = 'recently';
   searchActive: boolean = false;
+  totalCount = 0;
 
 
   constructor(private articleService: ArticleService) {

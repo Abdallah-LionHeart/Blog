@@ -1,4 +1,5 @@
 import { ImageDto } from "./imageDto";
+import { TagDto } from "./tagDto";
 import { VideoDto } from "./videoDto";
 
 
@@ -11,6 +12,7 @@ export interface Article {
  publishDate: string;
  images: ImageDto[];
  videos: VideoDto[];
+ tags: TagDto[];
  youTubeLink: string | null;
- facebookLink: string |null ;
+ facebookLink: string | null;
 }
